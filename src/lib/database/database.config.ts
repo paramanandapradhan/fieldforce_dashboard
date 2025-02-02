@@ -52,7 +52,7 @@ export const stores: StoreDefinitionType[] = [
         ],
     },
     {
-        name: 'agents', primaryKey: '_onid',
+        name: 'retailers', primaryKey: '_onid',
         indexes: [
             { keyPath: 'oid' },
             { keyPath: ['oid', '_uatdt'] },
@@ -60,27 +60,7 @@ export const stores: StoreDefinitionType[] = [
         ],
     },
     {
-        name: 'knowledges', primaryKey: '_onid',
-        indexes: [
-            { keyPath: 'oid' },
-            { keyPath: ['oid', '_uatdt'] },
-            { keyPath: ['oid', '_id'] },
-            { keyPath: ['oid', 'popic'] },
-            { keyPath: ['oid', 'agent'] },
-            { keyPath: ['oid', 'agent', 'topic'] },
-        ],
-    },
-    {
-        name: 'actions', primaryKey: '_onid',
-        indexes: [
-            { keyPath: 'oid' },
-            { keyPath: ['oid', '_uatdt'] },
-            { keyPath: ['oid', '_id'] },
-            { keyPath: ['oid', 'agent'] },
-        ],
-    },
-    {
-        name: 'phones', primaryKey: '_onid',
+        name: 'products', primaryKey: '_onid',
         indexes: [
             { keyPath: 'oid' },
             { keyPath: ['oid', '_uatdt'] },
@@ -88,23 +68,7 @@ export const stores: StoreDefinitionType[] = [
         ],
     },
     {
-        name: 'invoices', primaryKey: '_onid',
-        indexes: [
-            { keyPath: 'oid' },
-            { keyPath: ['oid', '_uatdt'] },
-            { keyPath: ['oid', '_id'] },
-        ],
-    },
-    {
-        name: 'payments', primaryKey: '_onid',
-        indexes: [
-            { keyPath: 'oid' },
-            { keyPath: ['oid', '_uatdt'] },
-            { keyPath: ['oid', '_id'] },
-        ],
-    },
-    {
-        name: 'calls', primaryKey: '_onid',
+        name: 'orders', primaryKey: '_onid',
         indexes: [
             { keyPath: 'oid' },
             { keyPath: ['oid', '_uatdt'] },

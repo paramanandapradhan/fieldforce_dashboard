@@ -11,6 +11,7 @@
 	import AppNavbar from '$lib/core/components/app-navbar.svelte';
 	import BackgroundGradient from '$lib/core/components/background-gradient.svelte';
 	import RestrictedDrawer from '$lib/drawer/components/restricted-drawer.svelte';
+	import { openRetailerEditDialog } from '$lib/retailer/retailer-ui-service';
 
 	let drawerRef: Drawer;
 
@@ -18,7 +19,11 @@
 		drawerRef && drawerRef.openDrawer();
 	}
 
-	function handleAdd() {}
+	async function handleAdd() {
+		let res = await openRetailerEditDialog();
+		if (res) {
+		}
+	}
 </script>
 
 <div class="min-h-full">
@@ -31,7 +36,7 @@
 				<div class="p-4 flex items-center justify-between">
 					<div><h1 class="text-xl font-black">Retailers</h1></div>
 					<div>
-						<Button appearance="border-primary" onClick={handleAdd} label="ADD" />
+						<Button appearance="border-primary" onClick={handleAdd} label="Create Retailer" />
 					</div>
 				</div>
 			</main>

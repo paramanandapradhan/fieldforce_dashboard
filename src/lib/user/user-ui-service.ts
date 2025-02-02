@@ -1,4 +1,4 @@
-import { isMobileScreen, openDeleteConfirmDialog, openDialog, openLoadingDialog, openPickerDialog, showErrorToast, showSuccessToast, showToast } from "@cloudparker/moldex.js";
+import { getDialogSize, isMobileScreen, openDeleteConfirmDialog, openDialog, openLoadingDialog, openPickerDialog, showErrorToast, showSuccessToast, showToast } from "@cloudparker/moldex.js";
 import type { UserDataModel, UserTypeEnum } from "./user-types";
 import { deleteUser, getAllUsers, syncUsers } from "./user-service";
 import UserEditDialog from "./components/user-edit-dialog.svelte";
@@ -14,7 +14,7 @@ export async function openUserEditDialog(user?: UserDataModel) {
         title: 'Create user',
         hasHeaderBack: isMobileScreen(),
         hasHeaderClose: !isMobileScreen(),
-        size: isMobileScreen() ? 'full' : 'sm',
+        size: getDialogSize(),
         hasFooter: true,
         hasFooterCloseButton: true,
         hasFooterOkButton: true,
