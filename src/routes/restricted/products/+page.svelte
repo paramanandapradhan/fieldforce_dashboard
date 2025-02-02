@@ -29,7 +29,7 @@
 		<BackgroundGradient>
 			<main>
 				<div class="p-4 flex items-center justify-between">
-					<div><h1 class="text-xl font-black">Title</h1></div>
+					<div><h1 class="text-xl font-black">Products</h1></div>
 					<div>
 						<Button appearance="border-primary" onClick={handleAdd} label="ADD" />
 					</div>

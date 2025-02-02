@@ -2,18 +2,15 @@
 	import { page } from '$app/stores';
 	import { APP_NAME } from '$lib/core/services/app-environment-service';
 	import {
-		mdiAccountCircle,
-		mdiCash,
-		mdiFaceAgent,
+		mdiAccount,
 		mdiFormatListBulleted,
 		mdiHomeVariant,
 		mdiPackageVariantClosed,
 		mdiStore,
-		mdiTagOutline,
 		mdiTextBoxCheckOutline
 	} from '$lib/core/services/app-icons-service';
 
-	import { Button, IconCircle, isMobileScreen, mdiPhone, navigate } from '@cloudparker/moldex.js';
+	import { Button, IconCircle, isMobileScreen, navigate } from '@cloudparker/moldex.js';
 
 	let active: string = $state('');
 	let logoImgSrc = '/icons/web/icon-192.png';
@@ -31,7 +28,7 @@
 <div class="h-full flex flex-col">
 	{#if isMobileScreen()}
 		<div
-			class="p-4 flex items-center gap-2 border-b border-base-300 dark:border-base-600 bg-white dark:bg-base-800"
+			class="p-4 flex items-center gap-2 border-b border-base-300 dark:border-base-600 bg-gray-100 dark:bg-base-700"
 		>
 			<img src={logoImgSrc} alt="App Logo" class="w-8 h-8" />
 			<h2 class="text-lg font-bold text-primary">{APP_NAME}</h2>
@@ -93,7 +90,7 @@
 			onClick={(ev) => handleNavigate('/restricted/users', ev)}
 		>
 			<IconCircle
-				iconPath={mdiAccountCircle}
+				iconPath={mdiAccount}
 				circleClassName="!w-8 !h-8"
 				iconClassName="!w-4 !h-4 text-primary"
 			/>
