@@ -11,7 +11,6 @@
 	import { syncActions } from '$lib/action/action-service';
 	import { syncInvoices } from '$lib/invoice/invoice-service';
 	import { syncPayments } from '$lib/payment/payment-service';
-	
 
 	let imgClassName: string = $state('opacity-0');
 
@@ -24,13 +23,6 @@
 		syncUsers();
 		syncRoles();
 		syncAttributes();
-		syncPhones();
-		syncAgents();
-		syncKnowledges();
-		syncActions();
-		syncInvoices();
-		syncPayments()
-		
 	}
 	onMount(() => {
 		setTimeout(() => {

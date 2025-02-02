@@ -29,12 +29,11 @@ import { onCall, HttpsError } from 'firebase-functions/v2/https';
 //     });
 
 let corsDev = [
-    "https://dev-app.hellocall.ai",
-    "https://app.hellocall.ai",
-    "http://localhost:4040",
+    "https://dev-fieldforce.cloudparker.com",
+    "http://localhost:5050",
 ];
 let corsProd = [
-    "https://app.hellocall.ai",
+    "https://fieldforce.cloudparker.com",
 ];
 let cors: string | string[] | boolean = corsDev;
 if (process.env.VITE_ENVIRONMENT == 'prod') {

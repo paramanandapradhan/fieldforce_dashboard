@@ -46,8 +46,8 @@
 </script>
 
 <div class="min-h-full">
-	<AppNavbar hasLogo hasTitle hasMore={isMobileScreen()} onMore={handleMore}/>
-	<Drawer bind:this={drawerRef} className="border-r">drawwer</Drawer>
+	<AppNavbar hasLogo hasTitle hasMore={isMobileScreen()} onMore={handleMore} />
+	<Drawer bind:this={drawerRef} className="border-r"><RestrictedDrawer /></Drawer>
 	<Sidebar className="border-r "><RestrictedDrawer /></Sidebar>
 	<ContentArea className="md:pl-72">
 		<BackgroundGradient>
