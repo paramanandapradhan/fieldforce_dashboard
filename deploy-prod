@@ -1,0 +1,3 @@
+#!/bin/bash
+npm run setup:production && firebase login && firebase use cp-dev-fieldforce && npm run build && npm run deploy && echo "Visit Host : https://exam.cloudparker.com"
+

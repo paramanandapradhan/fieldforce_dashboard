@@ -1,0 +1,10 @@
+#!/bin/bash
+gcloud auth login
+gcloud config set project cp-dev-fieldforce
+
+gcloud firestore fields ttls update ttl --collection-group=orgs --enable-ttl --async
+gcloud firestore fields ttls update ttl --collection-group=attrs --enable-ttl --async
+gcloud firestore fields ttls update ttl --collection-group=docs --enable-ttl --async
+gcloud firestore fields ttls update ttl --collection-group=files --enable-ttl --async
+gcloud firestore fields ttls update ttl --collection-group=roles --enable-ttl --async
+gcloud firestore fields ttls update ttl --collection-group=users --enable-ttl --async

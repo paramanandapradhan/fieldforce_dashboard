@@ -1,0 +1,135 @@
+import { getAuthOrgId } from "$lib/auth/services/auth-service.svelte";
+import { DatabaseService } from "$lib/database/database-service";
+import { APP_ID } from "$lib/core/services/app-environment-service";
+import { IdbWhere } from "@cloudparker/easy-idb";
+import type { AttributeTypeConfig, AttributeDataModel } from "./attribute-types";
+
+export enum AttributeTypeEnum {
+    ALL = '0',
+    ID_PROOF_TYPE = '1',
+    COUNTRY = '2',
+    CITY = '3',
+    STATE = '4',
+    KNOWLEDGE_TOPIC = '5',
+    ACTION_TOPIC = '6'
+
+}
+
+export const attributeTypeConfigs: AttributeTypeConfig[] = [
+    { _id: AttributeTypeEnum.ALL, label: 'All Attributes', },
+    { _id: AttributeTypeEnum.ID_PROOF_TYPE, label: 'ID Proof', },
+    { _id: AttributeTypeEnum.COUNTRY, label: 'Country', },
+    { _id: AttributeTypeEnum.STATE, label: 'State', parent: AttributeTypeEnum.COUNTRY },
+    { _id: AttributeTypeEnum.CITY, label: 'City', },
+    { _id: AttributeTypeEnum.KNOWLEDGE_TOPIC, label: 'Knowledge Topic', },
+    { _id: AttributeTypeEnum.ACTION_TOPIC, label: 'Action Topic', },
+];
+
+class AttributeDatabaseService extends DatabaseService<AttributeDataModel> {
+
+    // Indicates if sync is enabled
+    protected syncEnabled: boolean = false;
+
+    // Name of the Firestore collection
+    protected collectionName: string = 'attrs';
+
+    // Private constructor to prevent direct instantiation
+    constructor() {
+        super();
+    }
+
+    // Constructs the Firestore collection path for users
+    public getFirestoreCollectionPath(): string {
+        let path = `/a/${APP_ID}/o/${getAuthOrgId()}/${this.collectionName}`;
+        return path;
+    }
+
+    public async createAttribute(data: AttributeDataModel, id?: string) {
+        return super.createFirestoreDoc(data, id);
+    }
+
+    public async updateAttribute(id: string, data: AttributeDataModel) {
+        return super.updateFirestoreDoc(id, data);
+    }
+
+    public async deleteAttribute(id: string) {
+        return super.deleteFirestoreDocSoft(id);
+    }
+
+    public async getAttribute(id: string) {
+        return super.getOneLocal(id);
+    }
+
+    public async getAllAttributes({ type, parent }: { type?: AttributeTypeEnum, parent?: string } = {}) {
+        return this.findAttributesLocal({ type, parent });
+    }
+
+    public async syncAttributes() {
+        return super.sync();
+    }
+
+    public async getAttributeCache(id: string) {
+        return super.getOneCache(id)
+    }
+
+    /**
+     * Find data from local database.
+     * 
+     * @returns {AttributeDataModel} array - all recods from local collection 
+     */
+    protected async findAttributesLocal({ type, parent }: { type?: AttributeTypeEnum, parent?: string } = {}): Promise<AttributeDataModel[]> {
+        let store = await this.getLocalDatabaseStore();
+        let oid = getAuthOrgId();
+        if (oid) {
+            let whereKeys: string[] = ['oid'];
+            let whereValue: any[] = [oid];
+            if (type) {
+                whereKeys.push('type');
+                whereValue.push(type)
+            }
+            if (parent) {
+                whereKeys.push('parent');
+                whereValue.push(parent);
+            }
+            let where = IdbWhere(whereKeys, "==", whereValue);
+            let array = await store.find<AttributeDataModel>({ where })!;
+            return array;
+        }
+        return [] as AttributeDataModel[];
+    }
+}
+
+
+const attributeService = new AttributeDatabaseService();
+
+export async function createAttribute(data: AttributeDataModel, id?: string) {
+    return attributeService.createAttribute(data, id);
+}
+
+export async function updateAttribute(id: string, data: AttributeDataModel) {
+    return attributeService.updateAttribute(id, data);
+}
+
+export async function deleteAttribute(id: string) {
+    return attributeService.deleteAttribute(id);
+}
+
+export async function getAttribute(id: string) {
+    return attributeService.getAttribute(id);
+}
+
+export async function getAllAttributes({ type, parent }: { type?: AttributeTypeEnum, parent?: string } = {}) {
+    return attributeService.getAllAttributes({ type, parent });
+}
+
+export async function syncAttributes() {
+    return attributeService.syncAttributes();
+}
+
+export async function getAttributeCache(id: string) {
+    return attributeService.getAttributeCache(id)
+}
+
+export function getAttributeTypeConfig(type: AttributeTypeEnum) {
+    return attributeTypeConfigs.find((o) => o._id === type);
+}

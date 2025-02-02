@@ -1,0 +1,9 @@
+#!/bin/bash
+# Set the CORS policy for the bucket
+# https://cloud.google.com/storage/docs/gsutil/commands/cors
+#  "maxAgeSeconds": 1296000 // 15 days
+gcloud auth login
+gcloud config set project cp-dev-fieldforce
+gsutil cors set storage-cors-dev.json gs://cp-dev-fieldforce.appspot.com
+
+gcloud storage buckets describe gs://cp-dev-fieldforce.appspot.com --format="default(cors_config)"

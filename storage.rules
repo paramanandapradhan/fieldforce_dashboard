@@ -1,0 +1,94 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function isAuth() {
+      return request.auth != null;
+    }
+
+    function isAuthOrg(oid) {
+      return request.auth.token.oid == oid;
+    }
+
+    // Size will be in MB
+    function isSize(size) {
+      return request.resource.size <= size * 1024 * 1024;
+    }
+
+    function isImage() {
+      return request.resource.contentType.matches('image/.*');
+    }
+
+    function isDocument() {
+      return request.resource.name.matches('.*(.png|.PNG|.jpg|.JPG|.jpeg|.JPEG|.webp|.WEBP|.pdf|.PDF|.doc|.DOC|.docx|.DOCX|.xls|.XLS|.xlsx|.XLSX|.ppt|.PPT|.pptx|.PPTX|.txt|.TXT|.odf|.ODF|.ods|.ODS)$');
+    }
+
+    // rid -> '1'-> Admin
+    function isAdmin() {
+      return request.auth.token.rid == '1';
+    }
+
+    function isSameUser(ouid) {
+      return request.auth.token.ouid == ouid;
+    }
+
+    // pid: 0-> none, 1->read, 2->write, 3->Full
+    function isFeature(fid, pid) {
+      return request.auth.token.scp[fid] >= pid;
+    }
+
+    function isFeatureStaffs(pid) {
+      // '1' -> Staff feature id
+      return isFeature('1', pid);
+    }
+
+    function isFeatureDocuments(pid) {
+      // '9' -> Documents feature id
+      return isFeature('9', pid);
+    }
+
+    function isUserPhotoUploadAllowed(oid, did) {
+    	  return  isAuth() && isAuthOrg(oid) && isImage() && isSize(0.1) && (isSameUser(did) || isAdmin() || isFeatureStaffs(2))
+    }
+
+    function isDocFileUploadAllowed(oid, did) {
+    	  return  isAuth() && isAuthOrg(oid) && isDocument() && isSize(10) && (isAdmin() || isFeatureDocuments(2))
+    }
+
+    match /a/H/o/{oid}/orgs/{did}/photo/{type}/{ouid}/{fid}/{name} {
+      // oid=OrgId, did=Document id, ouid=UploaderUserId
+
+      allow read: if request.auth != null;
+
+      // 100 KB allowed and image type
+      allow write: if isUserPhotoUploadAllowed(oid, did);
+    }
+
+    match /a/H/o/{oid}/users/{did}/photo/{type}/{ouid}/{fid}/{name} {
+      // oid=OrgId, did=Document id, ouid=UploaderUserId
+
+      allow read: if request.auth != null;
+
+      // 100 KB allowed and image type
+      allow write: if isUserPhotoUploadAllowed(oid, did);
+    }
+
+    match /a/H/o/{oid}/docs/{did}/file/{type}/{ouid}/{fid}/{name} {
+      // oid=OrgId, did=Document id, ouid=UploaderUserId
+
+      allow read: if request.auth != null;
+
+      // 10 MB allowed and image type
+      allow write: if isDocFileUploadAllowed(oid, did);
+    }
+
+    match /a/H/o/{oid}/entries/{did}/files/{type}/{ouid}/{fid}/{name} {
+      // oid=OrgId, did=Document id, ouid=UploaderUserId
+
+      allow read: if request.auth != null;
+
+      // 10 MB allowed and image type
+      allow write: if isDocFileUploadAllowed(oid, did);
+    }
+  }
+}

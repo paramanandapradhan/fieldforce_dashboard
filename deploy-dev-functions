@@ -1,0 +1,2 @@
+#!/bin/bash
+npm run setup:development && firebase login && firebase use cp-dev-fieldforce && npm run build:functions && npm run deploy:functions 

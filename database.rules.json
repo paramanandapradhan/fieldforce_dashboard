@@ -1,0 +1,36 @@
+{
+  "rules": {
+    "a": {
+      "F": {
+        "skus": {
+          ".read": "auth !== null",
+          ".write": "auth !== null"
+        },
+        "o": {
+          "$oid": {
+            ".read": "auth !== null",
+            ".write": false
+          }
+        },
+        "ids": {
+          "o": {
+            "$orgId": {
+              "$key": {
+                ".read": "auth !== null",
+                ".write": "auth !== null"
+              }
+            }
+          },
+          "global": {
+            "$key": {
+              ".read": "auth !== null",
+              ".write": "auth !== null"
+            }
+          }
+        }
+      }
+    },
+    ".read": false,
+    ".write": false
+  }
+}

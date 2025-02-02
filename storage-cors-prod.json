@@ -1,0 +1,14 @@
+[
+    {
+        "origin": [
+            "https://*.cloudparker.com"
+        ],
+        "responseHeader": [
+            "Content-Type"
+        ],
+        "method": [
+            "GET"
+        ],
+        "maxAgeSeconds": 1296000
+    }
+]

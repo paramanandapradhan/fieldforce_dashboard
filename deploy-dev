@@ -1,0 +1,3 @@
+#!/bin/bash
+npm run setup:development && firebase login && firebase use cp-dev-fieldforce \
+&& npm run build && npm run deploy && echo "Visit Host : https://dev-fieldforce.cloudparker.com"
