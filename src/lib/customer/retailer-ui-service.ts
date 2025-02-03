@@ -1,15 +1,16 @@
 import { getDialogSize, isMobileScreen, openDeleteConfirmDialog, openDialog, openLoadingDialog, showErrorToast, showSuccessToast } from "@cloudparker/moldex.js";
-import type { RetailerDataModel } from "./retailer-types";
-import { deleteRetailer, syncRetailers } from "./retailer-service";
-import RetailerEditDialog from "./components/retailer-edit-dialog.svelte";
 
-export async function openRetailerEditDialog(retailer?: RetailerDataModel) {
+import CustomerEditDialog from "./components/customer-edit-dialog.svelte";
+import type { CustomerDataModel } from "$lib/user/user-types";
+import { deleteUser, syncUsers } from "$lib/user/user-service";
+
+export async function openCustomerEditDialog(customer?: CustomerDataModel) {
     let res = openDialog({
-        bodyComponent: RetailerEditDialog,
-        props: { retailer },
+        bodyComponent: CustomerEditDialog,
+        props: { customer },
         hasTitle: true,
         hasHeader: true,
-        title: 'Create retailer',
+        title: 'Create customer',
         hasHeaderBack: isMobileScreen(),
         hasHeaderClose: !isMobileScreen(),
         size: getDialogSize(),
@@ -17,25 +18,25 @@ export async function openRetailerEditDialog(retailer?: RetailerDataModel) {
         hasFooterCloseButton: true,
         hasFooterOkButton: true,
         footerOkButtonLable: 'Save',
-        targetFormId: 'retailer-edit-form'
+        targetFormId: 'customer-edit-form'
     });
     return res;
 }
 
-export async function openRetailerDeleteDialog(retailer: RetailerDataModel) {
+export async function openCustomerDeleteDialog(customer: CustomerDataModel) {
 
-    if (retailer && retailer._id && (await openDeleteConfirmDialog({}))) {
+    if (customer && customer._id && (await openDeleteConfirmDialog({}))) {
         let loading = await openLoadingDialog({});
         try {
-            await deleteRetailer(retailer._id!);
-            await syncRetailers();
+            await deleteUser(customer._id!);
+            await syncUsers();
             showSuccessToast();
         } catch (error) {
-            console.error('Error on delete retailer.');
+            console.error('Error on delete customer.');
             console.error(error);
             showErrorToast();
         }
         loading.closeDialog();
-        return retailer;
+        return customer;
     }
 }

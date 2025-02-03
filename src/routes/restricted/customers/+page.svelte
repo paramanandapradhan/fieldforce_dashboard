@@ -11,7 +11,7 @@
 	import AppNavbar from '$lib/core/components/app-navbar.svelte';
 	import BackgroundGradient from '$lib/core/components/background-gradient.svelte';
 	import RestrictedDrawer from '$lib/drawer/components/restricted-drawer.svelte';
-	import { openRetailerEditDialog } from '$lib/retailer/retailer-ui-service';
+	import { openCustomerEditDialog } from '$lib/customer/retailer-ui-service';
 
 	let drawerRef: Drawer;
 
@@ -20,7 +20,7 @@
 	}
 
 	async function handleAdd() {
-		let res = await openRetailerEditDialog();
+		let res = await openCustomerEditDialog();
 		if (res) {
 		}
 	}
@@ -34,9 +34,9 @@
 		<BackgroundGradient>
 			<main>
 				<div class="p-4 flex items-center justify-between">
-					<div><h1 class="text-xl font-black">Retailers</h1></div>
+					<div><h1 class="text-xl font-black">Customers</h1></div>
 					<div>
-						<Button appearance="border-primary" onClick={handleAdd} label="Create Retailer" />
+						<Button appearance="border-primary" onClick={handleAdd} label="Create Customers" />
 					</div>
 				</div>
 			</main>

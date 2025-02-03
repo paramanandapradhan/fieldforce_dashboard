@@ -3,6 +3,7 @@
 	import { APP_NAME } from '$lib/core/services/app-environment-service';
 	import {
 		mdiAccount,
+		mdiBriefcaseAccount,
 		mdiFormatListBulleted,
 		mdiHomeVariant,
 		mdiPackageVariantClosed,
@@ -50,18 +51,6 @@
 		</Button>
 
 		<Button
-			className={`w-full !text-start !justify-start !gap-4 ${active.startsWith('/restricted/retailers') ? 'bg-primary-50' : ''}`}
-			onClick={(ev) => handleNavigate('/restricted/retailers', ev)}
-		>
-			<IconCircle
-				iconPath={mdiStore}
-				circleClassName="!w-8 !h-8"
-				iconClassName="!w-4 !h-4 text-primary"
-			/>
-			<div>Retailers</div>
-		</Button>
-
-		<Button
 			className={`w-full !text-start !justify-start !gap-4 ${active.startsWith('/restricted/products') ? 'bg-primary-50 ' : ''}`}
 			onClick={(ev) => handleNavigate('/restricted/products', ev)}
 		>
@@ -83,6 +72,18 @@
 				iconClassName="!w-4 !h-4 text-primary"
 			/>
 			<div>Orders</div>
+		</Button>
+
+		<Button
+			className={`w-full !text-start !justify-start !gap-4 ${active.startsWith('/restricted/customers') ? 'bg-primary-50' : ''}`}
+			onClick={(ev) => handleNavigate('/restricted/customers', ev)}
+		>
+			<IconCircle
+				iconPath={mdiBriefcaseAccount}
+				circleClassName="!w-8 !h-8"
+				iconClassName="!w-4 !h-4 text-primary"
+			/>
+			<div>Customers</div>
 		</Button>
 
 		<Button

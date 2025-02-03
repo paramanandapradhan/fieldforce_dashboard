@@ -2,10 +2,11 @@ import { getAuthOrgId } from "$lib/auth/services/auth-service.svelte";
 import { DatabaseService } from "$lib/database/database-service";
 import { APP_ID } from "$lib/core/services/app-environment-service";
 import { IdbWhere } from "@cloudparker/easy-idb";
-import type { UserDataModel, UserTypeEnum } from "./user-types";
+import type { UserDataModel, CustomerDataModel, UserTypeEnum, } from "./user-types";
 
 
-class UserDatabaseService extends DatabaseService<UserDataModel> {
+
+class UserDatabaseService extends DatabaseService<UserDataModel | CustomerDataModel> {
 
     // Indicates if sync is enabled
     protected syncEnabled: boolean = false;
@@ -24,11 +25,11 @@ class UserDatabaseService extends DatabaseService<UserDataModel> {
         return path;
     }
 
-    public async createUser(data: UserDataModel, id?: string) {
+    public async createUser(data: UserDataModel | CustomerDataModel, id?: string) {
         return super.createFirestoreDoc(data, id);
     }
 
-    public async updateUser(id: string, data: UserDataModel) {
+    public async updateUser(id: string, data: UserDataModel | CustomerDataModel) {
         return super.updateFirestoreDoc(id, data);
     }
 
@@ -63,10 +64,10 @@ class UserDatabaseService extends DatabaseService<UserDataModel> {
                 whereValue.push(type)
             }
             let where = IdbWhere(whereKeys, "==", whereValue);
-            let array = await store.find<UserDataModel>({ where })!;
+            let array = await store.find<UserDataModel | CustomerDataModel>({ where })!;
             return array;
         }
-        return [] as UserDataModel[];
+        return [] as UserDataModel | CustomerDataModel[];
     }
 
 }
@@ -74,11 +75,11 @@ class UserDatabaseService extends DatabaseService<UserDataModel> {
 
 const userService = new UserDatabaseService();
 
-export async function createUser(data: UserDataModel, id?: string) {
+export async function createUser(data: UserDataModel | CustomerDataModel, id?: string) {
     return userService.createUser(data, id);
 }
 
-export async function updateUser(id: string, data: UserDataModel) {
+export async function updateUser(id: string, data: UserDataModel | CustomerDataModel) {
     return userService.updateUser(id, data);
 }
 
