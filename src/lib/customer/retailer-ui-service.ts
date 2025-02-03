@@ -1,4 +1,4 @@
-import { getDialogSize, isMobileScreen, openDeleteConfirmDialog, openDialog, openLoadingDialog, showErrorToast, showSuccessToast } from "@cloudparker/moldex.js";
+import { DialogSizeEnum, getDialogSize, isMobileScreen, openDeleteConfirmDialog, openDialog, openLoadingDialog, showErrorToast, showSuccessToast } from "@cloudparker/moldex.js";
 
 import CustomerEditDialog from "./components/customer-edit-dialog.svelte";
 import type { CustomerDataModel } from "$lib/user/user-types";
@@ -13,7 +13,7 @@ export async function openCustomerEditDialog(customer?: CustomerDataModel) {
         title: 'Create customer',
         hasHeaderBack: isMobileScreen(),
         hasHeaderClose: !isMobileScreen(),
-        size: getDialogSize(),
+        size: DialogSizeEnum.FULL,
         hasFooter: true,
         hasFooterCloseButton: true,
         hasFooterOkButton: true,

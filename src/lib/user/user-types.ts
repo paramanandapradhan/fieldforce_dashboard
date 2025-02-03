@@ -167,6 +167,7 @@ export type CustomerDataModel = BaseDataModel & {
     owner?: CustomerOwner,
     master?: CustomerMaster,
     isActive?: boolean,
+    canOrder?: boolean,
     identity?: CustomerIdentity;
     geo?: CustomerGeo;
 }
