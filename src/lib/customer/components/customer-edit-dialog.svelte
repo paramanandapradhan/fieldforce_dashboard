@@ -560,7 +560,7 @@
 
 	<!-- Geo Details Card -->
 	<div class="m-4 bg-white p-4 border rounded shadow">
-		<h4 class="text-xl font-bold mb-4">Geo Details</h4>
+		<h4 class="text-xl font-bold mb-4">Geographical Details</h4>
 		<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 			<div>
 				<TextField name="geoCountry" label="Country" bind:value={geoCountry} maxlength={50} />
