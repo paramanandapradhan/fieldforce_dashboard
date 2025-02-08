@@ -24,6 +24,7 @@
 		type DialogExports
 	} from '@cloudparker/moldex.js';
 	import UserComboboxField from './user-combobox-field.svelte';
+	import RouteComboboxField from '$lib/route/components/route-combobox-field.svelte';
 
 	export type CustomerProps = {
 		customer?: CustomerDataModel;
@@ -341,7 +342,12 @@
 					/>
 				</div>
 				<div>
-					<TextField name="masterRoute" label="Route" bind:value={masterRoute} maxlength={80} />
+					<RouteComboboxField
+						name="masterRoute"
+						label="Route"
+						bind:value={masterRoute}
+						createButtonLabel="Add Route"
+					/>
 				</div>
 				<div>
 					<AttributeComboboxField

@@ -1,9 +1,10 @@
 <script lang="ts">
-	import { ButtonMenu, Pagination, sort } from '@cloudparker/moldex.js';
+	import { ButtonMenu, IconCircle, Pagination, sort } from '@cloudparker/moldex.js';
 	import { getAllRoutes } from '../route-service';
 	import type { RouteDataModel } from '../route-types';
 	import TextUser from '$lib/user/components/text-user.svelte';
 	import { onMount } from 'svelte';
+	import { mdiMapMarkerPath } from '$lib/core/services/app-icons-service';
 
 	type Props = {};
 	let {}: Props = $props();
@@ -23,23 +24,33 @@
 </script>
 
 <div>
-	<table class="min-w-full divide-y divide-gray-200 table-auto">
+	<table class="min-w-full divide-y divide-base-200 table-fixed">
 		<thead>
 			<tr>
+				<th class="text-left w-12"></th>
 				<th class="text-left p-4">Name</th>
 				<th class="text-left p-4">Manager</th>
 				<th class="text-left p-4">Visit Plan</th>
 				<th class="text-right p-4"></th>
 			</tr>
 		</thead>
-		<tbody class="divide-y divide-gray-200">
+		<tbody class="divide-y divide-base-200">
 			{#each routes as route, index}
 				<tr class="hover:bg-base-100">
+					<td class="text-left p-1 w-12">
+						<IconCircle
+							iconPath={mdiMapMarkerPath}
+							iconClassName="!h-5 !w-5 text-primary"
+							circleClassName="!h-10 !w-10"
+						/>
+					</td>
 					<td class="text-left px-4">
 						<div>
-							{route.name || ''}
+							<a href="/restricted/routes/view" class="hover:text-primary">
+								{route.name || ''}
+							</a>
 						</div>
-						<div>
+						<div class="text-base-500 text-sm">
 							{route.desc || ''}
 						</div>
 					</td>
