@@ -4,11 +4,6 @@ export type RouteDataModel = BaseDataModel & {
 	name?: string,
 	desc?: string,
 	customers?: string[],
-	plans?: RoutePlans,
+	plans?: { [userId: string]: number[] },
 	manager?: string,
 };
-
-export type RoutePlans = {
-	user?: string,
-	weekday?: number;
-}

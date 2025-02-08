@@ -6,6 +6,7 @@
 		IconCircle,
 		isMobileScreen,
 		Loading,
+		navigate,
 		Sidebar
 	} from '@cloudparker/moldex.js';
 	import AppNavbar from '$lib/core/components/app-navbar.svelte';
@@ -15,6 +16,7 @@
 	import { getRoute } from '$lib/route/route-service';
 	import RouteDetails from '$lib/route/components/route-details.svelte';
 	import { mdiMapMarkerPath } from '$lib/core/services/app-icons-service';
+	import RoutePlanner from '$lib/route/components/route-planner.svelte';
 
 	let drawerRef: Drawer;
 
@@ -26,6 +28,10 @@
 	}
 
 	function handleEdit() {}
+
+	function handleChange() {
+		navigate(`/restricted/routes/view?routeId=${routeId}`, { replaceState: true });
+	}
 
 	$effect(() => {});
 </script>
@@ -62,19 +68,23 @@
 									</div>
 								</div>
 							</div>
+
+							<div class="bg-white rounded-lg shadow p-4 m-4">
+								<RoutePlanner {route} onChange={handleChange} />
+							</div>
+							<div class="bg-white rounded-lg shadow p-4 m-4">
+								<div class="flex">
+									<div class=" flex-grow">
+										<h3 class="text-lg font-bold">Route Customers</h3>
+									</div>
+									<div>
+										<Button appearance="base">Add Customer</Button>
+									</div>
+								</div>
+								<div></div>
+							</div>
 						{/if}
 					{/await}
-				</div>
-				<div class="bg-white rounded-lg shadow p-4 m-4">
-					<div class="flex">
-						<div class=" flex-grow">
-							<h3 class="text-lg font-bold">Route Customers</h3>
-						</div>
-						<div>
-							<Button appearance="base">Add Customer</Button>
-						</div>
-					</div>
-					<div></div>
 				</div>
 			</main>
 		</BackgroundGradient>
