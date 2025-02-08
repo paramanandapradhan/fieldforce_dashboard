@@ -1,34 +1,35 @@
 <script lang="ts">
-	import { ButtonMenu, IconCircle, Pagination, sort } from '@cloudparker/moldex.js';
+	import {
+		Button,
+		IconCircle,
+		openDeleteConfirmDialog,
+		openLoadingDialog,
+		Pagination
+	} from '@cloudparker/moldex.js';
 
-	import { mdiBriefcaseAccount, mdiMapMarkerPath } from '$lib/core/services/app-icons-service';
-	import { onMount } from 'svelte';
-	import { getAllUsers, UserTypeEnum } from '../user-service';
-	import type { CustomerDataModel } from '../user-types';
-	import TextUserSubtype from './text-user-subtype.svelte';
 	import TextAttribute from '$lib/attribute/components/text-attribute.svelte';
+	import { mdiBriefcaseAccount, mdiDeleteOutline } from '$lib/core/services/app-icons-service';
+
+	import { syncUsers, updateUser } from '$lib/user/user-service';
+	import type { CustomerDataModel } from '$lib/user/user-types';
+	import TextUserSubtype from '$lib/user/components/text-user-subtype.svelte';
 
 	type Props = {
 		customers?: CustomerDataModel[];
+		onChange?: () => void;
 	};
-	let { customers }: Props = $props();
 
-	let items: CustomerDataModel[] = $state([]);
+	let { customers, onChange }: Props = $props();
 
-	export async function loadCustomers() {
-		if (!customers) {
-			let array =
-				((await getAllUsers({ type: UserTypeEnum.USER_TYPE_CUSTOMER })) as CustomerDataModel[]) ||
-				[];
-			items = sort({ array, field: 'name' });
+	async function handleDelete(item: CustomerDataModel) {
+		if (item?._id && item?.master?.route && (await openDeleteConfirmDialog())) {
+			let loader = await openLoadingDialog();
+			await updateUser(item._id, { 'master.route': '' } as CustomerDataModel);
+			await syncUsers();
+			loader.closeDialog();
+			onChange && onChange();
 		}
 	}
-
-	export function handleMenu(ev: Event, menu: string, item: CustomerDataModel) {}
-
-	onMount(() => {
-		loadCustomers();
-	});
 </script>
 
 <div>
@@ -44,7 +45,7 @@
 			</tr>
 		</thead>
 		<tbody class="divide-y divide-base-200">
-			{#each customers || items as item, index}
+			{#each customers || [] as item, index}
 				<tr class="hover:bg-base-100">
 					<td class="text-left pl-4 py-1 w-14">
 						<IconCircle
@@ -74,10 +75,7 @@
 					</td>
 					<td class="text-right px-4">
 						<div class="flex justify-end">
-							<ButtonMenu
-								menus={['View', 'Edit', 'Delete']}
-								onMenu={(ev, menu) => handleMenu(ev, menu as string, item)}
-							/>
+							<Button iconPath={mdiDeleteOutline} onClick={() => handleDelete(item)} />
 						</div>
 					</td>
 				</tr>
@@ -85,6 +83,6 @@
 		</tbody>
 	</table>
 	<div class="p-4">
-		<Pagination length={items?.length} />
+		<Pagination length={customers?.length} />
 	</div>
 </div>

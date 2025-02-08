@@ -3,6 +3,7 @@ import { DatabaseService } from "$lib/database/database-service";
 import { APP_ID } from "$lib/core/services/app-environment-service";
 import { IdbWhere } from "@cloudparker/easy-idb";
 import { type UserDataModel, type CustomerDataModel, } from "./user-types";
+import type { AttributeTypeEnum } from "$lib/attribute/attribute-service";
 
 
 export enum UserTypeEnum {
@@ -67,8 +68,8 @@ class UserDatabaseService extends DatabaseService<UserDataModel | CustomerDataMo
         return super.getOneLocal(id);
     }
 
-    public async getAllUsers({ type, subtype }: { type?: UserTypeEnum, subtype?: UserSubtypeEnum } = {}) {
-        return this.findUsersLocal({ type, subtype })
+    public async getAllUsers({ type, subtype, route }: { type?: UserTypeEnum, subtype?: UserSubtypeEnum, route?: string } = {}) {
+        return this.findUsersLocal({ type, subtype, route })
     }
 
     public async syncUsers() {
@@ -79,7 +80,7 @@ class UserDatabaseService extends DatabaseService<UserDataModel | CustomerDataMo
         return super.getOneCache(id)
     }
 
-    protected async findUsersLocal({ type, subtype }: { type?: UserTypeEnum, subtype?: UserSubtypeEnum } = {}) {
+    protected async findUsersLocal({ type, subtype, route }: { type?: UserTypeEnum, subtype?: UserSubtypeEnum, route?: string } = {}) {
         let store = await this.getLocalDatabaseStore();
         let oid = getAuthOrgId();
         if (oid) {
@@ -92,6 +93,10 @@ class UserDatabaseService extends DatabaseService<UserDataModel | CustomerDataMo
             if (subtype) {
                 whereKeys.push('subtype');
                 whereValue.push(subtype)
+            }
+            if (route) {
+                whereKeys.push('master.route');
+                whereValue.push(route)
             }
             let where = IdbWhere(whereKeys, "==", whereValue);
             let array = await store.find<UserDataModel | CustomerDataModel>({ where })!;
@@ -121,8 +126,8 @@ export async function getUser(id: string) {
     return userService.getUser(id);
 }
 
-export async function getAllUsers({ type, subtype }: { type?: UserTypeEnum, subtype?: UserSubtypeEnum } = {}) {
-    return userService.getAllUsers({ type, subtype });
+export async function getAllUsers({ type, subtype, route }: { type?: UserTypeEnum, subtype?: UserSubtypeEnum, route?: string } = {}) {
+    return userService.getAllUsers({ type, subtype, route });
 }
 
 export async function syncUsers() {
