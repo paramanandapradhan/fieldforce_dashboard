@@ -1,9 +1,20 @@
 <script lang="ts">
-	import { createUser, getUser, syncUsers, updateUser } from '$lib/user/user-service';
-	import type { CustomerDataModel } from '$lib/user/user-types';
+	import { AttributeTypeEnum } from '$lib/attribute/attribute-service';
+	import AttributeComboboxField from '$lib/attribute/components/attribute-combobox-field.svelte';
+	import {
+		createUser,
+		CUSTOMER_TYPES,
+		getUser,
+		syncUsers,
+		updateUser
+	} from '$lib/user/user-service';
+	import { UserTypeEnum, type CustomerDataModel } from '$lib/user/user-types';
 	import {
 		CheckboxField,
+		ComboboxField,
+		DateField,
 		EmailField,
+		NumberField,
 		PhoneField,
 		showToast,
 		TextareaField,
@@ -31,6 +42,8 @@
 	let address = $state(customer?.address || '');
 	let isActive = $state(customer?.isActive ?? true);
 	let canPlaceOrder = $state(customer?.isActive ?? true);
+	let categories = $state(customer?.categories || []);
+	let type = $state(customer?.type || UserTypeEnum.USER_TYPE_CUSTOMER);
 
 	// Billing Fields
 	let billingName = $state(customer?.billing?.name || '');
@@ -54,7 +67,7 @@
 	let ownerDob = $state(customer?.owner?.dob || '');
 
 	// Master Fields
-	let masterCustomerType = $state(customer?.master?.customerType || '');
+
 	let masterCompany = $state(customer?.master?.company || '');
 	let masterBranch = $state(customer?.master?.branch || '');
 	let masterDistributor = $state(customer?.master?.distributor || '');
@@ -88,6 +101,7 @@
 		email = (email || '').trim();
 		phone = (phone || '').trim();
 		address = (address || '').trim();
+		type = type || UserTypeEnum.USER_TYPE_CUSTOMER;
 
 		billingName = (billingName || '').trim();
 		billingAddress = (billingAddress || '').trim();
@@ -107,7 +121,7 @@
 		ownerEmail = (ownerEmail || '').trim();
 		ownerDob = (ownerDob || '').trim();
 
-		masterCustomerType = (masterCustomerType || '').trim();
+		categories = categories || [];
 		masterCompany = (masterCompany || '').trim();
 		masterBranch = (masterBranch || '').trim();
 		masterDistributor = (masterDistributor || '').trim();
@@ -142,6 +156,7 @@
 				address,
 				isActive,
 				canPlaceOrder,
+				type,
 				billing: {
 					name: billingName,
 					address: billingAddress,
@@ -164,7 +179,6 @@
 					dob: ownerDob
 				},
 				master: {
-					customerType: masterCustomerType,
 					company: masterCompany,
 					branch: masterBranch,
 					distributor: masterDistributor,
@@ -235,34 +249,106 @@
 			<div>
 				<TextField name="desc" label="Description" maxlength={100} bind:value={desc} />
 			</div>
+			<div></div>
 			<div>
 				<EmailField name="email" label="Email" bind:value={email} />
 			</div>
 			<div>
 				<PhoneField name="phone" label="Phone" bind:value={phone} dialCode="+91" />
 			</div>
-			<div class="">
+			<div></div>
+
+			<div>
 				<div>
-					<TextField
-						name="masterCustomerType"
+					<ComboboxField
+						name="tyepe"
 						label="Customer Type"
-						bind:value={masterCustomerType}
-						maxlength={50}
+						items={CUSTOMER_TYPES}
+						bind:value={type}
 					/>
 				</div>
 			</div>
+
 			<div>
-				<TextareaField name="address" label="Address" bind:value={address} maxlength={300} />
+				<AttributeComboboxField
+					attributeType={AttributeTypeEnum.CUSTOMER_CATEGORY}
+					name="categories"
+					label="Customer Categories"
+					bind:value={categories}
+					createButtonLabel="Add Category"
+					hasCheckbox={true}
+					multiple={true}
+				/>
 			</div>
-			<div></div>
+
 			<div></div>
 			<div>
+				<div class="">
+					<TextareaField name="address" label="Address" bind:value={address} maxlength={300} />
+				</div>
+
 				<div class="my-4">
 					<CheckboxField name="isActive" label="Active" bind:value={isActive} />
 				</div>
 				<div class="my-4">
 					<CheckboxField name="canPlaceOrder" label="Can Place Order" bind:value={canPlaceOrder} />
 				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Master Details Card -->
+	<div class="m-4 bg-white p-4 border rounded shadow">
+		<h4 class="text-xl font-bold mb-4">Master Details</h4>
+		<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+			<div>
+				<TextField name="masterSm" label="SM" bind:value={masterSm} maxlength={80} />
+			</div>
+			<div>
+				<TextField name="masterTsm" label="TSM" bind:value={masterTsm} maxlength={80} />
+			</div>
+			<div>
+				<TextField
+					name="masterDistributor"
+					label="Distributor"
+					bind:value={masterDistributor}
+					maxlength={80}
+				/>
+			</div>
+			<div>
+				<TextField name="masterRoute" label="Route" bind:value={masterRoute} maxlength={80} />
+			</div>
+			<div>
+				<AttributeComboboxField
+					attributeType={AttributeTypeEnum.CUSTOMER_CLASS}
+					name="masterClazz"
+					label="Class"
+					bind:value={masterClazz}
+					createButtonLabel="Add Class"
+				/>
+			</div>
+			<div>
+				<AttributeComboboxField
+					attributeType={AttributeTypeEnum.CUSTOMER_CLASS}
+					name="masterChain"
+					label="Chain"
+					bind:value={masterChain}
+					createButtonLabel="Add Chain"
+				/>
+			</div>
+
+			<div>
+				<TextField name="masterCompany" label="Company" bind:value={masterCompany} maxlength={80} />
+			</div>
+
+			<div>
+				<TextField name="masterLabel" label="Label" bind:value={masterLabel} maxlength={50} />
+			</div>
+			<div>
+				<TextField name="masterExtId" label="External ID" bind:value={masterExtId} maxlength={50} />
+			</div>
+			<div>
+				<NumberField name="masterCreditLimit" label="Credit Limit" bind:value={masterCreditLimit} />
 			</div>
 		</div>
 	</div>
@@ -279,6 +365,16 @@
 					maxlength={80}
 				/>
 			</div>
+
+			<div>
+				<TextField
+					name="billingTaxNo"
+					label="Billing Tax No / GST No"
+					bind:value={billingTaxNo}
+					maxlength={50}
+				/>
+			</div>
+			<div></div>
 			<div>
 				<TextField
 					name="billingEmail"
@@ -295,14 +391,8 @@
 					maxlength={18}
 				/>
 			</div>
-			<div>
-				<TextField
-					name="billingTaxNo"
-					label="Billing Tax No / GST No"
-					bind:value={billingTaxNo}
-					maxlength={50}
-				/>
-			</div>
+			<div></div>
+
 			<div>
 				<TextareaField
 					name="billingAddress"
@@ -343,14 +433,6 @@
 				/>
 			</div>
 			<div>
-				<TextField
-					name="deliveryTaxNo"
-					label="Delivery Tax No"
-					bind:value={deliveryTaxNo}
-					maxlength={50}
-				/>
-			</div>
-			<div>
 				<TextareaField
 					name="deliveryAddress"
 					label="Delivery Address"
@@ -369,14 +451,16 @@
 				<TextField name="ownerName" label="Owner Name" bind:value={ownerName} maxlength={80} />
 			</div>
 			<div>
+				<DateField name="ownerDob" label="Owner Date of Birth" type="date" bind:value={ownerDob} />
+			</div>
+			<div></div>
+			<div>
 				<EmailField name="ownerEmail" label="Owner Email" bind:value={ownerEmail} />
 			</div>
 			<div>
 				<PhoneField name="ownerPhone" label="Owner Phone" bind:value={ownerPhone} dialCode="+91" />
 			</div>
-			<div>
-				<TextField name="ownerDob" label="Owner Date of Birth" type="date" bind:value={ownerDob} />
-			</div>
+			<div></div>
 			<div>
 				<TextareaField
 					name="ownerAddress"
@@ -388,68 +472,48 @@
 		</div>
 	</div>
 
-	<!-- Master Details Card -->
-	<div class="m-4 bg-white p-4 border rounded shadow">
-		<h4 class="text-xl font-bold mb-4">Master Details</h4>
-		<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-			<div>
-				<TextField name="masterCompany" label="Company" bind:value={masterCompany} maxlength={80} />
-			</div>
-			<div>
-				<TextField
-					name="masterDistributor"
-					label="Distributor"
-					bind:value={masterDistributor}
-					maxlength={80}
-				/>
-			</div>
-			<div>
-				<TextField name="masterRoute" label="Route" bind:value={masterRoute} maxlength={80} />
-			</div>
-			<div>
-				<TextField name="masterSm" label="SM" bind:value={masterSm} maxlength={80} />
-			</div>
-			<div>
-				<TextField name="masterTsm" label="TSM" bind:value={masterTsm} maxlength={80} />
-			</div>
-			<div>
-				<TextField name="masterChain" label="Chain" bind:value={masterChain} maxlength={50} />
-			</div>
-			<div>
-				<TextField name="masterClazz" label="Class" bind:value={masterClazz} maxlength={50} />
-			</div>
-			<div>
-				<TextField name="masterLabel" label="Label" bind:value={masterLabel} maxlength={50} />
-			</div>
-			<div>
-				<TextField name="masterExtId" label="External ID" bind:value={masterExtId} maxlength={50} />
-			</div>
-			<div>
-				<TextField
-					name="masterCreditLimit"
-					label="Credit Limit"
-					bind:value={masterCreditLimit}
-					maxlength={50}
-				/>
-			</div>
-		</div>
-	</div>
-
 	<!-- Geo Details Card -->
 	<div class="m-4 bg-white p-4 border rounded shadow">
 		<h4 class="text-xl font-bold mb-4">Geographical Details</h4>
 		<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 			<div>
-				<TextField name="geoCountry" label="Country" bind:value={geoCountry} maxlength={50} />
+				<AttributeComboboxField
+					attributeType={AttributeTypeEnum.COUNTRY}
+					name="geoCountry"
+					label="Country "
+					bind:value={geoCountry}
+					createButtonLabel="Add Country"
+				/>
 			</div>
 			<div>
-				<TextField name="geoState" label="State" bind:value={geoState} maxlength={50} />
+				<AttributeComboboxField
+					attributeType={AttributeTypeEnum.STATE}
+					name="geoState"
+					label="State "
+					bind:value={geoState}
+					createButtonLabel="Add State"
+					parent={geoCountry}
+				/>
 			</div>
 			<div>
-				<TextField name="geoCity" label="City" bind:value={geoCity} maxlength={50} />
+				<AttributeComboboxField
+					attributeType={AttributeTypeEnum.DISTRICT}
+					name="geoDistrict"
+					label="District "
+					bind:value={geoDistrict}
+					createButtonLabel="Add District"
+					parent={geoState}
+				/>
 			</div>
 			<div>
-				<TextField name="geoDistrict" label="District" bind:value={geoDistrict} maxlength={50} />
+				<AttributeComboboxField
+					attributeType={AttributeTypeEnum.CITY}
+					name="geoCity"
+					label="City "
+					bind:value={geoCity}
+					createButtonLabel="Add City"
+					parent={geoState}
+				/>
 			</div>
 			<div>
 				<TextField name="geoLocality" label="Locality" bind:value={geoLocality} maxlength={50} />

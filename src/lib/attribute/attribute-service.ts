@@ -4,6 +4,7 @@ import { APP_ID } from "$lib/core/services/app-environment-service";
 import { IdbWhere } from "@cloudparker/easy-idb";
 import type { AttributeTypeConfig, AttributeDataModel } from "./attribute-types";
 
+// Define the enum with all attribute types
 export enum AttributeTypeEnum {
     ALL = '0',
     ID_PROOF = '1',
@@ -11,23 +12,33 @@ export enum AttributeTypeEnum {
     CITY = '3',
     STATE = '4',
     DISTRICT = '5',
-    CUSTOMER_COMPANY="7",
-    CUSTOMER_ROUTE="9",
-    CUSTOMER_TYPE='10',
-    CUSTOMER_SUBTYPE='11',
-    CUSTOMER_CHAIN='12',
-    CUSTOMER_CLASS="13"
-
+    CUSTOMER_COMPANY = '7',
+    CUSTOMER_ROUTE = '9',
+    CUSTOMER_TYPE = '10',
+    CUSTOMER_SUBTYPE = '11',
+    CUSTOMER_CHAIN = '12',
+    CUSTOMER_CLASS = '13',
+    CUSTOMER_CATEGORY = '14',
 }
 
+// Create the configuration array with an item for every enum value.
 export const attributeTypeConfigs: AttributeTypeConfig[] = [
-    { _id: AttributeTypeEnum.ALL, label: 'All Attributes', },
-    { _id: AttributeTypeEnum.ID_PROOF, label: 'ID Proof', },
-    { _id: AttributeTypeEnum.COUNTRY, label: 'Country', },
+    { _id: AttributeTypeEnum.ALL, label: 'All Attributes' },
+    { _id: AttributeTypeEnum.ID_PROOF, label: 'ID Proof' },
+    { _id: AttributeTypeEnum.COUNTRY, label: 'Country' },
+    // Example: If you want to define a relationship (State belongs to Country)
     { _id: AttributeTypeEnum.STATE, label: 'State', parent: AttributeTypeEnum.COUNTRY },
-    { _id: AttributeTypeEnum.CITY, label: 'City', },
-
+    { _id: AttributeTypeEnum.CITY, label: 'City' },
+    { _id: AttributeTypeEnum.DISTRICT, label: 'District' },
+    { _id: AttributeTypeEnum.CUSTOMER_COMPANY, label: 'Customer Company' },
+    { _id: AttributeTypeEnum.CUSTOMER_ROUTE, label: 'Customer Route' },
+    { _id: AttributeTypeEnum.CUSTOMER_TYPE, label: 'Customer Type' },
+    { _id: AttributeTypeEnum.CUSTOMER_SUBTYPE, label: 'Customer Subtype' },
+    { _id: AttributeTypeEnum.CUSTOMER_CHAIN, label: 'Customer Chain' },
+    { _id: AttributeTypeEnum.CUSTOMER_CLASS, label: 'Customer Class' },
+    { _id: AttributeTypeEnum.CUSTOMER_CATEGORY, label: 'Customer Category' },
 ];
+
 
 class AttributeDatabaseService extends DatabaseService<AttributeDataModel> {
 

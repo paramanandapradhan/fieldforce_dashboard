@@ -33,7 +33,7 @@ export type UserDataModel = BaseDataModel & {
     city?: string;
     state?: string
     country?: string;
-    catagories?: string
+    categories?: string
     pin?: string;
     desig?: string;
     dept?: string;

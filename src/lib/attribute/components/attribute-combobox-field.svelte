@@ -55,9 +55,12 @@
 	}
 
 	async function handelCreate() {
-		let res = await openAttributeEditDialog({ attributeType: attributeType!, parent });
-		if (res) {
-			loadAttributes();
+		console.log('handelCreate');
+		if (attributeType) {
+			let res = await openAttributeEditDialog({ attributeType: attributeType!, parent });
+			if (res) {
+				loadAttributes();
+			}
 		}
 	}
 </script>
