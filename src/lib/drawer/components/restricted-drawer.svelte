@@ -6,6 +6,7 @@
 		mdiBriefcaseAccount,
 		mdiFormatListBulleted,
 		mdiHomeVariant,
+		mdiMapMarkerPath,
 		mdiPackageVariantClosed,
 		mdiStore,
 		mdiTextBoxCheckOutline
@@ -84,6 +85,18 @@
 				iconClassName="!w-4 !h-4 text-primary"
 			/>
 			<div>Customers</div>
+		</Button>
+
+		<Button
+			className={`w-full !text-start !justify-start !gap-4 ${active.startsWith('/restricted/routes') ? 'bg-primary-50' : ''}`}
+			onClick={(ev) => handleNavigate('/restricted/routes', ev)}
+		>
+			<IconCircle
+				iconPath={mdiMapMarkerPath}
+				circleClassName="!w-8 !h-8"
+				iconClassName="!w-4 !h-4 text-primary"
+			/>
+			<div>Routes</div>
 		</Button>
 
 		<Button

@@ -13,7 +13,7 @@
 
 	type Props = {
 		userType: UserTypeEnum;
-		userSubtype: UserSubtypeEnum;
+		userSubtype?: UserSubtypeEnum;
 		value?: string | string[] | null;
 	};
 
