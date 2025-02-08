@@ -76,6 +76,14 @@ export const stores: StoreDefinitionType[] = [
             { keyPath: ['oid', '_id'] },
         ],
     },
+    {
+        name: 'routes', primaryKey: '_onid',
+        indexes: [
+            { keyPath: 'oid' },
+            { keyPath: ['oid', '_uatdt'] },
+            { keyPath: ['oid', '_id'] },
+        ],
+    },
 ];
 
 
