@@ -28,7 +28,6 @@
 	let desc = $state(customer?.desc || '');
 	let email = $state(customer?.email || '');
 	let phone = $state(customer?.phone || '');
-	let altPhone = $state(customer?.altPhone || '');
 	let address = $state(customer?.address || '');
 	let isActive = $state(customer?.isActive ?? true);
 	let canPlaceOrder = $state(customer?.isActive ?? true);
@@ -62,23 +61,11 @@
 	let masterSm = $state(customer?.master?.sm || '');
 	let masterTsm = $state(customer?.master?.tsm || '');
 	let masterRoute = $state(customer?.master?.route || '');
-	let masterType = $state(customer?.master?.type || '');
-	let masterSubType = $state(customer?.master?.subType || '');
 	let masterChain = $state(customer?.master?.chain || '');
 	let masterClazz = $state(customer?.master?.clazz || '');
 	let masterLabel = $state(customer?.master?.label || '');
 	let masterExtId = $state(customer?.master?.extId || '');
 	let masterCreditLimit = $state(customer?.master?.creditLimit || '');
-
-	// Identity Fields
-	let identityTaxNo = $state(customer?.identity?.taxNo || '');
-	let identityAadharNo = $state(customer?.identity?.aadharNo || '');
-	let identityPanNo = $state(customer?.identity?.panNo || '');
-	let identityVoterId = $state(customer?.identity?.voterId || '');
-	let identitySecurityCheck = $state(customer?.identity?.securityCheck || '');
-	let identityDrivingLicence = $state(customer?.identity?.drivingLicence || '');
-	let identityOtherNo = $state(customer?.identity?.otherNo || '');
-	let identityOtherNoName = $state(customer?.identity?.otherNoName || '');
 
 	// Geo Fields
 	let geoCountry = $state(customer?.geo?.country || '');
@@ -100,7 +87,6 @@
 		desc = (desc || '').trim();
 		email = (email || '').trim();
 		phone = (phone || '').trim();
-		altPhone = (altPhone || '').trim();
 		address = (address || '').trim();
 
 		billingName = (billingName || '').trim();
@@ -128,22 +114,11 @@
 		masterSm = (masterSm || '').trim();
 		masterTsm = (masterTsm || '').trim();
 		masterRoute = (masterRoute || '').trim();
-		masterType = (masterType || '').trim();
-		masterSubType = (masterSubType || '').trim();
 		masterChain = (masterChain || '').trim();
 		masterClazz = (masterClazz || '').trim();
 		masterLabel = (masterLabel || '').trim();
 		masterExtId = (masterExtId || '').trim();
 		masterCreditLimit = (masterCreditLimit || '').trim();
-
-		identityTaxNo = (identityTaxNo || '').trim();
-		identityAadharNo = (identityAadharNo || '').trim();
-		identityPanNo = (identityPanNo || '').trim();
-		identityVoterId = (identityVoterId || '').trim();
-		identitySecurityCheck = (identitySecurityCheck || '').trim();
-		identityDrivingLicence = (identityDrivingLicence || '').trim();
-		identityOtherNo = (identityOtherNo || '').trim();
-		identityOtherNoName = (identityOtherNoName || '').trim();
 
 		geoCountry = (geoCountry || '').trim();
 		geoState = (geoState || '').trim();
@@ -164,7 +139,6 @@
 				desc,
 				email,
 				phone,
-				altPhone,
 				address,
 				isActive,
 				canPlaceOrder,
@@ -197,24 +171,13 @@
 					sm: masterSm,
 					tsm: masterTsm,
 					route: masterRoute,
-					type: masterType,
-					subType: masterSubType,
 					chain: masterChain,
 					clazz: masterClazz,
 					label: masterLabel,
 					extId: masterExtId,
 					creditLimit: masterCreditLimit
 				},
-				identity: {
-					taxNo: identityTaxNo,
-					aadharNo: identityAadharNo,
-					panNo: identityPanNo,
-					voterId: identityVoterId,
-					securityCheck: identitySecurityCheck,
-					drivingLicence: identityDrivingLicence,
-					otherNo: identityOtherNo,
-					otherNoName: identityOtherNoName
-				},
+
 				geo: {
 					country: geoCountry,
 					state: geoState,
@@ -254,7 +217,7 @@
 	Inside each card a grid (1 column on mobile, 3 columns on md+ screens) holds the fields.
 	The textarea fields are now placed in their own grid cell so they align as one column on larger screens.
   -->
-<form id="customer-edit-form" on:submit={handleSubmit} class="space-y-6">
+<form id="customer-edit-form" onsubmit={handleSubmit} class="space-y-6">
 	<!-- Customer Details Card -->
 	<div class="m-4 bg-white p-4 border rounded shadow">
 		<h4 class="text-xl font-bold mb-4">Customer Details</h4>
@@ -278,18 +241,15 @@
 			<div>
 				<PhoneField name="phone" label="Phone" bind:value={phone} dialCode="+91" />
 			</div>
-			<div>
-				<TextField
-					name="altPhone"
-					label="Alternate Phone Number"
-					bind:value={altPhone}
-					maxlength={18}
-				/>
-			</div>
-
 			<div class="">
-				<!-- <input type="checkbox" bind:checked={isActive} id="active-checkbox" class="mr-2" />
-				<label for="active-checkbox">Active</label> -->
+				<div>
+					<TextField
+						name="masterCustomerType"
+						label="Customer Type"
+						bind:value={masterCustomerType}
+						maxlength={50}
+					/>
+				</div>
 			</div>
 			<div>
 				<TextareaField name="address" label="Address" bind:value={address} maxlength={300} />
@@ -433,18 +393,7 @@
 		<h4 class="text-xl font-bold mb-4">Master Details</h4>
 		<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 			<div>
-				<TextField
-					name="masterCustomerType"
-					label="Customer Type"
-					bind:value={masterCustomerType}
-					maxlength={50}
-				/>
-			</div>
-			<div>
 				<TextField name="masterCompany" label="Company" bind:value={masterCompany} maxlength={80} />
-			</div>
-			<div>
-				<TextField name="masterBranch" label="Branch" bind:value={masterBranch} maxlength={80} />
 			</div>
 			<div>
 				<TextField
@@ -464,17 +413,6 @@
 				<TextField name="masterTsm" label="TSM" bind:value={masterTsm} maxlength={80} />
 			</div>
 			<div>
-				<TextField name="masterType" label="Type" bind:value={masterType} maxlength={50} />
-			</div>
-			<div>
-				<TextField
-					name="masterSubType"
-					label="Sub Type"
-					bind:value={masterSubType}
-					maxlength={50}
-				/>
-			</div>
-			<div>
 				<TextField name="masterChain" label="Chain" bind:value={masterChain} maxlength={50} />
 			</div>
 			<div>
@@ -491,67 +429,6 @@
 					name="masterCreditLimit"
 					label="Credit Limit"
 					bind:value={masterCreditLimit}
-					maxlength={50}
-				/>
-			</div>
-		</div>
-	</div>
-
-	<!-- Identity Details Card -->
-	<div class="m-4 bg-white p-4 border rounded shadow">
-		<h4 class="text-xl font-bold mb-4">Identity Details</h4>
-		<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-			<div>
-				<TextField name="identityTaxNo" label="Tax No" bind:value={identityTaxNo} maxlength={50} />
-			</div>
-			<div>
-				<TextField name="identityPanNo" label="PAN No" bind:value={identityPanNo} maxlength={50} />
-			</div>
-			<div>
-				<TextField
-					name="identityAadharNo"
-					label="Aadhar No"
-					bind:value={identityAadharNo}
-					maxlength={50}
-				/>
-			</div>
-			<div>
-				<TextField
-					name="identityVoterId"
-					label="Voter ID"
-					bind:value={identityVoterId}
-					maxlength={50}
-				/>
-			</div>
-			<div>
-				<TextField
-					name="identityDrivingLicence"
-					label="Driving Licence"
-					bind:value={identityDrivingLicence}
-					maxlength={50}
-				/>
-			</div>
-			<div>
-				<TextField
-					name="identitySecurityCheck"
-					label="Security Check"
-					bind:value={identitySecurityCheck}
-					maxlength={50}
-				/>
-			</div>
-			<div>
-				<TextField
-					name="identityOtherNo"
-					label="Other Number"
-					bind:value={identityOtherNo}
-					maxlength={50}
-				/>
-			</div>
-			<div>
-				<TextField
-					name="identityOtherNoName"
-					label="Other Number Name"
-					bind:value={identityOtherNoName}
 					maxlength={50}
 				/>
 			</div>

@@ -6,23 +6,27 @@ import type { AttributeTypeConfig, AttributeDataModel } from "./attribute-types"
 
 export enum AttributeTypeEnum {
     ALL = '0',
-    ID_PROOF_TYPE = '1',
+    ID_PROOF = '1',
     COUNTRY = '2',
     CITY = '3',
     STATE = '4',
-    KNOWLEDGE_TOPIC = '5',
-    ACTION_TOPIC = '6'
+    DISTRICT = '5',
+    CUSTOMER_COMPANY="7",
+    CUSTOMER_ROUTE="9",
+    CUSTOMER_TYPE='10',
+    CUSTOMER_SUBTYPE='11',
+    CUSTOMER_CHAIN='12',
+    CUSTOMER_CLASS="13"
 
 }
 
 export const attributeTypeConfigs: AttributeTypeConfig[] = [
     { _id: AttributeTypeEnum.ALL, label: 'All Attributes', },
-    { _id: AttributeTypeEnum.ID_PROOF_TYPE, label: 'ID Proof', },
+    { _id: AttributeTypeEnum.ID_PROOF, label: 'ID Proof', },
     { _id: AttributeTypeEnum.COUNTRY, label: 'Country', },
     { _id: AttributeTypeEnum.STATE, label: 'State', parent: AttributeTypeEnum.COUNTRY },
     { _id: AttributeTypeEnum.CITY, label: 'City', },
-    { _id: AttributeTypeEnum.KNOWLEDGE_TOPIC, label: 'Knowledge Topic', },
-    { _id: AttributeTypeEnum.ACTION_TOPIC, label: 'Action Topic', },
+
 ];
 
 class AttributeDatabaseService extends DatabaseService<AttributeDataModel> {

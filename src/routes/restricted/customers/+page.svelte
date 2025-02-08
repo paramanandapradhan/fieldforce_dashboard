@@ -1,17 +1,9 @@
 <script lang="ts">
-	import {
-		Button,
-		CheckboxField,
-		ColorField,
-		ContentArea,
-		Drawer,
-		isMobileScreen,
-		Sidebar
-	} from '@cloudparker/moldex.js';
 	import AppNavbar from '$lib/core/components/app-navbar.svelte';
 	import BackgroundGradient from '$lib/core/components/background-gradient.svelte';
 	import RestrictedDrawer from '$lib/drawer/components/restricted-drawer.svelte';
-	import { openCustomerEditDialog } from '$lib/customer/retailer-ui-service';
+	import { openCustomerEditDialog } from '$lib/user/customer-ui-service';
+	import { Button, ContentArea, Drawer, isMobileScreen, Sidebar } from '@cloudparker/moldex.js';
 
 	let drawerRef: Drawer;
 
