@@ -1,7 +1,7 @@
 <script lang="ts">
 	import AuthUserReady from '$lib/auth/components/auth-user-ready.svelte';
 	import { Button, ButtonMenu, openDeleteConfirmDialog } from '@cloudparker/moldex.js';
-	import { getAllUsers } from '../user-service';
+	import { getAllUsers, UserTypeEnum } from '../user-service';
 	import type { UserDataModel } from '../user-types';
 	import { mdiDotsHorizontal } from '$lib/core/services/app-icons-service';
 	import { openUserDeleteDialog, openUserEditDialog } from '../user-ui-service';
@@ -9,7 +9,7 @@
 	let users: UserDataModel[] = $state([]);
 
 	export async function loadUsers() {
-		users = (await getAllUsers()) || [];
+		users = ((await getAllUsers({ type: UserTypeEnum.USER_TYPE_USER })) as UserDataModel[]) || [];
 	}
 
 	function handleReady() {

@@ -59,10 +59,6 @@ class RouteDatabaseService extends DatabaseService<RouteDataModel> {
 		return super.getOneCache(id);
 	}
 
-	protected async generateId(): Promise<string> {
-		return alphabetNanoid();
-	}
-
 	protected async findRoutesLocal() {
 		let store = await this.getLocalDatabaseStore();
 		let oid = getAuthOrgId();

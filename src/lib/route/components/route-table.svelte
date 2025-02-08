@@ -46,7 +46,7 @@
 					</td>
 					<td class="text-left px-4">
 						<div>
-							<a href="/restricted/routes/view" class="hover:text-primary">
+							<a href="/restricted/routes/view?routeId={route._id}" class="hover:text-primary">
 								{route.name || ''}
 							</a>
 						</div>
