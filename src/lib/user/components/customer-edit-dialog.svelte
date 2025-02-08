@@ -89,6 +89,7 @@
 	let geoCountry = $state(customer?.geo?.country || '');
 	let geoState = $state(customer?.geo?.state || '');
 	let geoCity = $state(customer?.geo?.city || '');
+	let geoArea = $state(customer?.geo?.area || '');
 	let geoDistrict = $state(customer?.geo?.district || '');
 	let geoLocality = $state(customer?.geo?.locality || '');
 	let geoStreet = $state(customer?.geo?.street || '');
@@ -142,6 +143,7 @@
 		geoCountry = (geoCountry || '').trim();
 		geoState = (geoState || '').trim();
 		geoCity = (geoCity || '').trim();
+		geoArea = (geoArea || '').trim();
 		geoDistrict = (geoDistrict || '').trim();
 		geoLocality = (geoLocality || '').trim();
 		geoStreet = (geoStreet || '').trim();
@@ -203,6 +205,7 @@
 					country: geoCountry,
 					state: geoState,
 					city: geoCity,
+					area: geoArea,
 					district: geoDistrict,
 					locality: geoLocality,
 					street: geoStreet,
@@ -571,6 +574,16 @@
 						bind:value={geoCity}
 						createButtonLabel="Add City"
 						parent={geoState}
+					/>
+				</div>
+				<div>
+					<AttributeComboboxField
+						attributeType={AttributeTypeEnum.AREA}
+						name="geoArea"
+						label="Area "
+						bind:value={geoArea}
+						createButtonLabel="Add Area"
+						parent={geoCity}
 					/>
 				</div>
 				<div>

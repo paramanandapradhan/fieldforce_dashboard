@@ -1,3 +1,4 @@
 #!/bin/bash
 npm run setup:development && firebase login && firebase use cp-dev-fieldforce \
+&& firebase firestore:indexes > ./firestore.indexes.json \
 && npm run build && npm run deploy && echo "Visit Host : https://dev-fieldforce.cloudparker.com"

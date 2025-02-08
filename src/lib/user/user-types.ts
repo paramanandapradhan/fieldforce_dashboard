@@ -54,6 +54,7 @@ export type CustomerGeo = {
     country?: string;
     state?: string,
     city?: string;
+    area?: string;
     district?: string;
     locality?: string,
     street?: string;
