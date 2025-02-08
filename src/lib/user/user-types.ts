@@ -2,10 +2,17 @@
 import type { BaseDataModel } from "$lib/core/types/app-types";
 
 export enum UserTypeEnum {
-    USER_TYPE_STAFF = '1',
-    USER_TYPE_CUSTOMER = '2',
-    USER_TYPE_RETAILER = '3',
-    USER_TYPE_DISTRIBUTOR = '4',
+    USER_TYPE_USER = 'u',
+    USER_TYPE_CUSTOMER = 'c',
+}
+
+export enum UserSubtypeEnum {
+    USER_SUBTYPE_USER_STAFF = 's',
+    USER_SUBTYPE_USER_SM = 'm',
+    USER_SUBTYPE_USER_TSM = 't',
+    USER_SUBTYPE_USER_DISTRIBUTOR = 'd',
+    USER_SUBTYPE_CUSTOMER_CONSUMER = 'c',
+    USER_SUBTYPE_CUSTOMER_RETAILER = 'r',
 }
 
 export type UserDataModel = BaseDataModel & {
@@ -38,6 +45,8 @@ export type UserDataModel = BaseDataModel & {
     desig?: string;
     dept?: string;
     subtype?: string;
+    isActive?: boolean,
+    canOrder?: boolean,
 }
 
 export type UserDataModelExtraType<T> = UserDataModel & {
@@ -49,8 +58,6 @@ export type CustomerDataModel = UserDataModel & {
     delivery?: CustomerDelivery,
     owner?: CustomerOwner,
     master?: CustomerMaster,
-    isActive?: boolean,
-    canOrder?: boolean,
     geo?: CustomerGeo;
 }
 

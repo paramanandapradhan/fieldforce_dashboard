@@ -7,6 +7,7 @@ export const stores: StoreDefinitionType[] = [
         indexes: [
             { keyPath: 'oid' },
             { keyPath: ['oid', 'type'] },
+            { keyPath: ['oid', 'type', 'subtype'] },
             { keyPath: ['oid', '_uatdt'] },
             { keyPath: ['oid', '_id'] },
         ],

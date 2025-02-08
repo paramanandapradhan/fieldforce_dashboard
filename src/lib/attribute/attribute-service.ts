@@ -19,6 +19,8 @@ export enum AttributeTypeEnum {
     CUSTOMER_CHAIN = '12',
     CUSTOMER_CLASS = '13',
     CUSTOMER_CATEGORY = '14',
+    USER_CATEGORY = '16',
+    USER_DESIGNATION = '17',
 }
 
 // Create the configuration array with an item for every enum value.
@@ -37,6 +39,8 @@ export const attributeTypeConfigs: AttributeTypeConfig[] = [
     { _id: AttributeTypeEnum.CUSTOMER_CHAIN, label: 'Customer Chain' },
     { _id: AttributeTypeEnum.CUSTOMER_CLASS, label: 'Customer Class' },
     { _id: AttributeTypeEnum.CUSTOMER_CATEGORY, label: 'Customer Category' },
+    { _id: AttributeTypeEnum.USER_CATEGORY, label: 'User Category' },
+    { _id: AttributeTypeEnum.USER_DESIGNATION, label: 'User Designation' },
 ];
 
 

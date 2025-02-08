@@ -2,13 +2,19 @@ import { getAuthOrgId } from "$lib/auth/services/auth-service.svelte";
 import { DatabaseService } from "$lib/database/database-service";
 import { APP_ID } from "$lib/core/services/app-environment-service";
 import { IdbWhere } from "@cloudparker/easy-idb";
-import { type UserDataModel, type CustomerDataModel, UserTypeEnum, } from "./user-types";
+import { type UserDataModel, type CustomerDataModel, UserTypeEnum, UserSubtypeEnum, } from "./user-types";
 
 
-export const CUSTOMER_TYPES = [
-    { _id: UserTypeEnum.USER_TYPE_CUSTOMER, name: 'Customer' },
-    { _id: UserTypeEnum.USER_TYPE_DISTRIBUTOR, name: 'Distributor' },
-    { _id: UserTypeEnum.USER_TYPE_RETAILER, name: 'Retailer' },
+export const USER_SUBTYPES = [
+    { _id: UserSubtypeEnum.USER_SUBTYPE_USER_STAFF, name: 'Staff' },
+    { _id: UserSubtypeEnum.USER_SUBTYPE_USER_SM, name: 'SM' },
+    { _id: UserSubtypeEnum.USER_SUBTYPE_USER_TSM, name: 'TSM' },
+    { _id: UserSubtypeEnum.USER_SUBTYPE_USER_DISTRIBUTOR, name: 'Distributor' },
+]
+
+export const CUSTOMER_SUBTYPES = [
+    { _id: UserSubtypeEnum.USER_SUBTYPE_CUSTOMER_CONSUMER, name: 'Consumer' },
+    { _id: UserSubtypeEnum.USER_SUBTYPE_CUSTOMER_RETAILER, name: 'Retailer' },
 ]
 
 class UserDatabaseService extends DatabaseService<UserDataModel | CustomerDataModel> {
@@ -46,8 +52,8 @@ class UserDatabaseService extends DatabaseService<UserDataModel | CustomerDataMo
         return super.getOneLocal(id);
     }
 
-    public async getAllUsers({ type }: { type?: UserTypeEnum }) {
-        return this.findUsersLocal({ type })
+    public async getAllUsers({ type, subtype }: { type?: UserTypeEnum, subtype?: UserSubtypeEnum } = {}) {
+        return this.findUsersLocal({ type, subtype })
     }
 
     public async syncUsers() {
@@ -58,7 +64,7 @@ class UserDatabaseService extends DatabaseService<UserDataModel | CustomerDataMo
         return super.getOneCache(id)
     }
 
-    protected async findUsersLocal({ type }: { type?: UserTypeEnum }) {
+    protected async findUsersLocal({ type, subtype }: { type?: UserTypeEnum, subtype?: UserSubtypeEnum } = {}) {
         let store = await this.getLocalDatabaseStore();
         let oid = getAuthOrgId();
         if (oid) {
@@ -67,6 +73,10 @@ class UserDatabaseService extends DatabaseService<UserDataModel | CustomerDataMo
             if (type) {
                 whereKeys.push('type');
                 whereValue.push(type)
+            }
+            if (subtype) {
+                whereKeys.push('subtype');
+                whereValue.push(subtype)
             }
             let where = IdbWhere(whereKeys, "==", whereValue);
             let array = await store.find<UserDataModel | CustomerDataModel>({ where })!;
@@ -96,8 +106,8 @@ export async function getUser(id: string) {
     return userService.getUser(id);
 }
 
-export async function getAllUsers({ type }: { type?: UserTypeEnum } = {}) {
-    return userService.getAllUsers({ type });
+export async function getAllUsers({ type, subtype }: { type?: UserTypeEnum, subtype?: UserSubtypeEnum } = {}) {
+    return userService.getAllUsers({ type, subtype });
 }
 
 export async function syncUsers() {

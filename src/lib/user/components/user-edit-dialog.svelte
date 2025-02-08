@@ -1,13 +1,19 @@
 <script lang="ts">
 	import {
+		CheckboxField,
+		ComboboxField,
+		DateField,
 		EmailField,
 		PhoneField,
 		showToast,
+		TextareaField,
 		TextField,
 		type DialogExports
 	} from '@cloudparker/moldex.js';
-	import { UserTypeEnum, type UserDataModel } from '../user-types';
-	import { createUser, getUser, syncUsers, updateUser } from '../user-service';
+	import { UserSubtypeEnum, UserTypeEnum, type UserDataModel } from '../user-types';
+	import { createUser, getUser, syncUsers, updateUser, USER_SUBTYPES } from '../user-service';
+	import AttributeComboboxField from '$lib/attribute/components/attribute-combobox-field.svelte';
+	import { AttributeTypeEnum } from '$lib/attribute/attribute-service';
 
 	type Props = {
 		user?: UserDataModel;
@@ -20,6 +26,13 @@
 	let desc = $state(user?.desc || '');
 	let email = $state(user?.email || '');
 	let phone = $state(user?.phone || '');
+	let address = $state(user?.address || '');
+	let subtype = $state(user?.subtype || UserSubtypeEnum.USER_SUBTYPE_USER_STAFF);
+	let desig = $state(user?.desig || '');
+	let dob = $state(user?.dob || '');
+	let doj = $state(user?.doj || '');
+	let isActive = $state(user?.isActive || true);
+	let canOrder = $state(user?.canOrder || true);
 
 	async function handleSubmit(ev: SubmitEvent) {
 		ev.preventDefault();
@@ -27,10 +40,25 @@
 		desc = (desc || '').trim();
 		email = (email || '').trim();
 		phone = (phone || '').trim();
+		address = (address || '').trim();
+
 		if (name && email) {
 			setOkEnabled(false);
 			setOkSpinner(true);
-			let payload = { name, desc, email, phone, type: UserTypeEnum.USER_TYPE_STAFF };
+			let payload = {
+				name,
+				desc,
+				email,
+				phone,
+				type: UserTypeEnum.USER_TYPE_USER,
+				subtype,
+				desig,
+				address,
+				dob,
+				doj,
+				isActive,
+				canOrder
+			};
 			let id = null;
 			if (!user?._id) {
 				id = await createUser(payload);
@@ -69,6 +97,34 @@
 		</div>
 		<div class="my-4">
 			<PhoneField name="phone" label="Phone" bind:value={phone} dialCode="+91" />
+		</div>
+		<div class="my-4">
+			<ComboboxField name="subtype" label="User Type" items={USER_SUBTYPES} bind:value={subtype} />
+		</div>
+		<div class="my-4">
+			<AttributeComboboxField
+				attributeType={AttributeTypeEnum.USER_DESIGNATION}
+				name="desig"
+				label="Designation"
+				bind:value={desig}
+				createButtonLabel="Add Designation"
+			/>
+		</div>
+		<div class="my-4">
+			<DateField name="dob" label="Date Of Birth" bind:value={dob} />
+		</div>
+		<div class="my-4">
+			<DateField name="doj" label="Date Of Joining" bind:value={doj} />
+		</div>
+		<div class="my-4">
+			<TextareaField name="address" label="Address" bind:value={address} />
+		</div>
+
+		<div class="my-4">
+			<CheckboxField name="canOrder" label="Can Place Order" bind:value={canOrder} />
+		</div>
+		<div class="my-4">
+			<CheckboxField name="isActive" label="Active" bind:value={isActive} />
 		</div>
 	</div>
 </form>

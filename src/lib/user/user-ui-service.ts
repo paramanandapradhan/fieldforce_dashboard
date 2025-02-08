@@ -64,7 +64,7 @@ export async function openPartyEditDialog(guest?: UserDataModel) {
 
 
 export async function openUserPickerDialog({ userType, multiple, value, maxlength }: { userType: UserTypeEnum, multiple?: boolean, value?: string, maxlength?: number }) {
-    let items = await getAllUsers({ type: userType })
+    let items = await getAllUsers({ type: userType }) as UserDataModel[];
     let res = await openPickerDialog({
         items,
         value,
