@@ -6,9 +6,11 @@
 		CUSTOMER_SUBTYPES,
 		getUser,
 		syncUsers,
-		updateUser
+		updateUser,
+		UserSubtypeEnum,
+		UserTypeEnum
 	} from '$lib/user/user-service';
-	import { UserSubtypeEnum, UserTypeEnum, type CustomerDataModel } from '$lib/user/user-types';
+	import { type CustomerDataModel } from '$lib/user/user-types';
 	import {
 		CheckboxField,
 		ComboboxField,
@@ -308,7 +310,6 @@
 		<div class="m-4 bg-white p-4 border rounded shadow">
 			<h4 class="text-xl font-bold mb-4">Master Details</h4>
 			<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-
 				<div>
 					<UserComboboxField
 						userType={UserTypeEnum.USER_TYPE_USER}
@@ -320,17 +321,23 @@
 					/>
 				</div>
 				<div>
-					<TextField name="masterSm" label="SM" bind:value={masterSm} maxlength={80} />
+					<UserComboboxField
+						userType={UserTypeEnum.USER_TYPE_USER}
+						userSubtype={UserSubtypeEnum.USER_SUBTYPE_USER_TSM}
+						name="masterTsm"
+						label="TSM"
+						bind:value={masterTsm}
+						createButtonLabel="Add TSM"
+					/>
 				</div>
 				<div>
-					<TextField name="masterTsm" label="TSM" bind:value={masterTsm} maxlength={80} />
-				</div>
-				<div>
-					<TextField
+					<UserComboboxField
+						userType={UserTypeEnum.USER_TYPE_USER}
+						userSubtype={UserSubtypeEnum.USER_SUBTYPE_USER_DISTRIBUTOR}
 						name="masterDistributor"
 						label="Distributor"
 						bind:value={masterDistributor}
-						maxlength={80}
+						createButtonLabel="Add Distributor"
 					/>
 				</div>
 				<div>
@@ -347,7 +354,7 @@
 				</div>
 				<div>
 					<AttributeComboboxField
-						attributeType={AttributeTypeEnum.CUSTOMER_CLASS}
+						attributeType={AttributeTypeEnum.CUSTOMER_CHAIN}
 						name="masterChain"
 						label="Chain"
 						bind:value={masterChain}

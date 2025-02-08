@@ -7,8 +7,8 @@
 		type InputFieldProps
 	} from '@cloudparker/moldex.js';
 
-	import type { UserDataModel, UserSubtypeEnum, UserTypeEnum } from '../user-types';
-	import { getAllUsers } from '../user-service';
+	import type { UserDataModel } from '../user-types';
+	import { getAllUsers, UserSubtypeEnum, UserTypeEnum } from '../user-service';
 	import { openUserEditDialog } from '../user-ui-service';
 
 	type Props = {
@@ -42,6 +42,7 @@
 
 	export async function loadUsers() {
 		let array = (await getAllUsers({ type: userType, subtype: userSubtype })) as UserDataModel[];
+		console.log('loadUsers', { type: userType, subtype: userSubtype }, array);
 		users = sort({ array, field: 'name' });
 	}
 

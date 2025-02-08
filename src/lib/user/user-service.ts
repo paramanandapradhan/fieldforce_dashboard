@@ -2,7 +2,22 @@ import { getAuthOrgId } from "$lib/auth/services/auth-service.svelte";
 import { DatabaseService } from "$lib/database/database-service";
 import { APP_ID } from "$lib/core/services/app-environment-service";
 import { IdbWhere } from "@cloudparker/easy-idb";
-import { type UserDataModel, type CustomerDataModel, UserTypeEnum, UserSubtypeEnum, } from "./user-types";
+import { type UserDataModel, type CustomerDataModel, } from "./user-types";
+
+
+export enum UserTypeEnum {
+    USER_TYPE_USER = 'u',
+    USER_TYPE_CUSTOMER = 'c',
+}
+
+export enum UserSubtypeEnum {
+    USER_SUBTYPE_USER_STAFF = 's',
+    USER_SUBTYPE_USER_SM = 'm',
+    USER_SUBTYPE_USER_TSM = 't',
+    USER_SUBTYPE_USER_DISTRIBUTOR = 'd',
+    USER_SUBTYPE_CUSTOMER_CONSUMER = 'c',
+    USER_SUBTYPE_CUSTOMER_RETAILER = 'r',
+}
 
 
 export const USER_SUBTYPES = [

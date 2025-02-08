@@ -10,8 +10,8 @@
 		TextField,
 		type DialogExports
 	} from '@cloudparker/moldex.js';
-	import { UserSubtypeEnum, UserTypeEnum, type UserDataModel } from '../user-types';
-	import { createUser, getUser, syncUsers, updateUser, USER_SUBTYPES } from '../user-service';
+	import {   type UserDataModel } from '../user-types';
+	import { createUser, getUser, syncUsers, updateUser, USER_SUBTYPES, UserSubtypeEnum, UserTypeEnum } from '../user-service';
 	import AttributeComboboxField from '$lib/attribute/components/attribute-combobox-field.svelte';
 	import { AttributeTypeEnum } from '$lib/attribute/attribute-service';
 

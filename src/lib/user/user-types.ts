@@ -1,24 +1,12 @@
 
 import type { BaseDataModel } from "$lib/core/types/app-types";
-
-export enum UserTypeEnum {
-    USER_TYPE_USER = 'u',
-    USER_TYPE_CUSTOMER = 'c',
-}
-
-export enum UserSubtypeEnum {
-    USER_SUBTYPE_USER_STAFF = 's',
-    USER_SUBTYPE_USER_SM = 'm',
-    USER_SUBTYPE_USER_TSM = 't',
-    USER_SUBTYPE_USER_DISTRIBUTOR = 'd',
-    USER_SUBTYPE_CUSTOMER_CONSUMER = 'c',
-    USER_SUBTYPE_CUSTOMER_RETAILER = 'r',
-}
+import type { UserSubtypeEnum, UserTypeEnum } from "./user-service";
 
 export type UserDataModel = BaseDataModel & {
     name?: string;
     desc?: string;
     type?: UserTypeEnum;
+    subtype?: UserSubtypeEnum;
     photo?: string;
     phone?: string;
     email?: string;
@@ -44,7 +32,6 @@ export type UserDataModel = BaseDataModel & {
     pin?: string;
     desig?: string;
     dept?: string;
-    subtype?: string;
     isActive?: boolean,
     canOrder?: boolean,
 }
