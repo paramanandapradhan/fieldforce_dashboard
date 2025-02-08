@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button } from '@cloudparker/moldex.js';
+	import { Button, openLoadingDialog } from '@cloudparker/moldex.js';
 	import type { RouteDataModel } from '../route-types';
 	import { openUserPickerDialog } from '$lib/user/user-ui-service';
 	import { UserTypeEnum } from '$lib/user/user-service';
@@ -19,9 +19,11 @@
 		if (route?._id) {
 			let userId = await openUserPickerDialog({ userType: UserTypeEnum.USER_TYPE_USER });
 			if (userId) {
+				let loader = await openLoadingDialog();
 				await updateRoute(route?._id, { [`plans.${userId}`]: [] });
 				await syncRoutes();
 				handleChange();
+				loader.closeDialog();
 			}
 		}
 	}
@@ -29,6 +31,10 @@
 	function handleChange() {
 		onChange && onChange();
 	}
+
+	$effect(() => {
+		console.log('Route changed in planner ', route);
+	});
 </script>
 
 <div>

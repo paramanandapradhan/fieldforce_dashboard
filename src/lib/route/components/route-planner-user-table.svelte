@@ -1,12 +1,17 @@
 <script lang="ts">
-	import { Button, openDeleteConfirmDialog, readFileAsBuffer } from '@cloudparker/moldex.js';
+	import {
+		Button,
+		openDeleteConfirmDialog,
+		openLoadingDialog,
+		readFileAsBuffer
+	} from '@cloudparker/moldex.js';
 	import type { RouteDataModel } from '../route-types';
 	import { openUserPickerDialog } from '$lib/user/user-ui-service';
 	import { UserTypeEnum } from '$lib/user/user-service';
 	import { syncRoutes, updateRoute } from '../route-service';
 	import TextUser from '$lib/user/components/text-user.svelte';
-	import { mdiCheck, mdiDeleteOutline } from '$lib/core/services/app-icons-service';
-	import { deleteField, FieldValue } from 'firebase/firestore';
+	import { mdiCheck, mdiCircleSmall, mdiDeleteOutline } from '$lib/core/services/app-icons-service';
+	import { arrayRemove, arrayUnion, deleteField, FieldValue } from 'firebase/firestore';
 
 	type Props = {
 		route: RouteDataModel;
@@ -15,7 +20,7 @@
 
 	let { route, onChange }: Props = $props();
 
-	let items: { userId: string }[] = $derived.by(() => {
+	let items: any[] = $derived.by(() => {
 		return Object.keys(route.plans || {}).map((key) => {
 			let weekdays: { [day: number]: boolean } = {
 				0: false,
@@ -45,9 +50,22 @@
 
 	async function handleDelete(item: any) {
 		if (item?.userId && route._id && (await openDeleteConfirmDialog())) {
+			let loader = await openLoadingDialog();
 			await updateRoute(route._id, { [`plans.${item.userId}`]: deleteField() });
 			await syncRoutes();
 			onChange && onChange();
+			loader.closeDialog();
+		}
+	}
+
+	async function handleToggleCheck(item: any, day: number) {
+		if (item && day != null && route._id) {
+			let loader = await openLoadingDialog();
+			let value = item[day] ? arrayRemove(day) : arrayUnion(day);
+			await updateRoute(route._id, { [`plans.${item.userId}`]: value });
+			await syncRoutes();
+			onChange && onChange();
+			loader.closeDialog();
 		}
 	}
 </script>
@@ -74,25 +92,46 @@
 					<td></td>
 					<td class="text-left"><TextUser input={item.userId} hideIcon /></td>
 					<td>
-						<Button iconPath={mdiCheck}></Button>
+						<Button
+							iconPath={item[0] ? mdiCheck : mdiCircleSmall}
+							onClick={() => handleToggleCheck(item, 0)}
+						></Button>
 					</td>
 					<td>
-						<Button iconPath={mdiCheck}></Button>
+						<Button
+							iconPath={item[1] ? mdiCheck : mdiCircleSmall}
+							onClick={() => handleToggleCheck(item, 1)}
+						></Button>
 					</td>
 					<td>
-						<Button iconPath={mdiCheck}></Button>
+						<Button
+							iconPath={item[2] ? mdiCheck : mdiCircleSmall}
+							onClick={() => handleToggleCheck(item, 2)}
+						></Button>
 					</td>
 					<td>
-						<Button iconPath={mdiCheck}></Button>
+						<Button
+							iconPath={item[3] ? mdiCheck : mdiCircleSmall}
+							onClick={() => handleToggleCheck(item, 3)}
+						></Button>
 					</td>
 					<td>
-						<Button iconPath={mdiCheck}></Button>
+						<Button
+							iconPath={item[4] ? mdiCheck : mdiCircleSmall}
+							onClick={() => handleToggleCheck(item, 4)}
+						></Button>
 					</td>
 					<td>
-						<Button iconPath={mdiCheck}></Button>
+						<Button
+							iconPath={item[5] ? mdiCheck : mdiCircleSmall}
+							onClick={() => handleToggleCheck(item, 5)}
+						></Button>
 					</td>
 					<td>
-						<Button iconPath={mdiCheck}></Button>
+						<Button
+							iconPath={item[6] ? mdiCheck : mdiCircleSmall}
+							onClick={() => handleToggleCheck(item, 6)}
+						></Button>
 					</td>
 					<td>
 						<Button iconPath={mdiDeleteOutline} onClick={() => handleDelete(item)}></Button>

@@ -17,11 +17,21 @@
 	import RouteDetails from '$lib/route/components/route-details.svelte';
 	import { mdiMapMarkerPath } from '$lib/core/services/app-icons-service';
 	import RoutePlanner from '$lib/route/components/route-planner.svelte';
+	import { onMount } from 'svelte';
+	import type { RouteDataModel } from '$lib/route/route-types';
 
 	let drawerRef: Drawer;
 
-	let routeId: string | null = $derived(page.url.searchParams.get('routeId'));
-	let routePromise = $derived(routeId ? getRoute(routeId) : null);
+	let routeId: string = $state('');
+	let route: RouteDataModel | null = $state(null);
+
+	async function loadRoute() {
+		if (routeId) {
+			route = await getRoute(routeId);
+		} else {
+			route = null;
+		}
+	}
 
 	function handleMore() {
 		drawerRef && drawerRef.openDrawer();
@@ -30,10 +40,13 @@
 	function handleEdit() {}
 
 	function handleChange() {
-		navigate(`/restricted/routes/view?routeId=${routeId}`, { replaceState: true });
+		loadRoute();
 	}
 
-	$effect(() => {});
+	onMount(() => {
+		routeId = page.url.searchParams.get('routeId') || '';
+		loadRoute();
+	});
 </script>
 
 <div class="min-h-full">
@@ -50,41 +63,37 @@
 					</div>
 				</div>
 				<div>
-					{#await routePromise}
-						<div><Loading /></div>
-					{:then route}
-						{#if route != null}
-							<div class="bg-white p-4 shadow rounded-lg m-4">
-								<div class="flex gap-4">
-									<div>
-										<IconCircle
-											iconPath={mdiMapMarkerPath}
-											iconClassName="  text-primary"
-											circleClassName=" "
-										/>
-									</div>
-									<div>
-										<RouteDetails {route} />
-									</div>
+					{#if route != null}
+						<div class="bg-white p-4 shadow rounded-lg m-4">
+							<div class="flex gap-4">
+								<div>
+									<IconCircle
+										iconPath={mdiMapMarkerPath}
+										iconClassName="  text-primary"
+										circleClassName=" "
+									/>
+								</div>
+								<div>
+									<RouteDetails {route} />
 								</div>
 							</div>
+						</div>
 
-							<div class="bg-white rounded-lg shadow p-4 m-4">
-								<RoutePlanner {route} onChange={handleChange} />
-							</div>
-							<div class="bg-white rounded-lg shadow p-4 m-4">
-								<div class="flex">
-									<div class=" flex-grow">
-										<h3 class="text-lg font-bold">Route Customers</h3>
-									</div>
-									<div>
-										<Button appearance="base">Add Customer</Button>
-									</div>
+						<div class="bg-white rounded-lg shadow p-4 m-4">
+							<RoutePlanner {route} onChange={handleChange} />
+						</div>
+						<div class="bg-white rounded-lg shadow p-4 m-4">
+							<div class="flex">
+								<div class=" flex-grow">
+									<h3 class="text-lg font-bold">Route Customers</h3>
 								</div>
-								<div></div>
+								<div>
+									<Button appearance="base">Add Customer</Button>
+								</div>
 							</div>
-						{/if}
-					{/await}
+							<div></div>
+						</div>
+					{/if}
 				</div>
 			</main>
 		</BackgroundGradient>
