@@ -10,8 +10,16 @@
 		TextField,
 		type DialogExports
 	} from '@cloudparker/moldex.js';
-	import {   type UserDataModel } from '../user-types';
-	import { createUser, getUser, syncUsers, updateUser, USER_SUBTYPES, UserSubtypeEnum, UserTypeEnum } from '../user-service';
+	import { type UserDataModel } from '../user-types';
+	import {
+		createUser,
+		getUser,
+		syncUsers,
+		updateUser,
+		USER_SUBTYPES,
+		UserSubtypeEnum,
+		UserTypeEnum
+	} from '../user-service';
 	import AttributeComboboxField from '$lib/attribute/components/attribute-combobox-field.svelte';
 	import { AttributeTypeEnum } from '$lib/attribute/attribute-service';
 
@@ -26,6 +34,7 @@
 	let desc = $state(user?.desc || '');
 	let email = $state(user?.email || '');
 	let phone = $state(user?.phone || '');
+	let dept = $state(user?.dept || '');
 	let address = $state(user?.address || '');
 	let subtype = $state(user?.subtype || UserSubtypeEnum.USER_SUBTYPE_USER_STAFF);
 	let desig = $state(user?.desig || '');
@@ -40,6 +49,7 @@
 		desc = (desc || '').trim();
 		email = (email || '').trim();
 		phone = (phone || '').trim();
+		dept = (dept || '').trim();
 		address = (address || '').trim();
 
 		if (name && email) {
@@ -50,10 +60,11 @@
 				desc,
 				email,
 				phone,
+				address,
 				type: UserTypeEnum.USER_TYPE_USER,
 				subtype,
 				desig,
-				address,
+				dept,
 				dob,
 				doj,
 				isActive,
@@ -111,13 +122,22 @@
 			/>
 		</div>
 		<div class="my-4">
+			<AttributeComboboxField
+				attributeType={AttributeTypeEnum.USER_DEPARTMENT}
+				name="dept"
+				label="Department"
+				bind:value={dept}
+				createButtonLabel="Add Department"
+			/>
+		</div>
+		<div class="my-4">
+			<TextareaField name="address" label="Address" bind:value={address} />
+		</div>
+		<div class="my-4">
 			<DateField name="dob" label="Date Of Birth" bind:value={dob} />
 		</div>
 		<div class="my-4">
 			<DateField name="doj" label="Date Of Joining" bind:value={doj} />
-		</div>
-		<div class="my-4">
-			<TextareaField name="address" label="Address" bind:value={address} />
 		</div>
 
 		<div class="my-4">

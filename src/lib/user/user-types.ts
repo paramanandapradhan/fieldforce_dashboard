@@ -24,14 +24,11 @@ export type UserDataModel = BaseDataModel & {
     dob?: any;
     doj?: any; // date of join
     dor?: any; // date of release
-    address?: string;
-    city?: string;
-    state?: string
-    country?: string;
     categories?: string
-    pin?: string;
+    address?: string;
     desig?: string;
     dept?: string;
+    geo?: CustomerGeo;
     isActive?: boolean,
     canOrder?: boolean,
 }

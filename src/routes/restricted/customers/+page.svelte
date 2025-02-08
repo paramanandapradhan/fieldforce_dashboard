@@ -2,6 +2,7 @@
 	import AppNavbar from '$lib/core/components/app-navbar.svelte';
 	import BackgroundGradient from '$lib/core/components/background-gradient.svelte';
 	import RestrictedDrawer from '$lib/drawer/components/restricted-drawer.svelte';
+	import CustomerTable from '$lib/user/components/customer-table.svelte';
 	import { openCustomerEditDialog } from '$lib/user/customer-ui-service';
 	import { Button, ContentArea, Drawer, isMobileScreen, Sidebar } from '@cloudparker/moldex.js';
 
@@ -30,6 +31,10 @@
 					<div>
 						<Button appearance="border-primary" onClick={handleAdd} label="Create Customers" />
 					</div>
+				</div>
+				<div class="m-4 p-4 bg-white shadow rounded-lg">
+					<CustomerTable />
+
 				</div>
 			</main>
 		</BackgroundGradient>
