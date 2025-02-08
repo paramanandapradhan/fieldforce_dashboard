@@ -11,4 +11,8 @@ export const ADMIN_ROLE_ID = '1';
 export const SERVICE_ROLE_ID = '2';
 export const SUPPORT_ROLE_ID = '3';
 
+export const USER_TYPE_USER = 'u';
+export const USER_TYPE_CUSTOMER = 'c';
+
+export const USER_SUBTYPE_USER_STAFF = 's';
 

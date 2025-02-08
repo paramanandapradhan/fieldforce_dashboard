@@ -2,7 +2,13 @@
 	import type { UserDataModel } from '$lib/user/user-types';
 	import { BROWSER } from 'esm-env';
 	import { mdiAccountOutline } from '$lib/core/services/app-icons-service';
-	import { ButtonDropdown, ButtonMenu, Icon, mdiChevronDown, TextAwait } from '@cloudparker/moldex.js';
+	import {
+		ButtonDropdown,
+		ButtonMenu,
+		Icon,
+		mdiChevronDown,
+		TextAwait
+	} from '@cloudparker/moldex.js';
 	import { getUser } from '../user-service';
 
 	type Props = {
@@ -44,7 +50,7 @@
 	});
 </script>
 
-<span class={'flex-align-center ' + itemClass}>
+<span class={'flex items-center ' + itemClass}>
 	{#if !hideIcon}
 		<span class:pe-1={!hideName}>
 			<Icon path={iconPath} />

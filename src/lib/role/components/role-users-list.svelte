@@ -1,8 +1,8 @@
 <script lang="ts">
 	import AuthUserReady from '$lib/auth/components/auth-user-ready.svelte';
 	import { ADMIN_USER_ID } from '$lib/core/services/app-service';
-	import { getAllUsers, syncUsers, updateUser } from '$lib/user/user-service';
-	import { UserTypeEnum, type UserDataModel } from '$lib/user/user-types';
+	import { getAllUsers, syncUsers, updateUser, UserTypeEnum } from '$lib/user/user-service';
+	import {   type UserDataModel } from '$lib/user/user-types';
 	import {
 		Button,
 		ButtonListItem,
@@ -28,7 +28,7 @@
 	export async function loadUsers() {
 		console.log('loadUsers', role);
 		if (role && role._id) {
-			let localUsers = await getAllUsers({ type: UserTypeEnum.USER_TYPE_STAFF });
+			let localUsers = await getAllUsers({ type: UserTypeEnum.USER_TYPE_USER }) as UserDataModel[];
 
 			if (localUsers) {
 				localUsers = localUsers.filter((user: UserDataModel) => {

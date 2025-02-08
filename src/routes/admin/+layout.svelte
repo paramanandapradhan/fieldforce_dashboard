@@ -1,17 +1,12 @@
 <script lang="ts">
-	import { syncAgents } from '$lib/agent/services/agent-service';
 	import { syncAttributes } from '$lib/attribute/attribute-service';
 	import AuthUserReady from '$lib/auth/components/auth-user-ready.svelte';
-	import { syncPhones } from '$lib/phone/phone-service';
+	import { syncInvoices } from '$lib/invoice/invoice-service';
+	import { syncPayments } from '$lib/payment/payment-service';
 	import { syncRoles } from '$lib/role/role-service';
 	import { syncUsers } from '$lib/user/user-service';
 	import { onMount } from 'svelte';
 	import '../../tailwind.css';
-	import { syncKnowledges } from '$lib/knowledge/knowledge-service';
-	import { syncActions } from '$lib/action/action-service';
-	import { syncInvoices } from '$lib/invoice/invoice-service';
-	import { syncPayments } from '$lib/payment/payment-service';
-	
 
 	let imgClassName: string = $state('opacity-0');
 
@@ -24,13 +19,8 @@
 		syncUsers();
 		syncRoles();
 		syncAttributes();
-		syncPhones();
-		syncAgents();
-		syncKnowledges();
-		syncActions();
 		syncInvoices();
-		syncPayments()
-		
+		syncPayments();
 	}
 	onMount(() => {
 		setTimeout(() => {

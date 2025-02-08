@@ -13,9 +13,8 @@
 	import { mdiPlus } from '$lib/core/services/app-icons-service';
 	import type { Snippet } from 'svelte';
 	import { openUserPickerDialog } from '$lib/user/user-ui-service';
-	import { UserTypeEnum } from '$lib/user/user-types';
 	import { ADMIN_USER_ID } from '$lib/core/services/app-service';
-	import { syncUsers, updateUser } from '$lib/user/user-service';
+	import { syncUsers, updateUser, UserTypeEnum } from '$lib/user/user-service';
 
 	type Props = {
 		role?: RoleDataModel;
@@ -28,7 +27,7 @@
 	async function handleAddUser() {
 		console.log('handleAddUser');
 		let userId: string = (await openUserPickerDialog({
-			userType: UserTypeEnum.USER_TYPE_STAFF
+			userType: UserTypeEnum.USER_TYPE_USER
 		})) as string;
 		if (userId) {
 			if (userId == ADMIN_USER_ID) {

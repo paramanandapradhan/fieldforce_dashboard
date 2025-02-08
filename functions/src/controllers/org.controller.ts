@@ -1,7 +1,7 @@
 
 import { FieldValue } from 'firebase-admin/firestore';
 import { onDocumentWritten } from 'firebase-functions/v2/firestore';
-import { ADMIN_ROLE_ID, ADMIN_USER_ID, ROOT_ORG_ID, SERVICE_ROLE_ID, SERVICE_USER_ID, SUPPORT_ROLE_ID, SUPPORT_USER_ID } from '../services/common.service';
+import { ADMIN_ROLE_ID, ADMIN_USER_ID, ROOT_ORG_ID, SERVICE_ROLE_ID, SERVICE_USER_ID, SUPPORT_ROLE_ID, SUPPORT_USER_ID, USER_SUBTYPE_USER_STAFF, USER_TYPE_USER } from '../services/common.service';
 import { createRole } from '../services/role.service';
 import { createRtdbNumberId } from '../services/rtdb-service';
 import { createUser, updateUser } from '../services/user.service';
@@ -41,6 +41,8 @@ export const onOrgWrite =
                                 cat: FieldValue.serverTimestamp(),
                                 uat: FieldValue.serverTimestamp(),
                                 default: true,
+                                type: USER_TYPE_USER,
+                                subtype: USER_SUBTYPE_USER_STAFF,
                             }
                             if (oid == ROOT_ORG_ID && uid == ADMIN_USER_ID) {
                                 adminUserPayload.ur = true;
@@ -57,6 +59,8 @@ export const onOrgWrite =
                                 cat: FieldValue.serverTimestamp(),
                                 uat: FieldValue.serverTimestamp(),
                                 default: true,
+                                type: USER_TYPE_USER,
+                                subtype: USER_SUBTYPE_USER_STAFF,
                             }
 
                             let supportUserPayload: UserDataModel = {
@@ -70,6 +74,8 @@ export const onOrgWrite =
                                 cat: FieldValue.serverTimestamp(),
                                 uat: FieldValue.serverTimestamp(),
                                 default: true,
+                                type: USER_TYPE_USER,
+                                subtype: USER_SUBTYPE_USER_STAFF,
                             }
 
                             let adminRolePayload: RoleDataModel = {

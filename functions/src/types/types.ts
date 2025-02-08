@@ -26,6 +26,7 @@ export type UserDataModel = {
     ur?: boolean;
     us?: boolean;
     type?: string;
+    subtype?: string;
     _eauid?: string;
     _pauid?: string;
     default?: boolean;
