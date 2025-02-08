@@ -27,7 +27,7 @@
 	<table class="min-w-full divide-y divide-base-200 table-fixed">
 		<thead>
 			<tr>
-				<th class="text-left w-12"></th>
+				<th class="text-left w-14"></th>
 				<th class="text-left p-4">Name</th>
 				<th class="text-left p-4">Manager</th>
 				<th class="text-left p-4">Visit Plan</th>
@@ -37,7 +37,7 @@
 		<tbody class="divide-y divide-base-200">
 			{#each routes as route, index}
 				<tr class="hover:bg-base-100">
-					<td class="text-left p-1 w-12">
+					<td class="text-left pl-4 py-1 w-14">
 						<IconCircle
 							iconPath={mdiMapMarkerPath}
 							iconClassName="!h-5 !w-5 text-primary"
