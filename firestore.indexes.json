@@ -1,34 +1,6 @@
 {
   "indexes": [
     {
-      "collectionGroup": "retailers",
-      "queryScope": "COLLECTION",
-      "fields": [
-        {
-          "fieldPath": "oid",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "uat",
-          "order": "ASCENDING"
-        }
-      ]
-    },
-    {
-      "collectionGroup": "products",
-      "queryScope": "COLLECTION",
-      "fields": [
-        {
-          "fieldPath": "oid",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "uat",
-          "order": "ASCENDING"
-        }
-      ]
-    },
-    {
       "collectionGroup": "attrs",
       "queryScope": "COLLECTION",
       "fields": [
@@ -115,7 +87,49 @@
       ]
     },
     {
+      "collectionGroup": "products",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "oid",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "uat",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "retailers",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "oid",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "uat",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
       "collectionGroup": "roles",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "oid",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "uat",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "routes",
       "queryScope": "COLLECTION",
       "fields": [
         {
