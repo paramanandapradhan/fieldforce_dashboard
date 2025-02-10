@@ -3,6 +3,7 @@
 		Button,
 		ContentArea,
 		Drawer,
+		goBack,
 		IconCircle,
 		isMobileScreen,
 		openLoadingDialog,
@@ -95,7 +96,7 @@
 </script>
 
 <div class="min-h-full">
-	<AppNavbar hasLogo hasTitle hasMore={isMobileScreen()} onMore={handleMore} />
+	<AppNavbar title="VIEW ROUTE" hasLogo hasTitle hasBack={isMobileScreen()} onBack={goBack}  />
 	<Drawer bind:this={drawerRef} className="border-r"><RestrictedDrawer /></Drawer>
 	<Sidebar className="border-r "><RestrictedDrawer /></Sidebar>
 	<ContentArea className="md:pl-72">

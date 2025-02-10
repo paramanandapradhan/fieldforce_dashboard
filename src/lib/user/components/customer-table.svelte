@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ButtonMenu, IconCircle, Pagination, sort } from '@cloudparker/moldex.js';
+	import { ButtonMenu, IconCircle, navigate, Pagination, sort } from '@cloudparker/moldex.js';
 
 	import { mdiBriefcaseAccount, mdiMapMarkerPath } from '$lib/core/services/app-icons-service';
 	import { onMount } from 'svelte';
@@ -7,6 +7,8 @@
 	import type { CustomerDataModel } from '../user-types';
 	import TextUserSubtype from './text-user-subtype.svelte';
 	import TextAttribute from '$lib/attribute/components/text-attribute.svelte';
+	import { openCustomerDeleteDialog, openCustomerEditDialog } from '../customer-ui-service';
+	import { appState } from '$lib/core/services/app-state.svelte';
 
 	type Props = {
 		customers?: CustomerDataModel[];
@@ -14,6 +16,10 @@
 	let { customers }: Props = $props();
 
 	let items: CustomerDataModel[] = $state([]);
+
+	let paginatedCustomers: CustomerDataModel[] = $state([]);
+	let pageIndex: number = $state(0);
+	let pageSize: number = $state(10);
 
 	export async function loadCustomers() {
 		if (!customers) {
@@ -24,8 +30,42 @@
 		}
 	}
 
-	export function handleMenu(ev: Event, menu: string, item: CustomerDataModel) {}
+	export async function handleMenu(ev: Event, menu: string, item: CustomerDataModel) {
+		switch (menu) {
+			case 'Edit':
+				await openCustomerEditDialog(item);
+				await loadCustomers();
+				break;
+			case 'Delete':
+				await openCustomerDeleteDialog(item);
+				await loadCustomers();
+				break;
+			case 'View':
+				handelViewRoute(item);
+				break;
+		}
+	}
 
+	function handelViewRoute(cuastomer: CustomerDataModel) {
+		navigate(`/restricted/customers/view?customerId=${cuastomer._id}`);
+	}
+
+	$effect(() => {
+		const start = pageIndex * pageSize;
+		const end = start + pageSize;
+		paginatedCustomers = items.slice(start, end);
+	});
+
+	// Handle page index changes
+	function handlePageIndexChange(newPageIndex: number) {
+		pageIndex = newPageIndex;
+	}
+
+	// Handle page size changes
+	function handlePageSizeChange(newPageSize: number) {
+		pageSize = newPageSize;
+		pageIndex = 0;
+	}
 	onMount(() => {
 		loadCustomers();
 	});
@@ -44,7 +84,7 @@
 			</tr>
 		</thead>
 		<tbody class="divide-y divide-base-200">
-			{#each customers || items as item, index}
+			{#each customers || paginatedCustomers as item, index}
 				<tr class="hover:bg-base-100">
 					<td class="text-left pl-4 py-1 w-14">
 						<IconCircle
@@ -77,6 +117,9 @@
 							<ButtonMenu
 								menus={['View', 'Edit', 'Delete']}
 								onMenu={(ev, menu) => handleMenu(ev, menu as string, item)}
+								iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
+									? ''
+									: 'dark:hover:text-base-200'}"
 							/>
 						</div>
 					</td>
@@ -85,6 +128,12 @@
 		</tbody>
 	</table>
 	<div class="p-4">
-		<Pagination length={items?.length} />
+		<Pagination
+			length={items?.length}
+			{pageIndex}
+			{pageSize}
+			onPageSizeChange={handlePageSizeChange}
+			onPageIndexChange={handlePageIndexChange}
+		/>
 	</div>
 </div>

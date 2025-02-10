@@ -84,6 +84,7 @@ export type CustomerMaster = {
     label?: string,
     extId?: string,
     creditLimit?: string,
+    
 }
 
 export type CustomerOwner = {

@@ -125,7 +125,7 @@
 		ownerAddress = (ownerAddress || '').trim();
 		ownerPhone = (ownerPhone || '').trim();
 		ownerEmail = (ownerEmail || '').trim();
-		ownerDob = (ownerDob || '').trim();
+		ownerDob = (ownerDob || '');
 
 		categories = categories || [];
 		masterCompany = (masterCompany || '').trim();
@@ -138,7 +138,7 @@
 		masterClazz = (masterClazz || '').trim();
 		masterLabel = (masterLabel || '').trim();
 		masterExtId = (masterExtId || '').trim();
-		masterCreditLimit = (masterCreditLimit || '').trim();
+		masterCreditLimit = (masterCreditLimit || '')
 
 		geoCountry = (geoCountry || '').trim();
 		geoState = (geoState || '').trim();
