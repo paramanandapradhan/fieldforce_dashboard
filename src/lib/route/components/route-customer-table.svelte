@@ -21,6 +21,27 @@
 
 	let { customers, onChange }: Props = $props();
 
+	let paginatedCustomers: CustomerDataModel[] = $state([]);
+	let pageIndex: number = $state(0);
+	let pageSize: number = $state(10);
+
+	$effect(() => {
+		const start = pageIndex * pageSize;
+		const end = start + pageSize;
+		paginatedCustomers = (customers ?? []).slice(start, end);
+	});
+
+	// Handle page index changes
+	function handlePageIndexChange(newPageIndex: number) {
+		pageIndex = newPageIndex;
+	}
+
+	// Handle page size changes
+	function handlePageSizeChange(newPageSize: number) {
+		pageSize = newPageSize;
+		pageIndex = 0;
+	}
+
 	async function handleDelete(item: CustomerDataModel) {
 		if (item?._id && item?.master?.route && (await openDeleteConfirmDialog())) {
 			let loader = await openLoadingDialog();
@@ -45,7 +66,7 @@
 			</tr>
 		</thead>
 		<tbody class="divide-y divide-base-200">
-			{#each customers || [] as item, index}
+			{#each paginatedCustomers || [] as item, index}
 				<tr class="hover:bg-base-100">
 					<td class="text-left pl-4 py-1 w-14">
 						<IconCircle
@@ -83,6 +104,12 @@
 		</tbody>
 	</table>
 	<div class="p-4">
-		<Pagination length={customers?.length} />
+		<Pagination
+			length={customers?.length}
+			{pageIndex}
+			{pageSize}
+			onPageSizeChange={handlePageSizeChange}
+			onPageIndexChange={handlePageIndexChange}
+		/>
 	</div>
 </div>

@@ -1,22 +1,63 @@
 <script lang="ts">
-	import { ButtonMenu, IconCircle, Pagination, sort } from '@cloudparker/moldex.js';
+	import { ButtonMenu, IconCircle, navigate, Pagination, sort } from '@cloudparker/moldex.js';
 	import { getAllRoutes } from '../route-service';
 	import type { RouteDataModel } from '../route-types';
 	import TextUser from '$lib/user/components/text-user.svelte';
 	import { onMount } from 'svelte';
 	import { mdiMapMarkerPath } from '$lib/core/services/app-icons-service';
+	import { openRouteDeleteDialog, openRouteEditDialog } from '../route-ui-service';
+	import { appState } from '$lib/core/services/app-state.svelte';
 
 	type Props = {};
 	let {}: Props = $props();
 
 	let routes: RouteDataModel[] = $state([]);
 
+	let paginatedRoutes: RouteDataModel[] = $state([]);
+	let pageIndex: number = $state(0);
+	let pageSize: number = $state(10);
+
 	export async function loadRoutes() {
 		let array = (await getAllRoutes()) || [];
 		routes = sort({ array, field: 'name' });
 	}
 
-	export function handleMenu(ev: Event, menu: string, item: RouteDataModel) {}
+	export async function handleMenu(ev: Event, menu: string, item: RouteDataModel) {
+		switch (menu) {
+			case 'Edit':
+				await openRouteEditDialog(item);
+				await loadRoutes();
+				break;
+			case 'Delete':
+				await openRouteDeleteDialog(item);
+				await loadRoutes();
+				break;
+			case 'View':
+				handelViewRoute(item);
+				break;
+		}
+	}
+
+	function handelViewRoute(route: RouteDataModel) {
+		navigate(`/restricted/routes/view?routeId=${route._id}`);
+	}
+
+	$effect(() => {
+		const start = pageIndex * pageSize;
+		const end = start + pageSize;
+		paginatedRoutes = routes.slice(start, end);
+	});
+
+	// Handle page index changes
+	function handlePageIndexChange(newPageIndex: number) {
+		pageIndex = newPageIndex;
+	}
+
+	// Handle page size changes
+	function handlePageSizeChange(newPageSize: number) {
+		pageSize = newPageSize;
+		pageIndex = 0;
+	}
 
 	onMount(() => {
 		loadRoutes();
@@ -35,7 +76,7 @@
 			</tr>
 		</thead>
 		<tbody class="divide-y divide-base-200">
-			{#each routes as route, index}
+			{#each paginatedRoutes as route, index}
 				<tr class="hover:bg-base-100">
 					<td class="text-left pl-4 py-1 w-14">
 						<IconCircle
@@ -63,6 +104,9 @@
 							<ButtonMenu
 								menus={['View', 'Edit', 'Delete']}
 								onMenu={(ev, menu) => handleMenu(ev, menu as string, route)}
+								iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
+									? ''
+									: 'dark:hover:text-base-200'}"
 							/>
 						</div>
 					</td>
@@ -71,6 +115,13 @@
 		</tbody>
 	</table>
 	<div class="p-4">
-		<Pagination length={routes?.length} />
+		<Pagination 
+			length={routes?.length} 
+			{pageIndex}
+			{pageSize}
+			onPageSizeChange={handlePageSizeChange}
+			onPageIndexChange={handlePageIndexChange}
+
+		/>
 	</div>
 </div>

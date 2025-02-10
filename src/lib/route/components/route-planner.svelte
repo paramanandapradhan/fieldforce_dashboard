@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { Button, openLoadingDialog } from '@cloudparker/moldex.js';
+	import { Button, openLoadingDialog, screenSize } from '@cloudparker/moldex.js';
 	import type { RouteDataModel } from '../route-types';
 	import { openUserPickerDialog } from '$lib/user/user-ui-service';
 	import { UserTypeEnum } from '$lib/user/user-service';
 	import { syncRoutes, updateRoute } from '../route-service';
 	import RoutePlannerUserTable from './route-planner-user-table.svelte';
+	import RoutPlannerUserList from './rout-planner-user-list.svelte';
 
 	type Props = {
 		route: RouteDataModel;
@@ -47,6 +48,10 @@
 		</div>
 	</div>
 	<div class="my-4">
-		<RoutePlannerUserTable {route} onChange={handleChange} />
+		{#if screenSize.isSm || screenSize.isMd || screenSize.isXs}
+			<RoutPlannerUserList {route} onChange={handleChange} />
+		{:else}
+			<RoutePlannerUserTable {route} onChange={handleChange} />
+		{/if}
 	</div>
 </div>

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import {
 		Button,
+		IconCircle,
 		openDeleteConfirmDialog,
 		openLoadingDialog,
 		readFileAsBuffer
@@ -10,7 +11,7 @@
 	import { UserTypeEnum } from '$lib/user/user-service';
 	import { syncRoutes, updateRoute } from '../route-service';
 	import TextUser from '$lib/user/components/text-user.svelte';
-	import { mdiCheck, mdiCircleSmall, mdiDeleteOutline } from '$lib/core/services/app-icons-service';
+	import { mdiAccount, mdiCheck, mdiCircleSmall, mdiDeleteOutline } from '$lib/core/services/app-icons-service';
 	import { arrayRemove, arrayUnion, deleteField, FieldValue } from 'firebase/firestore';
 
 	type Props = {
@@ -88,52 +89,58 @@
 		</thead>
 		<tbody class="divide-y divide-base-200">
 			{#each items as item, index}
-				<tr>
-					<td></td>
-					<td class="text-left"><TextUser input={item.userId} hideIcon /></td>
-					<td>
+				<tr class="hover:bg-base-100">
+					<td class="text-left pl-4 py-1 w-14">
+						<IconCircle
+							iconPath={mdiAccount}
+							iconClassName="!h-5 !w-5 text-primary"
+							circleClassName="!h-10 !w-10"
+						/>
+					</td>
+					<td class="text-left px-4"><TextUser input={item.userId} hideIcon /></td>
+					<td class="text-left px-4">
 						<Button
 							iconPath={item[0] ? mdiCheck : mdiCircleSmall}
 							onClick={() => handleToggleCheck(item, 0)}
 						></Button>
 					</td>
-					<td>
+					<td class="text-left px-4">
 						<Button
 							iconPath={item[1] ? mdiCheck : mdiCircleSmall}
 							onClick={() => handleToggleCheck(item, 1)}
 						></Button>
 					</td>
-					<td>
+					<td class="text-left px-4">
 						<Button
 							iconPath={item[2] ? mdiCheck : mdiCircleSmall}
 							onClick={() => handleToggleCheck(item, 2)}
 						></Button>
 					</td>
-					<td>
+					<td class="text-left px-4">
 						<Button
 							iconPath={item[3] ? mdiCheck : mdiCircleSmall}
 							onClick={() => handleToggleCheck(item, 3)}
 						></Button>
 					</td>
-					<td>
+					<td class="text-left px-4">
 						<Button
 							iconPath={item[4] ? mdiCheck : mdiCircleSmall}
 							onClick={() => handleToggleCheck(item, 4)}
 						></Button>
 					</td>
-					<td>
+					<td class="text-left px-4">
 						<Button
 							iconPath={item[5] ? mdiCheck : mdiCircleSmall}
 							onClick={() => handleToggleCheck(item, 5)}
 						></Button>
 					</td>
-					<td>
+					<td class="text-left px-4">
 						<Button
 							iconPath={item[6] ? mdiCheck : mdiCircleSmall}
 							onClick={() => handleToggleCheck(item, 6)}
 						></Button>
 					</td>
-					<td>
+					<td class="text-left px-4">
 						<Button iconPath={mdiDeleteOutline} onClick={() => handleDelete(item)}></Button>
 					</td>
 				</tr>

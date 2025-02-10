@@ -6,6 +6,7 @@
 		IconCircle,
 		isMobileScreen,
 		openLoadingDialog,
+		screenSize,
 		Sidebar
 	} from '@cloudparker/moldex.js';
 	import AppNavbar from '$lib/core/components/app-navbar.svelte';
@@ -23,6 +24,9 @@
 	import type { CustomerDataModel } from '$lib/user/user-types';
 	import CustomerTable from '$lib/user/components/customer-table.svelte';
 	import RouteCustomerTable from '$lib/route/components/route-customer-table.svelte';
+	import { openRouteEditDialog } from '$lib/route/route-ui-service';
+	import RoutPlannerUserList from '$lib/route/components/rout-planner-user-list.svelte';
+	import RouteCustomerList from '$lib/route/components/route-customer-list.svelte';
 
 	let drawerRef: Drawer;
 
@@ -56,7 +60,14 @@
 		drawerRef && drawerRef.openDrawer();
 	}
 
-	function handleEdit() {}
+	async function handleEdit() {
+		if (route) {
+			let res = await openRouteEditDialog(route);
+			if (res) {
+				loadRoute();
+			}
+		}
+	}
 
 	function handleChange() {
 		loadRoute();
@@ -99,7 +110,7 @@
 				<div>
 					{#if route != null}
 						<div class="bg-white p-4 shadow rounded-lg m-4">
-							<div class="flex gap-4">
+							<div class="flex md:flex-row flex-col gap-4">
 								<div>
 									<IconCircle
 										iconPath={mdiMapMarkerPath}
@@ -126,7 +137,11 @@
 								</div>
 							</div>
 							<div class="my-4">
+								{#if screenSize.isSm || screenSize.isMd || screenSize.isXs}
+								 <RouteCustomerList customers={routeCustomers} onChange={handleChange}/>
+								{:else}
 								<RouteCustomerTable customers={routeCustomers} onChange={handleChange} />
+								{/if}
 							</div>
 						</div>
 					{/if}
