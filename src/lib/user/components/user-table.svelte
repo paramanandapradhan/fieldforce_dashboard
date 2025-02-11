@@ -7,7 +7,10 @@
 		navigate,
 		openDeleteConfirmDialog,
 
-		Pagination
+		Pagination,
+
+		sort
+
 
 	} from '@cloudparker/moldex.js';
 	import { getAllUsers, UserTypeEnum } from '../user-service';
@@ -25,7 +28,8 @@
 	let pageSize: number = $state(10);
 
 	export async function loadUsers() {
-		users = ((await getAllUsers({ type: UserTypeEnum.USER_TYPE_USER })) as UserDataModel[]) || [];
+		let array = ((await getAllUsers({ type: UserTypeEnum.USER_TYPE_USER })) as UserDataModel[]) || [];
+		users = sort({array, field:'name'})
 	}
 
 	function handleReady() {

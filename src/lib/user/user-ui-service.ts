@@ -11,7 +11,7 @@ export async function openUserEditDialog(user?: UserDataModel) {
         props: { user },
         hasTitle: true,
         hasHeader: true,
-        title: 'Create user',
+        title: 'Create User',
         hasHeaderBack: isMobileScreen(),
         hasHeaderClose: !isMobileScreen(),
         size: getDialogSize(),

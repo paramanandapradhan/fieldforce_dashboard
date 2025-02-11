@@ -1,0 +1,62 @@
+<script lang="ts">
+	import { onMount } from 'svelte';
+	import { getProduct } from '../product-service';
+	import type { ProductDataModel } from '../product-type';
+	import { IconCircle } from '@cloudparker/moldex.js';
+	import { mdiPackageVariantClosed } from '$lib/core/services/app-icons-service';
+
+	type Props = {
+		productId: any;
+	};
+
+	let { productId }: Props = $props();
+	let product: ProductDataModel | null = $state(null);
+
+	async function loadProduct() {
+		if (productId) {
+			product = await getProduct(productId);
+		} else {
+			product = null;
+		}
+	}
+
+	onMount(() => {
+		loadProduct();
+	});
+</script>
+
+<div>
+	<h4 class="text-xl font-bold mb-4">Product Details</h4>
+	<div class="flex md:flex-row flex-col gap-4">
+		<div>
+			<IconCircle
+				iconPath={mdiPackageVariantClosed}
+				iconClassName="text-primary"
+				circleClassName=" "
+			/>
+		</div>
+		<div>
+			<table>
+				<tbody>
+					<tr class="lg:text-lg lg:font-bold font-semibold"
+						><td>Name</td><td>{product?.name || '-'}</td></tr
+					>
+					<tr><td>Description</td><td class="text-base-500 text-sm">{product?.desc || '-'}</td></tr>
+					<tr><td>MRP</td><td>{product?.mrp || '-'}</td></tr>
+					<tr><td>Sales Price</td><td>{product?.salesPrice || '-'}</td></tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<style>
+	td:nth-child(1) {
+		color: var(--color-base-400);
+		width: 180px;
+	}
+	td:nth-child(2) {
+		color: var(--color-base-500);
+		width: 300px;
+	}
+</style>

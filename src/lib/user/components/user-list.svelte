@@ -1,6 +1,15 @@
 <script lang="ts">
 	import AuthUserReady from '$lib/auth/components/auth-user-ready.svelte';
-	import { Button, ButtonListItem, ButtonMenu, IconCircle, Loading, navigate, openDeleteConfirmDialog } from '@cloudparker/moldex.js';
+	import {
+		Button,
+		ButtonListItem,
+		ButtonMenu,
+		IconCircle,
+		Loading,
+		navigate,
+		openDeleteConfirmDialog,
+		sort
+	} from '@cloudparker/moldex.js';
 	import { getAllUsers, UserTypeEnum } from '../user-service';
 	import type { UserDataModel } from '../user-types';
 	import { mdiAccount, mdiDotsHorizontal } from '$lib/core/services/app-icons-service';
@@ -16,7 +25,11 @@
 	let isLoading: boolean = $state(false);
 
 	export async function loadUsers() {
-		users = ((await getAllUsers({ type: UserTypeEnum.USER_TYPE_USER })) as UserDataModel[]) || [];
+		isLoading = true;
+		let array =
+			((await getAllUsers({ type: UserTypeEnum.USER_TYPE_USER })) as UserDataModel[]) || [];
+		users = sort({ array, field: 'name' });
+		isLoading = false;
 	}
 
 	function handleReady() {
@@ -61,35 +74,33 @@
 		<Loading />
 	{:else}
 		{#each users as user, index}
-				<ButtonListItem onClick={() => handelViewUser(user)}>
+			<ButtonListItem onClick={() => handelViewUser(user)}>
+				<div>
+					<IconCircle
+						iconPath={mdiAccount}
+						iconClassName="!h-5 !w-5 text-primary"
+						circleClassName="!h-10 !w-10"
+					/>
+				</div>
+				<div class="flex-grow px-2">
 					<div>
-						<IconCircle
-							iconPath={mdiAccount}
-							iconClassName="!h-5 !w-5 text-primary"
-							circleClassName="!h-10 !w-10"
-						/>
+						{user.name || '-'}
 					</div>
-					<div class="flex-grow px-2">
-						<div>
-							{user.name || '-'}
-						</div>
-						<div class="text-base-500 text-sm">
-							{user.desc || ''}
-						</div>
+					<div class="text-base-500 text-sm">
+						{user.desc || ''}
 					</div>
-					<div class="flex justify-end">
-						<ButtonMenu
-							menus={['View', 'Edit', 'Delete']}
-							iconPath={mdiDotsHorizontal}
-							onMenu={(ev, menu) => handleMenu(ev, menu as string, user)}
-							iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
-								? ''
-								: 'dark:hover:text-base-200'}"
-						/>
-					</div>
-				</ButtonListItem>
-
-			
+				</div>
+				<div class="flex justify-end">
+					<ButtonMenu
+						menus={['View', 'Edit', 'Delete']}
+						iconPath={mdiDotsHorizontal}
+						onMenu={(ev, menu) => handleMenu(ev, menu as string, user)}
+						iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
+							? ''
+							: 'dark:hover:text-base-200'}"
+					/>
+				</div>
+			</ButtonListItem>
 		{/each}
 	{/if}
 </div>
