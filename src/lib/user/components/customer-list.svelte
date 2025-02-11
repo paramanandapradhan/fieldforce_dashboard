@@ -46,12 +46,12 @@
 				await loadCustomers();
 				break;
 			case 'View':
-				handelViewRoute(item);
+			handelViewCustomer(item);
 				break;
 		}
 	}
 
-	function handelViewRoute(cuastomer: CustomerDataModel) {
+	function handelViewCustomer(cuastomer: CustomerDataModel) {
 		navigate(`/restricted/customers/view?customerId=${cuastomer._id}`);
 	}
 
@@ -76,7 +76,7 @@
 		<Loading />
 	{:else}
 		{#each customers || paginatedCustomers as item, index}
-			<ButtonListItem onClick={() => handelViewRoute(item)}>
+			<ButtonListItem onClick={() => handelViewCustomer(item)}>
 				<div>
 					<IconCircle
 						iconPath={mdiBriefcaseAccount}

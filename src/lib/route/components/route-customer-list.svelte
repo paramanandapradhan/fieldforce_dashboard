@@ -67,7 +67,7 @@
                     />
                     <div class="flex-grow">
                         <div class="text-lg font-semibold">
-                            <a href="/restricted/items/view?routeId={item._id}" class="hover:text-primary">
+                            <a href="/restricted/customers/view?customerId={item._id}" class="hover:text-primary">
                                 {item.name || ''}
                             </a>
                         </div>

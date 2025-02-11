@@ -1,105 +1,74 @@
 <script lang="ts">
-	import { ROOT_ORG_ID } from '$lib/core/services/app-core-service';
-	import { mdiCheckCircleOutline } from '$lib/core/services/app-icons-service';
-	import { Button, Icon, openImagePickerDialogWithCropper, Spinner } from '@cloudparker/moldex.js';
-	import type { UserDataModel } from '../user-types';
-	import UserLoader from './user-loader.svelte';
-	import { syncFiles, uploadFile } from '$lib/file/file-service';
-	import { syncUsers, updateUser } from '../user-service';
-	import ImgFile from '$lib/core/services/img-file.svelte';
+	import { onMount } from 'svelte';
+	import { getUser } from '../user-service';
+	import type { CustomerDataModel, UserDataModel } from '../user-types';
+	import { IconCircle, TextDate } from '@cloudparker/moldex.js';
+	import { mdiAccount, mdiBriefcaseAccount } from '$lib/core/services/app-icons-service';
+	import TextUserSubtype from './text-user-subtype.svelte';
+	import TextAttribute from '$lib/attribute/components/text-attribute.svelte';
+	import TextUser from './text-user.svelte';
+	import TextUserType from './text-user-type.svelte';
 
 	type Props = {
-		userId?: string;
-		showRootUserInfo: boolean;
+		userId: any;
 	};
 
-	let { userId, showRootUserInfo = false }: Props = $props();
+	let { userId }: Props = $props();
+	let user: UserDataModel | null = $state(null);
 
-	let user: UserDataModel | null | undefined = $state();
-
-	async function handleChangePhoto() {
-		let file = await openImagePickerDialogWithCropper({ outputAspectRatio: 1 });
-		if (file && user?._id) {
-			let fid = await uploadFile({ file, collection: 'users', docId: user?._id!, field: 'photo' });
-			if (fid) {
-				await syncFiles();
-				await updateUser(user._id, { photo: fid });
-				await syncUsers();
-				userId = userId;
-			}
+	async function loadUser() {
+		if (userId) {
+			user = await getUser(userId);
+		} else {
+			user = null;
 		}
 	}
+
+	onMount(() => {
+		loadUser();
+	});
 </script>
 
-<UserLoader {userId} bind:user>
-	{#snippet placeholder()}
-		<Spinner />
-	{/snippet}
-
-	{#if user}
-		<div class="flex flex-col lg:flex-row gap-6">
-			<div class="min-w-52 max-w-52">
-				<div class="rounded border w-full aspect-square">
-					<ImgFile alt="Profile Image" input={user.photo} />
-				</div>
-				<div class="flex justify-center mt-4">
-					<Button appearance="border-base" onClick={handleChangePhoto}>Change Photo</Button>
-				</div>
-			</div>
-			<div class="flex-grow">
-				<div class="mb-4">
-					<div>
-						<h5 class="font-bold">{user?.name || ''}</h5>
-					</div>
-					<div>
-						{user?.desc || ''}
-					</div>
-				</div>
-				<table class="text-sm table-auto">
-					<tbody>
-						<tr>
-							<td>Phone Number</td>
-							<td>{user?.phone || 'Note Avelable'}</td>
-						</tr>
-						<tr>
-							<td>Email</td>
-							<td>{user?.email || '-'}</td>
-						</tr>
-						<tr>
-							<td>Role</td>
-							<td>
-								{#if user.rid === '1'}
-									<span>Admin</span>
-								{:else}
-									-
-								{/if}
-							</td>
-						</tr>
-						{#if showRootUserInfo && user.oid == ROOT_ORG_ID}
-							<tr>
-								<td>Root User</td>
-								<td>
-									{#if user.ur}
-										<span title="Application Root User">
-											<Icon path={mdiCheckCircleOutline} sizeClassName="h-[16px] w-[16px]"></Icon>
-										</span>
-									{:else}
-										-
-									{/if}
-								</td></tr
-							>
-						{/if}
-					</tbody>
-				</table>
-			</div>
+<div>
+	<h4 class="text-xl font-bold mb-4">User Details</h4>
+	<div class="flex md:flex-row flex-col gap-4">
+		<div>
+			<IconCircle
+				iconPath={mdiAccount}
+				iconClassName="text-primary"
+				circleClassName=" "
+			/>
 		</div>
-	{/if}
-</UserLoader>
+		<div>
+			<table>
+				<tbody>
+					<tr class="lg:text-lg lg:font-bold font-semibold"
+						><td>Name</td><td>{user?.name || '-'}</td></tr
+					>
+					<tr><td>Description</td><td class="text-base-500 text-sm">{user?.desc || '-'}</td></tr
+					>
+					<tr><td>Email</td><td>{user?.email || '-'}</td></tr>
+					<tr><td>Phone</td><td>{user?.phone || '-'}</td></tr>
+					<tr><td>Type</td><td><TextUserType input={user?.type! || '-'} /></td></tr>
+					<tr><td>Sub Type</td><td><TextUserSubtype input={user?.subtype! || '-'}/> </td></tr>
+					<tr><td>Designation</td><td><TextAttribute input={user?.desig || '-'}/> </td></tr>
+					<tr><td>Department</td><td><TextAttribute input={user?.dept || '-'}/> </td></tr>
+					<tr><td>DOB</td><td><TextDate input={user?.dob || '-'}/> </td></tr>
+					<tr><td>DOJ</td><td><TextDate input={user?.doj || '-'}/> </td></tr>
+					<tr><td>Address</td> <td>{user?.address || '-'}</td></tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
 
 <style>
 	td:nth-child(1) {
-		color: grey;
-		width: 120px;
-		height: 36px;
+		color: var(--color-base-400);
+		width: 180px;
+	}
+	td:nth-child(2) {
+		color: var(--color-base-500);
+		width: 300px;
 	}
 </style>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { AttributeTypeEnum } from '$lib/attribute/attribute-service';
+	import { AttributeTypeEnum, syncAttributes } from '$lib/attribute/attribute-service';
 	import {
 		openAttributeEditDialog,
 		openAttributePickerDialog,
@@ -9,12 +9,14 @@
 	import TextAttribute from '$lib/attribute/components/text-attribute.svelte';
 	import AppNavbar from '$lib/core/components/app-navbar.svelte';
 	import BackgroundGradient from '$lib/core/components/background-gradient.svelte';
+	import { mdiSync } from '$lib/core/services/app-icons-service';
 	import RestrictedDrawer from '$lib/drawer/components/restricted-drawer.svelte';
 	import { Button, ContentArea, Drawer, isMobileScreen, Sidebar } from '@cloudparker/moldex.js';
 
 	let attributeListRef: AttributeList;
 	let drawerRef: Drawer;
 	let country = $state('');
+	let isSyncInProgress = $state(false);
 
 	function handleMore() {
 		drawerRef && drawerRef.openDrawer();
@@ -28,9 +30,20 @@
 			});
 
 			if (res) {
-				attributeListRef.loadAttributes();
+				loadAttributes();
 			}
 		}
+	}
+
+	async function loadAttributes() {
+		attributeListRef && attributeListRef.loadAttributes();
+	}
+
+	async function handleSync() {
+		isSyncInProgress = true;
+		await syncAttributes();
+		await loadAttributes();
+		isSyncInProgress = false;
 	}
 
 	async function handleSelectAttribute() {
@@ -52,18 +65,30 @@
 	<ContentArea className="md:pl-72">
 		<BackgroundGradient>
 			<main>
-				<div class="flex items-center justify-between m-4">
-					<div><h1 class="text-xl font-black">Attributes</h1></div>
-					<div>
-						<Button
-							appearance="border-primary"
-							onClick={handleAddAttribute}
-							label="Add Attribute"
-						/>
+				<div class="pb-32">
+					<div class="p-4 flex flex-wrap items-center gap-4">
+						<div class="flex-grow"><h1 class="text-xl font-black">Attributes</h1></div>
+						<div>
+							<Button
+								appearance="base"
+								onClick={handleSync}
+								title="Sync"
+								iconPath={mdiSync}
+								iconClassName={isSyncInProgress ? 'animate-spin' : ''}
+							/>
+						</div>
+						<div class="w-full sm:w-auto">
+							<Button
+								appearance="border-primary"
+								onClick={handleAddAttribute}
+								label="Add Attribute"
+								className="w-full sm:w-auto"
+							/>
+						</div>
 					</div>
-				</div>
-				<div class="my-4">
-					<AttributeList bind:this={attributeListRef} />
+					<div class="m-4 p-2 lg:p-4 bg-white shadow rounded-lg">
+						<AttributeList bind:this={attributeListRef} />
+					</div>
 				</div>
 			</main>
 		</BackgroundGradient>

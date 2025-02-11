@@ -77,7 +77,7 @@
 					</td>
 					<td class="text-left px-4">
 						<div>
-							<a href="/restricted/items/view?routeId={item._id}" class="hover:text-primary">
+							<a href="/restricted/customers/view?customerId={item._id}" class="hover:text-primary">
 								{item.name || ''}
 							</a>
 						</div>

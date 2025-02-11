@@ -7,11 +7,18 @@
 	import CustomerTable from '$lib/user/components/customer-table.svelte';
 	import { openCustomerEditDialog } from '$lib/user/customer-ui-service';
 	import { syncUsers } from '$lib/user/user-service';
-	import { Button, ContentArea, Drawer, isMobileScreen, screenSize, Sidebar } from '@cloudparker/moldex.js';
+	import {
+		Button,
+		ContentArea,
+		Drawer,
+		isMobileScreen,
+		screenSize,
+		Sidebar
+	} from '@cloudparker/moldex.js';
 
 	let drawerRef: Drawer;
-	let customerTableRef:CustomerTable;
-	let customerListRef:CustomerList
+	let customerTableRef: CustomerTable;
+	let customerListRef: CustomerList;
 
 	let isSyncInProgress = $state(false);
 
@@ -22,20 +29,20 @@
 	async function handleAdd() {
 		let res = await openCustomerEditDialog();
 		if (res) {
-			await loadCustomers()
+			await loadCustomers();
 		}
 	}
 
-	async function loadCustomers(){
-		customerTableRef && customerTableRef.loadCustomers()
-		customerListRef && customerListRef.loadCustomers()
+	async function loadCustomers() {
+		customerTableRef && customerTableRef.loadCustomers();
+		customerListRef && customerListRef.loadCustomers();
 	}
 
-	async function handleSync(){
-		isSyncInProgress = true
-		await syncUsers()
-		await loadCustomers()
-		isSyncInProgress = false
+	async function handleSync() {
+		isSyncInProgress = true;
+		await syncUsers();
+		await loadCustomers();
+		isSyncInProgress = false;
 	}
 </script>
 
@@ -58,14 +65,19 @@
 						/>
 					</div>
 					<div class="w-full sm:w-auto">
-						<Button appearance="border-primary" onClick={handleAdd} label="Create Customers"className="w-full sm:w-auto"/>
+						<Button
+							appearance="border-primary"
+							onClick={handleAdd}
+							label="Create Customers"
+							className="w-full sm:w-auto"
+						/>
 					</div>
 				</div>
 				<div class="m-4 p-4 bg-white shadow rounded-lg">
 					{#if screenSize.isSm || screenSize.isMd || screenSize.isXs}
-						<CustomerList bind:this={customerListRef}/>
+						<CustomerList bind:this={customerListRef} />
 					{:else}
-					<CustomerTable bind:this={customerTableRef}/>
+						<CustomerTable bind:this={customerTableRef} />
 					{/if}
 				</div>
 			</main>

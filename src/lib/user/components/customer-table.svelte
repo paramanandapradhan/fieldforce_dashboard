@@ -41,12 +41,12 @@
 				await loadCustomers();
 				break;
 			case 'View':
-				handelViewRoute(item);
+				handelViewCustomer(item);
 				break;
 		}
 	}
 
-	function handelViewRoute(cuastomer: CustomerDataModel) {
+	function handelViewCustomer(cuastomer: CustomerDataModel) {
 		navigate(`/restricted/customers/view?customerId=${cuastomer._id}`);
 	}
 
@@ -66,6 +66,7 @@
 		pageSize = newPageSize;
 		pageIndex = 0;
 	}
+	
 	onMount(() => {
 		loadCustomers();
 	});
@@ -95,7 +96,7 @@
 					</td>
 					<td class="text-left px-4">
 						<div>
-							<a href="/restricted/items/view?routeId={item._id}" class="hover:text-primary">
+							<a href="/restricted/customers/view?customerId={item._id}" class="hover:text-primary">
 								{item.name || ''}
 							</a>
 						</div>
