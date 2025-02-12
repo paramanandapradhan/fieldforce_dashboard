@@ -67,6 +67,21 @@
 	}
 	td:nth-child(2) {
 		color: var(--color-base-500);
-		width: 300px;
+		height: 40px;
+		width: auto;
+		max-width: 500px;
+		word-wrap: break-word;
+		overflow-wrap: break-word;
 	}
+
+	/* Responsive adjustments for small screens */
+    @media (max-width: 768px) {
+        td:nth-child(1) {
+            width: 100px; /* Further reduce width on small screens */
+        }
+        td:nth-child(2) {
+            max-width: 100%; /* Allow full width on small screens */
+            padding-left: 8px; /* Reduce left padding for tighter spacing */
+        }
+    }
 </style>

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import AuthAttributeReady from '$lib/auth/components/auth-user-ready.svelte';
-	import { Button, ButtonListItem, ButtonMenu, Pagination } from '@cloudparker/moldex.js';
+	import { Button, ButtonListItem, ButtonMenu, IconCircle, Pagination, sort } from '@cloudparker/moldex.js';
 	import { getAllAttributes } from '../attribute-service';
 	import type { AttributeDataModel } from '../attribute-types';
 	import {
@@ -9,7 +9,7 @@
 		openAttributeEditDialog
 	} from '../attribute-ui-service';
 	import TextAttributeType from './text-attribute-type.svelte';
-	import { mdiInformationOutline } from '$lib/core/services/app-icons-service';
+	import { mdiFormatListBulleted, mdiInformationOutline } from '$lib/core/services/app-icons-service';
 	import { appState } from '$lib/core/services/app-state.svelte';
 
 	let attributes: AttributeDataModel[] = $state([]);
@@ -18,7 +18,8 @@
 	let pageSize: number = $state(10);
 
 	export async function loadAttributes() {
-		attributes = (await getAllAttributes()) || [];
+		let array = (await getAllAttributes()) || [];
+		attributes = sort({array, field:"name"})
 	}
 
 	function handleReady() {
@@ -69,12 +70,18 @@
 <div>
 	{#each paginatedAttribute as attr, index}
 		<ButtonListItem>
-			<div></div>
+			<div><div>
+				<IconCircle
+					iconPath={mdiFormatListBulleted}
+					iconClassName="!h-5 !w-5 text-primary"
+					circleClassName="!h-10 !w-10"
+				/>
+			</div></div>
 			<div class="flex-grow">
 				<div>{attr.name || ''}</div>
 				<div class="text-sm text-base-400">{attr.desc || ''}</div>
 			</div>
-			<div>
+			<div class="hidden md:block">
 				<span class="text-sm font-bold text-base-400">
 					<TextAttributeType input={attr.type} />
 				</span>
