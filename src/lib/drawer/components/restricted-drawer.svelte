@@ -43,11 +43,7 @@
 			className={`w-full !text-start !justify-start !gap-4 ${active === '/restricted/home' ? 'bg-primary-50' : ''}`}
 			onClick={(ev) => handleNavigate('/restricted/home', ev)}
 		>
-			<IconCircle
-				iconPath={mdiHomeVariant}
-				circleClassName="!w-8 !h-8"
-				iconClassName="!w-4 !h-4 text-primary"
-			/>
+			<IconCircle iconPath={mdiHomeVariant} iconClassName="text-primary" />
 			<div>Home</div>
 		</Button>
 
@@ -55,11 +51,7 @@
 			className={`w-full !text-start !justify-start !gap-4 ${active.startsWith('/restricted/products') ? 'bg-primary-50 ' : ''}`}
 			onClick={(ev) => handleNavigate('/restricted/products', ev)}
 		>
-			<IconCircle
-				iconPath={mdiPackageVariantClosed}
-				circleClassName="!w-8 !h-8"
-				iconClassName="!w-4 !h-4 text-primary"
-			/>
+			<IconCircle iconPath={mdiPackageVariantClosed} iconClassName="text-primary" />
 			<div>Products</div>
 		</Button>
 
@@ -67,11 +59,7 @@
 			className={`w-full !text-start !justify-start !gap-4 ${active.startsWith('/restricted/orders') ? 'bg-primary-50 ' : ''}`}
 			onClick={(ev) => handleNavigate('/restricted/orders', ev)}
 		>
-			<IconCircle
-				iconPath={mdiTextBoxCheckOutline}
-				circleClassName="!w-8 !h-8"
-				iconClassName="!w-4 !h-4 text-primary"
-			/>
+			<IconCircle iconPath={mdiTextBoxCheckOutline} iconClassName="text-primary" />
 			<div>Orders</div>
 		</Button>
 
@@ -79,11 +67,7 @@
 			className={`w-full !text-start !justify-start !gap-4 ${active.startsWith('/restricted/customers') ? 'bg-primary-50' : ''}`}
 			onClick={(ev) => handleNavigate('/restricted/customers', ev)}
 		>
-			<IconCircle
-				iconPath={mdiBriefcaseAccount}
-				circleClassName="!w-8 !h-8"
-				iconClassName="!w-4 !h-4 text-primary"
-			/>
+			<IconCircle iconPath={mdiBriefcaseAccount} iconClassName="text-primary" />
 			<div>Customers</div>
 		</Button>
 
@@ -91,11 +75,7 @@
 			className={`w-full !text-start !justify-start !gap-4 ${active.startsWith('/restricted/routes') ? 'bg-primary-50' : ''}`}
 			onClick={(ev) => handleNavigate('/restricted/routes', ev)}
 		>
-			<IconCircle
-				iconPath={mdiMapMarkerPath}
-				circleClassName="!w-8 !h-8"
-				iconClassName="!w-4 !h-4 text-primary"
-			/>
+			<IconCircle iconPath={mdiMapMarkerPath} iconClassName="text-primary" />
 			<div>Routes</div>
 		</Button>
 
@@ -103,11 +83,7 @@
 			className={`w-full !text-start !justify-start !gap-4 ${active.startsWith('/restricted/users') ? 'bg-primary-50 ' : ''}`}
 			onClick={(ev) => handleNavigate('/restricted/users', ev)}
 		>
-			<IconCircle
-				iconPath={mdiAccount}
-				circleClassName="!w-8 !h-8"
-				iconClassName="!w-4 !h-4 text-primary"
-			/>
+			<IconCircle iconPath={mdiAccount} iconClassName="text-primary" />
 			<div>Users</div>
 		</Button>
 
@@ -115,11 +91,7 @@
 			className={`w-full !text-start !justify-start ${active.startsWith('/restricted/attributes') ? 'bg-primary-50 ' : ''}`}
 			onClick={(ev) => handleNavigate('/restricted/attributes', ev)}
 		>
-			<IconCircle
-				iconPath={mdiFormatListBulleted}
-				circleClassName="!w-8 !h-8"
-				iconClassName="!w-4 !h-4 text-primary"
-			/>
+			<IconCircle iconPath={mdiFormatListBulleted} iconClassName="text-primary" />
 			<div>Attributes</div>
 		</Button>
 	</div>

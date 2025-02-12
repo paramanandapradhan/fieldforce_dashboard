@@ -33,11 +33,7 @@
 	<h4 class="text-xl font-bold mb-4">User Details</h4>
 	<div class="flex md:flex-row flex-col gap-4">
 		<div>
-			<IconCircle
-				iconPath={mdiAccount}
-				iconClassName="text-primary"
-				circleClassName=" "
-			/>
+			<IconCircle iconPath={mdiAccount} iconClassName="text-primary" circleClassName=" " />
 		</div>
 		<div>
 			<table class="table-fixed w-full">
@@ -45,16 +41,14 @@
 					<tr class="lg:text-lg lg:font-bold font-semibold"
 						><td>Name</td><td>{user?.name || '-'}</td></tr
 					>
-					<tr><td>Description</td><td class="text-sm">{user?.desc || '-'}</td></tr
-					>
+					<tr><td>Description</td><td class="text-sm">{user?.desc || '-'}</td></tr>
 					<tr><td>Email</td><td>{user?.email || '-'}</td></tr>
 					<tr><td>Phone</td><td>{user?.phone || '-'}</td></tr>
-					<tr><td>Type</td><td><TextUserType input={user?.type! || '-'} /></td></tr>
-					<tr><td>Sub Type</td><td><TextUserSubtype input={user?.subtype! || '-'}/> </td></tr>
-					<tr><td>Designation</td><td><TextAttribute input={user?.desig || '-'}/> </td></tr>
-					<tr><td>Department</td><td><TextAttribute input={user?.dept || '-'}/> </td></tr>
-					<tr><td>DOB</td><td><TextDate input={user?.dob || '-'}/> </td></tr>
-					<tr><td>DOJ</td><td><TextDate input={user?.doj || '-'}/> </td></tr>
+					<tr><td>Type</td><td><TextUserSubtype input={user?.subtype! || '-'} /> </td></tr>
+					<tr><td>Designation</td><td><TextAttribute input={user?.desig || '-'} /> </td></tr>
+					<tr><td>Department</td><td><TextAttribute input={user?.dept || '-'} /> </td></tr>
+					<tr><td>DOB</td><td><TextDate input={user?.dob || '-'} /> </td></tr>
+					<tr><td>DOJ</td><td><TextDate input={user?.doj || '-'} /> </td></tr>
 					<tr><td>Address</td> <td>{user?.address || '-'}</td></tr>
 				</tbody>
 			</table>
@@ -77,13 +71,13 @@
 	}
 
 	/* Responsive adjustments for small screens */
-    @media (max-width: 768px) {
-        td:nth-child(1) {
-            width: 100px; /* Further reduce width on small screens */
-        }
-        td:nth-child(2) {
-            max-width: 100%; /* Allow full width on small screens */
-            padding-left: 8px; /* Reduce left padding for tighter spacing */
-        }
-    }
+	@media (max-width: 768px) {
+		td:nth-child(1) {
+			width: 100px; /* Further reduce width on small screens */
+		}
+		td:nth-child(2) {
+			max-width: 100%; /* Allow full width on small screens */
+			padding-left: 8px; /* Reduce left padding for tighter spacing */
+		}
+	}
 </style>
