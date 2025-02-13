@@ -110,6 +110,13 @@
 			<IconCircle iconPath={mdiAccount} iconClassName="text-primary" />
 			<div>Tour Visits</div>
 		</Button>
+		<Button
+			className={`w-full !text-start !justify-start !gap-4 ${active.startsWith('/restricted/activities') ? 'bg-primary-50 ' : ''}`}
+			onClick={(ev) => handleNavigate('/restricted/activities', ev)}
+		>
+			<IconCircle iconPath={mdiAccount} iconClassName="text-primary" />
+			<div>Activities</div>
+		</Button>
 
 		<Button
 			className={`w-full !text-start !justify-start ${active.startsWith('/restricted/attributes') ? 'bg-primary-50 ' : ''}`}
