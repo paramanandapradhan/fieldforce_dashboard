@@ -88,6 +88,30 @@
 		</Button>
 
 		<Button
+			className={`w-full !text-start !justify-start !gap-4 ${active.startsWith('/restricted/teams') ? 'bg-primary-50 ' : ''}`}
+			onClick={(ev) => handleNavigate('/restricted/teams', ev)}
+		>
+			<IconCircle iconPath={mdiAccount} iconClassName="text-primary" />
+			<div>Teams</div>
+		</Button>
+
+		<Button
+			className={`w-full !text-start !justify-start !gap-4 ${active.startsWith('/restricted/attendance') ? 'bg-primary-50 ' : ''}`}
+			onClick={(ev) => handleNavigate('/restricted/attendance', ev)}
+		>
+			<IconCircle iconPath={mdiAccount} iconClassName="text-primary" />
+			<div>Attendance</div>
+		</Button>
+
+		<Button
+			className={`w-full !text-start !justify-start !gap-4 ${active.startsWith('/restricted/visits') ? 'bg-primary-50 ' : ''}`}
+			onClick={(ev) => handleNavigate('/restricted/visits', ev)}
+		>
+			<IconCircle iconPath={mdiAccount} iconClassName="text-primary" />
+			<div>Tour Visits</div>
+		</Button>
+
+		<Button
 			className={`w-full !text-start !justify-start ${active.startsWith('/restricted/attributes') ? 'bg-primary-50 ' : ''}`}
 			onClick={(ev) => handleNavigate('/restricted/attributes', ev)}
 		>
