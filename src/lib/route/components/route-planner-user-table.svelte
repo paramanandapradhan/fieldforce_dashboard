@@ -11,7 +11,12 @@
 	import { UserTypeEnum } from '$lib/user/user-service';
 	import { syncRoutes, updateRoute } from '../route-service';
 	import TextUser from '$lib/user/components/text-user.svelte';
-	import { mdiAccount, mdiCheck, mdiCircleSmall, mdiDeleteOutline } from '$lib/core/services/app-icons-service';
+	import {
+		mdiAccount,
+		mdiCheck,
+		mdiCircleSmall,
+		mdiDeleteOutline
+	} from '$lib/core/services/app-icons-service';
 	import { arrayRemove, arrayUnion, deleteField, FieldValue } from 'firebase/firestore';
 
 	type Props = {
@@ -140,8 +145,10 @@
 							onClick={() => handleToggleCheck(item, 6)}
 						></Button>
 					</td>
-					<td class="text-left px-4">
-						<Button iconPath={mdiDeleteOutline} onClick={() => handleDelete(item)}></Button>
+					<td class="px-4">
+						<div class="flex justify-end">
+							<Button iconPath={mdiDeleteOutline} onClick={() => handleDelete(item)}></Button>
+						</div>
 					</td>
 				</tr>
 			{/each}
