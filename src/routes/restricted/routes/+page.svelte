@@ -56,28 +56,30 @@
 	<ContentArea className="md:pl-72">
 		<BackgroundGradient>
 			<main>
-				<div class="p-4 flex items-center gap-4">
-					<div class="flex-grow"><h1 class="text-xl font-black">Routes</h1></div>
-					<div>
-						<Button
-							appearance="base"
-							onClick={handleSync}
-							title="Sync"
-							iconPath={mdiSync}
-							iconClassName={isSyncInProgress ? 'animate-spin' : ''}
-						/>
+				<div class="pb-32">
+					<div class="p-4 flex items-center gap-4">
+						<div class="flex-grow"><h1 class="text-xl font-black">Routes</h1></div>
+						<div>
+							<Button
+								appearance="base"
+								onClick={handleSync}
+								title="Sync"
+								iconPath={mdiSync}
+								iconClassName={isSyncInProgress ? 'animate-spin' : ''}
+							/>
+						</div>
+						<div>
+							<Button appearance="border-primary" onClick={handleAdd} label="Add Route" />
+						</div>
 					</div>
 					<div>
-						<Button appearance="border-primary" onClick={handleAdd} label="Add Route" />
-					</div>
-				</div>
-				<div>
-					<div class="bg-white rounded-lg shadow p-4 m-4">
-						{#if screenSize.isSm || screenSize.isMd || screenSize.isXs}
-							<RouteList bind:this={routeListRef} />
-						{:else}
-							<RouteTable bind:this={routeTableRef} />
-						{/if}
+						<div class="bg-white rounded-lg shadow p-4 m-4">
+							{#if screenSize.isSm || screenSize.isMd || screenSize.isXs}
+								<RouteList bind:this={routeListRef} />
+							{:else}
+								<RouteTable bind:this={routeTableRef} />
+							{/if}
+						</div>
 					</div>
 				</div>
 			</main>

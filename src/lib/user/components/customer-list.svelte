@@ -1,7 +1,18 @@
 <script lang="ts">
-	import { ButtonListItem, ButtonMenu, IconCircle, Loading, navigate, Pagination, sort } from '@cloudparker/moldex.js';
+	import {
+		ButtonListItem,
+		ButtonMenu,
+		IconCircle,
+		Loading,
+		mdiMagnify,
+		navigate,
+		NoData,
+		Pagination,
+		SearchField,
+		sort
+	} from '@cloudparker/moldex.js';
 
-	import { mdiBriefcaseAccount, mdiMapMarkerPath } from '$lib/core/services/app-icons-service';
+	import { mdiBriefcaseAccount, mdiMapMarkerPath, mdiNotebookOutline } from '$lib/core/services/app-icons-service';
 	import { onMount } from 'svelte';
 	import { getAllUsers, UserTypeEnum } from '../user-service';
 	import type { CustomerDataModel } from '../user-types';
@@ -18,20 +29,27 @@
 
 	let items: CustomerDataModel[] = $state([]);
 
-	let paginatedCustomers: CustomerDataModel[] = $state([]);
+	// let paginatedCustomers: CustomerDataModel[] = $state([]);
 	let pageIndex: number = $state(0);
 	let pageSize: number = $state(10);
-    let isLoading: boolean = $state(false);
+	let searchText: string = $state('');
+	let isLoading: boolean = $state(true);
+
+	let filteredCustomers = $derived(
+		items.filter((item) =>
+			searchText ? item.name?.toLowerCase().includes(searchText.toLowerCase()) : true
+		)
+	);
+	let paginatedCustomers = $derived(filteredCustomers.slice(0, (pageIndex + 1) * pageSize));
 
 	export async function loadCustomers() {
-        if (!customers) {
-            isLoading = true
+		if (!customers) {
+			isLoading = true;
 			let array =
 				((await getAllUsers({ type: UserTypeEnum.USER_TYPE_CUSTOMER })) as CustomerDataModel[]) ||
 				[];
 			items = sort({ array, field: 'name' });
-            loadMore()
-            isLoading = false
+			isLoading = false;
 		}
 	}
 
@@ -46,7 +64,7 @@
 				await loadCustomers();
 				break;
 			case 'View':
-			handelViewCustomer(item);
+				handelViewCustomer(item);
 				break;
 		}
 	}
@@ -55,25 +73,55 @@
 		navigate(`/restricted/customers/view?customerId=${cuastomer._id}`);
 	}
 
-    function loadMore() {
-		const start = pageIndex * pageSize;
-		const end = start + pageSize;
-		const newItems = items.slice(start, end);
-		if (newItems.length) {
-			paginatedCustomers = [...paginatedCustomers, ...newItems];
-			pageIndex++;
-		}
+	// function loadMore() {
+	// 	const start = pageIndex * pageSize;
+	// 	const end = start + pageSize;
+	// 	const newItems = items.slice(start, end);
+	// 	if (newItems.length) {
+	// 		paginatedCustomers = [...paginatedCustomers, ...newItems];
+	// 		pageIndex++;
+	// 	}
+	// }
+
+	// Infinite scrolling logic
+	function loadMore() {
+		pageIndex++;
 	}
-	
+
 	onMount(() => {
 		loadCustomers();
 	});
 </script>
 
+<div class="p-4">
+	<SearchField bind:value={searchText} placeholder="Search Customers..." />
+</div>
 <WindowInfiniteScroll {loadMore} triggerDistance={500} side="bottom" />
 <div>
 	{#if isLoading}
 		<Loading />
+	{:else if searchText && filteredCustomers.length <= 0}
+		<NoData>
+			<IconCircle
+				iconPath={mdiMagnify}
+				circleClassName="!bg-base-100 !w-12 !h-12"
+				iconClassName="!w-6 !h-6 text-base-400"
+			/>
+			<div class="text-center text-base-400 text-sm mt-4">
+				No search results found for "{searchText}"!.
+			</div>
+		</NoData>
+	{:else if filteredCustomers.length <= 0}
+		<NoData>
+			<IconCircle
+				iconPath={mdiNotebookOutline}
+				circleClassName="!bg-base-100 !w-12 !h-12"
+				iconClassName="!w-6 !h-6 text-base-400"
+			/>
+			<div class="text-center text-base-400 text-sm mt-4">
+				No Products ! <br />Please add Products!
+			</div>
+		</NoData>
 	{:else}
 		{#each customers || paginatedCustomers as item, index}
 			<ButtonListItem onClick={() => handelViewCustomer(item)}>
@@ -94,12 +142,12 @@
 				</div>
 				<div>
 					<ButtonMenu
-								menus={['View', 'Edit', 'Delete']}
-								onMenu={(ev, menu) => handleMenu(ev, menu as string, item)}
-								iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
-									? ''
-									: 'dark:hover:text-base-200'}"
-							/>
+						menus={['View', 'Edit', 'Delete']}
+						onMenu={(ev, menu) => handleMenu(ev, menu as string, item)}
+						iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
+							? ''
+							: 'dark:hover:text-base-200'}"
+					/>
 				</div>
 			</ButtonListItem>
 		{/each}

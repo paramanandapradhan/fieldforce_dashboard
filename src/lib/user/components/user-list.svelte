@@ -6,23 +6,34 @@
 		ButtonMenu,
 		IconCircle,
 		Loading,
+		mdiMagnify,
 		navigate,
+		NoData,
 		openDeleteConfirmDialog,
+		SearchField,
 		sort
 	} from '@cloudparker/moldex.js';
 	import { getAllUsers, UserTypeEnum } from '../user-service';
 	import type { UserDataModel } from '../user-types';
-	import { mdiAccount, mdiDotsHorizontal } from '$lib/core/services/app-icons-service';
+	import { mdiAccount, mdiDotsHorizontal, mdiNotebookOutline } from '$lib/core/services/app-icons-service';
 	import { openUserDeleteDialog, openUserEditDialog } from '../user-ui-service';
 	import WindowInfiniteScroll from '$lib/core/components/window-infinite-scroll.svelte';
 	import { appState } from '$lib/core/services/app-state.svelte';
 
 	let users: UserDataModel[] = $state([]);
-
-	let paginatedUsers: UserDataModel[] = $state([]);
+	// let paginatedUsers: UserDataModel[] = $state([]);
 	let pageIndex: number = $state(0);
 	let pageSize: number = $state(10);
-	let isLoading: boolean = $state(false);
+	let isLoading: boolean = $state(true);
+	let searchText: string = $state('');
+
+	let filteredUsers = $derived(
+		users.filter((user) =>
+			searchText ? user.name?.toLowerCase().includes(searchText.toLowerCase()) : true
+		)
+	);
+
+	let paginatedUsers = $derived(filteredUsers.slice(0, (pageIndex + 1) * pageSize));
 
 	export async function loadUsers() {
 		isLoading = true;
@@ -56,24 +67,44 @@
 		navigate(`/restricted/users/view?userId=${user._id}`);
 	}
 
+	// Infinite scrolling logic
 	function loadMore() {
-		const start = pageIndex * pageSize;
-		const end = start + pageSize;
-		const newItems = users.slice(start, end);
-		if (newItems.length) {
-			paginatedUsers = [...paginatedUsers, ...newItems];
-			pageIndex++;
-		}
+		pageIndex++;
 	}
 </script>
 
 <AuthUserReady onReady={handleReady} />
 <WindowInfiniteScroll {loadMore} triggerDistance={500} side="bottom" />
+<div class="p-4">
+	<SearchField bind:value={searchText} placeholder="Search Users..." />
+</div>
 <div>
 	{#if isLoading}
 		<Loading />
+		{:else if searchText && filteredUsers.length <= 0}
+		<NoData>
+			<IconCircle
+				iconPath={mdiMagnify}
+				circleClassName="!bg-base-100 !w-12 !h-12"
+				iconClassName="!w-6 !h-6 text-base-400"
+			/>
+			<div class="text-center text-base-400 text-sm mt-4">
+				No search results found for "{searchText}"!.
+			</div>
+		</NoData>
+	{:else if filteredUsers.length <= 0}
+		<NoData>
+			<IconCircle
+				iconPath={mdiNotebookOutline}
+				circleClassName="!bg-base-100 !w-12 !h-12"
+				iconClassName="!w-6 !h-6 text-base-400"
+			/>
+			<div class="text-center text-base-400 text-sm mt-4">
+				No Products ! <br />Please add Products!
+			</div>
+		</NoData>
 	{:else}
-		{#each users as user, index}
+		{#each paginatedUsers as user, index}
 			<ButtonListItem onClick={() => handelViewUser(user)}>
 				<div>
 					<IconCircle

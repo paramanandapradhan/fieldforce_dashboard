@@ -1,7 +1,18 @@
 <script lang="ts">
 	import AuthAttributeReady from '$lib/auth/components/auth-user-ready.svelte';
-	import { Button, ButtonListItem, ButtonMenu, IconCircle, Pagination, sort } from '@cloudparker/moldex.js';
-	import { getAllAttributes } from '../attribute-service';
+	import {
+		Button,
+		ButtonListItem,
+		ButtonMenu,
+		IconCircle,
+		Loading,
+		mdiMagnify,
+		NoData,
+		Pagination,
+		SearchField,
+		sort
+	} from '@cloudparker/moldex.js';
+	import { attributeTypeConfigs, AttributeTypeEnum, getAllAttributes } from '../attribute-service';
 	import type { AttributeDataModel } from '../attribute-types';
 	import {
 		openAttributeDeleteDialog,
@@ -9,17 +20,48 @@
 		openAttributeEditDialog
 	} from '../attribute-ui-service';
 	import TextAttributeType from './text-attribute-type.svelte';
-	import { mdiFormatListBulleted, mdiInformationOutline } from '$lib/core/services/app-icons-service';
+	import {
+		mdiFormatListBulleted,
+		mdiInformationOutline,
+		mdiNotebookOutline
+	} from '$lib/core/services/app-icons-service';
 	import { appState } from '$lib/core/services/app-state.svelte';
 
 	let attributes: AttributeDataModel[] = $state([]);
-	let paginatedAttribute: AttributeDataModel[] = $state([]);
 	let pageIndex: number = $state(0);
 	let pageSize: number = $state(10);
+	let searchText: string = $state('');
+	let isLoading: boolean = $state(true);
+
+	// Map enum values to their labels
+	const attributeTypeMap = new Map(
+		attributeTypeConfigs.map((config) => [config._id, config.label])
+	);
+
+	// Derived state for filtered attributes
+	const filteredAttribute = $derived(
+		attributes.filter((attribute) => {
+			const nameMatch = searchText
+				? attribute.name?.toLowerCase().includes(searchText.toLowerCase())
+				: true;
+				const typeLabel = attributeTypeMap.get(attribute.type) || '';
+				const typeMatch = searchText
+				? typeLabel.toLowerCase().includes(searchText.toLowerCase())
+				: true;
+			return nameMatch || typeMatch;
+		})
+	);
+
+	// Derived state for paginated attributes
+	const paginatedAttribute = $derived(
+		filteredAttribute.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize)
+	);
 
 	export async function loadAttributes() {
+		isLoading = true;
 		let array = (await getAllAttributes()) || [];
-		attributes = sort({array, field:"name"})
+		attributes = sort({ array, field: 'name' });
+		isLoading = false;
 	}
 
 	function handleReady() {
@@ -48,12 +90,6 @@
 		}
 	}
 
-	$effect(() => {
-		const start = pageIndex * pageSize;
-		const end = start + pageSize;
-		paginatedAttribute = attributes.slice(start, end);
-	});
-
 	// Handle page index changes
 	function handlePageIndexChange(newPageIndex: number) {
 		pageIndex = newPageIndex;
@@ -68,54 +104,85 @@
 
 <AuthAttributeReady onReady={handleReady} />
 <div>
-	{#each paginatedAttribute as attr, index}
-		<ButtonListItem>
-			<div><div>
-				<IconCircle
-					iconPath={mdiFormatListBulleted}
-					iconClassName="!h-5 !w-5 text-primary"
-					circleClassName="!h-10 !w-10"
-				/>
-			</div></div>
-			<div class="flex-grow">
-				<div>{attr.name || ''}</div>
-				<div class="text-sm text-base-400">{attr.desc || ''}</div>
+	<div class="p-4 max-w-72">
+		<SearchField bind:value={searchText} placeholder="Search Attribute..." />
+	</div>
+	{#if isLoading}
+		<Loading />
+	{:else if searchText && filteredAttribute.length <= 0}
+		<NoData>
+			<IconCircle
+				iconPath={mdiMagnify}
+				circleClassName="!bg-base-100 !w-12 !h-12"
+				iconClassName="!w-6 !h-6 text-base-400"
+			/>
+			<div class="text-center text-base-400 text-sm mt-4">
+				No search results found for "{searchText}"!.
 			</div>
-			<div class="hidden md:block">
-				<span class="text-sm font-bold text-base-400">
-					<TextAttributeType input={attr.type} />
-				</span>
+		</NoData>
+	{:else if filteredAttribute.length <= 0}
+		<NoData>
+			<IconCircle
+				iconPath={mdiNotebookOutline}
+				circleClassName="!bg-base-100 !w-12 !h-12"
+				iconClassName="!w-6 !h-6 text-base-400"
+			/>
+			<div class="text-center text-base-400 text-sm mt-4">
+				No Products ! <br />Please add Products!
 			</div>
-			<div>
-				<Button
-					iconPath={mdiInformationOutline}
-					size="xs"
-					onClick={(ev) => handleItemClick(ev, attr)}
-					iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
-						? ''
-						: 'dark:hover:text-base-200'}"
-				/>
-			</div>
-			<div>
-				<ButtonMenu
-					menus={['Edit', 'Delete']}
-					onMenu={(ev, menu) => handleMenu(ev, menu as string, attr)}
-					iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
-						? ''
-						: 'dark:hover:text-base-200'}"
-					size="xs"
-				/>
-			</div>
-		</ButtonListItem>
-		<hr />
-	{/each}
-</div>
-<div class="p-4">
-	<Pagination
-		length={attributes?.length}
-		{pageIndex}
-		{pageSize}
-		onPageSizeChange={handlePageSizeChange}
-		onPageIndexChange={handlePageIndexChange}
-	/>
+		</NoData>
+	{:else}
+		{#each paginatedAttribute as attr, index}
+			<ButtonListItem>
+				<div>
+					<div>
+						<IconCircle
+							iconPath={mdiFormatListBulleted}
+							iconClassName="!h-5 !w-5 text-primary"
+							circleClassName="!h-10 !w-10"
+						/>
+					</div>
+				</div>
+				<div class="flex-grow">
+					<div>{attr.name || ''}</div>
+					<div class="text-sm text-base-400">{attr.desc || ''}</div>
+				</div>
+				<div class="hidden md:block">
+					<span class="text-sm font-bold text-base-400">
+						<TextAttributeType input={attr.type} />
+					</span>
+				</div>
+				<div>
+					<Button
+						iconPath={mdiInformationOutline}
+						size="xs"
+						onClick={(ev) => handleItemClick(ev, attr)}
+						iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
+							? ''
+							: 'dark:hover:text-base-200'}"
+					/>
+				</div>
+				<div>
+					<ButtonMenu
+						menus={['Edit', 'Delete']}
+						onMenu={(ev, menu) => handleMenu(ev, menu as string, attr)}
+						iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
+							? ''
+							: 'dark:hover:text-base-200'}"
+						size="xs"
+					/>
+				</div>
+			</ButtonListItem>
+			<hr />
+		{/each}
+		<div class="p-4">
+			<Pagination
+				length={filteredAttribute?.length}
+				{pageIndex}
+				{pageSize}
+				onPageSizeChange={handlePageSizeChange}
+				onPageIndexChange={handlePageIndexChange}
+			/>
+		</div>
+	{/if}
 </div>

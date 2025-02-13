@@ -53,32 +53,34 @@
 	<ContentArea className="md:pl-72">
 		<BackgroundGradient>
 			<main>
-				<div class="p-4 flex flex-wrap items-center gap-4">
-					<div class="flex-grow"><h1 class="text-xl font-black">Customers</h1></div>
-					<div>
-						<Button
-							appearance="base"
-							onClick={handleSync}
-							title="Sync"
-							iconPath={mdiSync}
-							iconClassName={isSyncInProgress ? 'animate-spin' : ''}
-						/>
+				<div class="pb-32">
+					<div class="p-4 flex flex-wrap items-center gap-4">
+						<div class="flex-grow"><h1 class="text-xl font-black">Customers</h1></div>
+						<div>
+							<Button
+								appearance="base"
+								onClick={handleSync}
+								title="Sync"
+								iconPath={mdiSync}
+								iconClassName={isSyncInProgress ? 'animate-spin' : ''}
+							/>
+						</div>
+						<div class="w-full sm:w-auto">
+							<Button
+								appearance="border-primary"
+								onClick={handleAdd}
+								label="Create Customers"
+								className="w-full sm:w-auto"
+							/>
+						</div>
 					</div>
-					<div class="w-full sm:w-auto">
-						<Button
-							appearance="border-primary"
-							onClick={handleAdd}
-							label="Create Customers"
-							className="w-full sm:w-auto"
-						/>
+					<div class="m-4 p-4 bg-white shadow rounded-lg">
+						{#if screenSize.isSm || screenSize.isMd || screenSize.isXs}
+							<CustomerList bind:this={customerListRef} />
+						{:else}
+							<CustomerTable bind:this={customerTableRef} />
+						{/if}
 					</div>
-				</div>
-				<div class="m-4 p-4 bg-white shadow rounded-lg">
-					{#if screenSize.isSm || screenSize.isMd || screenSize.isXs}
-						<CustomerList bind:this={customerListRef} />
-					{:else}
-						<CustomerTable bind:this={customerTableRef} />
-					{/if}
 				</div>
 			</main>
 		</BackgroundGradient>

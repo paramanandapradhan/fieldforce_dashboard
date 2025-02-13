@@ -4,15 +4,18 @@
 		ButtonMenu,
 		IconCircle,
 		Loading,
+		mdiMagnify,
 		navigate,
+		NoData,
 		Pagination,
+		SearchField,
 		sort
 	} from '@cloudparker/moldex.js';
 	import { getAllRoutes } from '../route-service';
 	import type { RouteDataModel } from '../route-types';
 	import TextUser from '$lib/user/components/text-user.svelte';
 	import { onMount } from 'svelte';
-	import { mdiMapMarkerPath } from '$lib/core/services/app-icons-service';
+	import { mdiMapMarkerPath, mdiNotebookOutline } from '$lib/core/services/app-icons-service';
 	import { openRouteDeleteDialog, openRouteEditDialog } from '../route-ui-service';
 	import { appState } from '$lib/core/services/app-state.svelte';
 	import WindowInfiniteScroll from '$lib/core/components/window-infinite-scroll.svelte';
@@ -21,12 +24,19 @@
 	let {}: Props = $props();
 
 	let routes: RouteDataModel[] = $state([]);
-
-	let paginatedRoutes: RouteDataModel[] = $state([]);
+	// let paginatedRoutes: RouteDataModel[] = $state([]);
 	let pageIndex: number = $state(0);
 	let pageSize: number = $state(10);
+	let isLoading: boolean = $state(true);
+	let searchText: string = $state('');
 
-	let isLoading: boolean = $state(false);
+	let filteredRoutes = $derived(
+		routes.filter((route) =>
+			searchText ? route.name?.toLowerCase().includes(searchText.toLowerCase()) : true
+		)
+	);
+
+	let paginatedRoutes = $derived(filteredRoutes.slice(0, (pageIndex + 1) * pageSize));
 
 	export async function loadRoutes() {
 		isLoading = true;
@@ -56,14 +66,9 @@
 		navigate(`/restricted/routes/view?routeId=${route._id}`);
 	}
 
+	// Infinite scrolling logic
 	function loadMore() {
-		const start = pageIndex * pageSize;
-		const end = start + pageSize;
-		const newItems = routes.slice(start, end);
-		if (newItems.length) {
-			paginatedRoutes = [...paginatedRoutes, ...newItems];
-			pageIndex++;
-		}
+		pageIndex++;
 	}
 
 	onMount(() => {
@@ -72,9 +77,34 @@
 </script>
 
 <WindowInfiniteScroll {loadMore} triggerDistance={500} side="bottom" />
+<div class="p-4">
+	<SearchField bind:value={searchText} placeholder="Search Routes..." />
+</div>
 <div>
 	{#if isLoading}
 		<Loading />
+		{:else if searchText && filteredRoutes.length <= 0}
+		<NoData>
+			<IconCircle
+				iconPath={mdiMagnify}
+				circleClassName="!bg-base-100 !w-12 !h-12"
+				iconClassName="!w-6 !h-6 text-base-400"
+			/>
+			<div class="text-center text-base-400 text-sm mt-4">
+				No search results found for "{searchText}"!.
+			</div>
+		</NoData>
+	{:else if filteredRoutes.length <= 0}
+		<NoData>
+			<IconCircle
+				iconPath={mdiNotebookOutline}
+				circleClassName="!bg-base-100 !w-12 !h-12"
+				iconClassName="!w-6 !h-6 text-base-400"
+			/>
+			<div class="text-center text-base-400 text-sm mt-4">
+				No Products ! <br />Please add Products!
+			</div>
+		</NoData>
 	{:else}
 		{#each paginatedRoutes as route, index}
 			<ButtonListItem onClick={() => handelViewRoute(route)}>

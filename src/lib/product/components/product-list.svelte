@@ -5,7 +5,10 @@
 		IconCircle,
 		Loading,
 		mdiDotsHorizontal,
+		mdiMagnify,
 		navigate,
+		NoData,
+		SearchField,
 		sort
 	} from '@cloudparker/moldex.js';
 	import { getAllProducts } from '../product-service';
@@ -13,14 +16,26 @@
 	import { openProductDeleteDialog, openProductEditDialog } from '../product-ui-service';
 	import { onMount } from 'svelte';
 	import WindowInfiniteScroll from '$lib/core/components/window-infinite-scroll.svelte';
-	import { mdiPackageVariantClosed } from '$lib/core/services/app-icons-service';
+	import {
+		mdiNotebookOutline,
+		mdiPackageVariantClosed
+	} from '$lib/core/services/app-icons-service';
 	import { appState } from '$lib/core/services/app-state.svelte';
 
 	let products: ProductDataModel[] = $state([]);
-	let paginatedProducts: ProductDataModel[] = $state([]);
+	// let filteredProducts: ProductDataModel[] = $state([]);
+	// let paginatedProducts: ProductDataModel[] = $state([]);
 	let pageIndex: number = $state(0);
 	let pageSize: number = $state(10);
-	let isLoading: boolean = $state(false);
+	let isLoading: boolean = $state(true);
+	let searchText: string = $state('');
+
+	let filteredProducts = $derived(
+		products.filter((product) =>
+			searchText ? product.name?.toLowerCase().includes(searchText.toLowerCase()) : true
+		)
+	);
+	let paginatedProducts = $derived(filteredProducts.slice(0, (pageIndex + 1) * pageSize));
 
 	export async function loadProducts() {
 		isLoading = true;
@@ -40,23 +55,18 @@
 				await loadProducts();
 				break;
 			case 'View':
-				handelViewProduct(product);
+				handleViewProduct(product);
 				break;
 		}
 	}
 
-	function handelViewProduct(product: ProductDataModel) {
+	function handleViewProduct(product: ProductDataModel) {
 		navigate(`/restricted/products/view?productId=${product._id}`);
 	}
 
+	// Infinite scrolling logic
 	function loadMore() {
-		const start = pageIndex * pageSize;
-		const end = start + pageSize;
-		const newItems = products.slice(start, end);
-		if (newItems.length) {
-			paginatedProducts = [...paginatedProducts, ...newItems];
-			pageIndex++;
-		}
+		pageIndex++;
 	}
 
 	onMount(() => {
@@ -65,12 +75,37 @@
 </script>
 
 <WindowInfiniteScroll {loadMore} triggerDistance={500} side="bottom" />
+<div class="p-4">
+	<SearchField bind:value={searchText} placeholder="Search Products..." />
+</div>
 <div>
 	{#if isLoading}
 		<Loading />
+	{:else if searchText && filteredProducts.length <= 0}
+		<NoData>
+			<IconCircle
+				iconPath={mdiMagnify}
+				circleClassName="!bg-base-100 !w-12 !h-12"
+				iconClassName="!w-6 !h-6 text-base-400"
+			/>
+			<div class="text-center text-base-400 text-sm mt-4">
+				No search results found for "{searchText}"!.
+			</div>
+		</NoData>
+	{:else if filteredProducts.length <= 0}
+		<NoData>
+			<IconCircle
+				iconPath={mdiNotebookOutline}
+				circleClassName="!bg-base-100 !w-12 !h-12"
+				iconClassName="!w-6 !h-6 text-base-400"
+			/>
+			<div class="text-center text-base-400 text-sm mt-4">
+				No Products ! <br />Please add Products!
+			</div>
+		</NoData>
 	{:else}
-		{#each products as product, index}
-			<ButtonListItem onClick={() => handelViewProduct(product)}>
+		{#each paginatedProducts as product, index}
+			<ButtonListItem onClick={() => handleViewProduct(product)}>
 				<div>
 					<IconCircle
 						iconPath={mdiPackageVariantClosed}
