@@ -143,6 +143,20 @@
       ]
     },
     {
+      "collectionGroup": "teams",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "oid",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "uat",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
       "collectionGroup": "users",
       "queryScope": "COLLECTION",
       "fields": [

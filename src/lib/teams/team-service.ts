@@ -9,7 +9,7 @@ class TeamDatabaseService extends DatabaseService<TeamDataModel> {
 	protected syncEnabled: boolean = false;
 
 	// Name of the Firestore collection
-	protected collectionName: string = 'teams';
+	protected collectionName: string = 'visits';
 
 	// Private constructor to prevent direct instantiation
 	constructor() {
