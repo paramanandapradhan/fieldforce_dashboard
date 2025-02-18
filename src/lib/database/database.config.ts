@@ -85,6 +85,14 @@ export const stores: StoreDefinitionType[] = [
             { keyPath: ['oid', '_id'] },
         ],
     },
+    {
+        name: 'teams', primaryKey: '_onid',
+        indexes: [
+            { keyPath: 'oid' },
+            { keyPath: ['oid', '_uatdt'] },
+            { keyPath: ['oid', '_id'] },
+        ],
+    },
 ];
 
 
