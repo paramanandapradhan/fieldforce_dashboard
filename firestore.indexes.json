@@ -169,6 +169,20 @@
           "order": "ASCENDING"
         }
       ]
+    },
+    {
+      "collectionGroup": "visits",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "oid",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "uat",
+          "order": "ASCENDING"
+        }
+      ]
     }
   ],
   "fieldOverrides": [
