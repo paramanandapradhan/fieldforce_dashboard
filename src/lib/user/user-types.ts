@@ -10,6 +10,8 @@ export type UserDataModel = BaseDataModel & {
     photo?: string;
     phone?: string;
     email?: string;
+    team?: string;
+    manager?: string;
     gen?: string;
     rid?: string;
     ur?: boolean;
@@ -31,6 +33,7 @@ export type UserDataModel = BaseDataModel & {
     geo?: CustomerGeo;
     isActive?: boolean,
     canOrder?: boolean,
+
 }
 
 export type UserDataModelExtraType<T> = UserDataModel & {
@@ -84,7 +87,7 @@ export type CustomerMaster = {
     label?: string,
     extId?: string,
     creditLimit?: string,
-    
+
 }
 
 export type CustomerOwner = {

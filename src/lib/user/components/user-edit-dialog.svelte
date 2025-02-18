@@ -22,6 +22,8 @@
 	} from '../user-service';
 	import AttributeComboboxField from '$lib/attribute/components/attribute-combobox-field.svelte';
 	import { AttributeTypeEnum } from '$lib/attribute/attribute-service';
+	import UserComboboxField from './user-combobox-field.svelte';
+	import TeamComboboxField from '$lib/teams/components/team-combobox-field.svelte';
 
 	type Props = {
 		user?: UserDataModel;
@@ -38,6 +40,8 @@
 	let address = $state(user?.address || '');
 	let subtype = $state(user?.subtype || UserSubtypeEnum.USER_SUBTYPE_USER_STAFF);
 	let desig = $state(user?.desig || '');
+	let manager = $state(user?.manager || '');
+	let team = $state(user?.team || '');
 	let dob = $state(user?.dob || '');
 	let doj = $state(user?.doj || '');
 	let isActive = $state(user?.isActive || true);
@@ -64,6 +68,8 @@
 				type: UserTypeEnum.USER_TYPE_USER,
 				subtype,
 				desig,
+				manager,
+				team,
 				dept,
 				dob,
 				doj,
@@ -111,6 +117,17 @@
 		</div>
 		<div class="my-4">
 			<ComboboxField name="subtype" label="User Type" items={USER_SUBTYPES} bind:value={subtype} />
+		</div>
+		<div class="my-4">
+			<UserComboboxField
+				name="manager"
+				label="Manager"
+				bind:value={manager}
+				userType={UserTypeEnum.USER_TYPE_USER}
+			/>
+		</div>
+		<div class="my-4">
+			<TeamComboboxField name="team" label="Team" bind:value={team} />
 		</div>
 		<div class="my-4">
 			<AttributeComboboxField

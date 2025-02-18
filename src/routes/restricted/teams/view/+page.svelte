@@ -7,6 +7,8 @@
 		Drawer,
 		goBack,
 		isMobileScreen,
+		openLoadingDialog,
+		screenSize,
 		Sidebar
 	} from '@cloudparker/moldex.js';
 	import AppNavbar from '$lib/core/components/app-navbar.svelte';
@@ -18,17 +20,23 @@
 	import { getTeam } from '$lib/teams/team-service';
 	import TeamDetails from '$lib/teams/components/team-details.svelte';
 	import { openTeamEditDialog } from '$lib/teams/team-ui-service';
+	import { getAllUsers, syncUsers, updateUser, UserTypeEnum } from '$lib/user/user-service';
+	import type { UserDataModel } from '$lib/user/user-types';
+	import { openUserPickerDialog } from '$lib/user/user-ui-service';
+	import TeamUserList from '$lib/teams/components/team-user-list.svelte';
+	import TeamUserTable from '$lib/teams/components/team-user-table.svelte';
 
 	let drawerRef: Drawer;
 
 	let teamId: string = $derived(page.url.searchParams.get('teamId') || '');
 	let team: TeamDataModel | null = $state(null);
+	let teamUsers: UserDataModel[] = $state([]);
 
 	function handleMore() {
 		drawerRef && drawerRef.openDrawer();
 	}
 
-	async function loadTeams() {
+	async function loadTeam() {
 		if (teamId) {
 			team = await getTeam(teamId);
 		} else {
@@ -40,13 +48,45 @@
 		if (team) {
 			let res = await openTeamEditDialog(team);
 			if (res) {
-				loadTeams();
+				loadTeam();
 			}
 		}
 	}
 
+	async function loadTeamUsers() {
+		if (teamId) {
+			let array = (await getAllUsers({
+				type: UserTypeEnum.USER_TYPE_USER,
+				team: teamId
+			})) as UserDataModel[];
+
+			// console.log('array', array);
+			teamUsers = array;
+		} else {
+			teamUsers = [];
+		}
+	}
+
+	async function handleAddUser() {
+		let custId: string = (await openUserPickerDialog({
+			userType: UserTypeEnum.USER_TYPE_USER
+		})) as string;
+		if (custId && teamId) {
+			let loader = await openLoadingDialog();
+			await updateUser(custId, { team: teamId } as UserDataModel);
+			await syncUsers();
+			await loadTeamUsers();
+			await loader.closeDialog();
+		}
+	}
+
+	function handleChange() {
+		loadTeam();
+		loadTeamUsers();
+	}
+
 	onMount(() => {
-		loadTeams();
+		loadTeam();
 	});
 </script>
 
@@ -69,6 +109,23 @@
 							<TeamDetails {teamId} />
 						</div>
 					{/if}
+				</div>
+				<div class="bg-white rounded-lg shadow p-4 m-4">
+					<div class="flex">
+						<div class=" flex-grow">
+							<h3 class="text-lg font-bold">Team Members</h3>
+						</div>
+						<div>
+							<Button appearance="base" onClick={handleAddUser}>Add User</Button>
+						</div>
+					</div>
+					<div class="my-4">
+						{#if screenSize.isSm || screenSize.isMd || screenSize.isXs}
+							<TeamUserList users={teamUsers} onChange={handleChange} />
+						{:else}
+							<TeamUserTable users={teamUsers} onChange={handleChange} />
+						{/if}
+					</div>
 				</div>
 			</main>
 		</BackgroundGradient>

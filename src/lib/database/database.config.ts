@@ -9,6 +9,7 @@ export const stores: StoreDefinitionType[] = [
             { keyPath: ['oid', 'type'] },
             { keyPath: ['oid', 'type', 'subtype'] },
             { keyPath: ['oid', 'type', 'master.route',] },
+            { keyPath: ['oid', 'type', 'team',] },
             { keyPath: ['oid', '_uatdt'] },
             { keyPath: ['oid', '_id'] },
         ],
