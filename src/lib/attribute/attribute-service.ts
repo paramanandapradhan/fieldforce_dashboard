@@ -23,6 +23,7 @@ export enum AttributeTypeEnum {
     USER_DESIGNATION = '17',
     AREA = '18',
     USER_DEPARTMENT = '19',
+    TOUR_VISIT_TYPE = '20',
 }
 
 // Create the configuration array with an item for every enum value.
@@ -45,6 +46,7 @@ export const attributeTypeConfigs: AttributeTypeConfig[] = [
     { _id: AttributeTypeEnum.USER_DESIGNATION, label: 'User Designation' },
     { _id: AttributeTypeEnum.AREA, label: 'Area' },
     { _id: AttributeTypeEnum.USER_DEPARTMENT, label: 'User Department' },
+    { _id: AttributeTypeEnum.TOUR_VISIT_TYPE, label: 'Tour Visit Title' },
 ];
 
 

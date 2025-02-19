@@ -87,6 +87,7 @@
 
 	onMount(() => {
 		loadTeam();
+		loadTeamUsers()
 	});
 </script>
 

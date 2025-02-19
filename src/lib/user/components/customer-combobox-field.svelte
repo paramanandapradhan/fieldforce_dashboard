@@ -1,0 +1,83 @@
+<script lang="ts">
+	import AuthUserReady from '$lib/auth/components/auth-user-ready.svelte';
+	import {
+		ComboboxField,
+		sort,
+		type ComboboxFieldProps,
+		type InputFieldProps
+	} from '@cloudparker/moldex.js';
+
+	import type { CustomerDataModel, UserDataModel } from '../user-types';
+	import { getAllUsers, UserSubtypeEnum, UserTypeEnum } from '../user-service';
+	import { openUserEditDialog } from '../user-ui-service';
+
+	type Props = {
+		userType: UserTypeEnum;
+		userSubtype?: UserSubtypeEnum;
+		value?: string | string[] | null;
+	};
+
+	let {
+		value = $bindable(null),
+		titleFieldName = 'name',
+		subtitleFieldName = 'desc',
+		displayFieldName = 'name',
+		searchFieldName = 'name',
+		identityFieldName = '_id',
+		hasDropdownHeader = true,
+		hasDropdownHeaderSearch = true,
+		hasDropdownFooter = true,
+		hasDropdownFooterCreateButton = true,
+		userType,
+		userSubtype,
+		label,
+		...props
+	}: ComboboxFieldProps & InputFieldProps & Props = $props();
+
+	let users: CustomerDataModel[] = $state([]);
+
+	let createButtonLabel = $derived.by(() => {
+		return `Add ${label}`;
+	});
+
+	export async function loadCustomers() {
+		let array = ((await getAllUsers({ type: UserTypeEnum.USER_TYPE_CUSTOMER })) as CustomerDataModel[]) || [];
+		console.log('loadUsers', { type: UserTypeEnum.USER_TYPE_CUSTOMER, subtype: userSubtype }, array);
+		users = sort({ array, field: 'name' });
+	}
+
+	async function handleReady() {
+		await loadCustomers();
+	}
+
+	async function handelCreate() {
+		console.log('handelCreate');
+		if (userType) {
+			let res = await openUserEditDialog({ subtype: userSubtype });
+			if (res) {
+				loadCustomers();
+			}
+		}
+	}
+</script>
+
+<AuthUserReady onReady={handleReady} />
+<ComboboxField
+	bind:value
+	items={users}
+	{label}
+	{titleFieldName}
+	{subtitleFieldName}
+	{displayFieldName}
+	{searchFieldName}
+	{identityFieldName}
+	{hasDropdownHeader}
+	{hasDropdownHeaderSearch}
+	{hasDropdownFooter}
+	{hasDropdownFooterCreateButton}
+	{createButtonLabel}
+	dropdownFooterClassName="border-t"
+	createButtonClassName="border-primary text-primary hover:text-primary"
+	onCreateButtonClick={handelCreate}
+	{...props}
+/>
