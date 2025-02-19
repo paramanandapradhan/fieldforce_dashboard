@@ -1,5 +1,12 @@
 <script lang="ts">
-	import { CheckboxField, NumberField, showToast, TextField, type DialogExports } from '@cloudparker/moldex.js';
+	import {
+		CheckboxField,
+		NumberField,
+		showToast,
+		TextareaField,
+		TextField,
+		type DialogExports
+	} from '@cloudparker/moldex.js';
 	import type { VisitDataModel } from '../visite-type';
 	import { createVisit, getVisit, syncVisits, updateVisit } from '../visit-service';
 	import AttributeComboboxField from '$lib/attribute/components/attribute-combobox-field.svelte';
@@ -25,7 +32,7 @@
 		name = (name || '').trim();
 		desc = (desc || '').trim();
 
-		if (name) {
+		if (name && type) {
 			setOkEnabled(false);
 			setOkSpinner(true);
 			let payload = {
@@ -67,16 +74,27 @@
 			/>
 		</div>
 		<div class="my-4">
-			<TextField name="visit Title" label="Visit Title" maxlength={150} bind:value={name} />
+			<TextField
+				name="visit Title"
+				label="Visit Purpose"
+				maxlength={150}
+				bind:value={name}
+				required
+			/>
 		</div>
 		<div class="my-4">
-			<TextField name="desc" label="Description" maxlength={250} bind:value={desc} />
+			<TextareaField name="desc" label="Visit Details" maxlength={250} bind:value={desc} />
 		</div>
 		<div class="my-4">
-			<CustomerComboboxField userType={UserTypeEnum.USER_TYPE_CUSTOMER} name='Customer' label='Customer' bind:value={customer} />
+			<CustomerComboboxField
+				userType={UserTypeEnum.USER_TYPE_CUSTOMER}
+				name="Customer"
+				label="Customer"
+				bind:value={customer}
+			/>
 		</div>
 		<div class="my-4">
-			<CheckboxField name="isPlanned" label="is Planned" bind:value={isPlanned} />
+			<CheckboxField name="isPlanned" label="Planned Visit" bind:value={isPlanned} />
 		</div>
 	</div>
 </form>
