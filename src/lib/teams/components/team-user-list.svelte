@@ -77,11 +77,12 @@
 				<Button iconPath={mdiDeleteOutline} onClick={() => handleDelete(item)} />
 			</div>
 			<div class="mt-3">
-				<p><strong>Type:</strong> <TextUserSubtype input={item.subtype} /></p>
-				<p><strong>City:</strong> <TextAttribute input={item?.geo?.city} /></p>
-				<p><strong>Area:</strong> <TextAttribute input={item?.geo?.area} /></p>
+				<p><strong>Type:</strong> <TextUserSubtype input={item.subtype! || '-'} /></p>
+				<p><strong>Email:</strong> {item?.email || '-'}</p>
+				<p><strong>Phone:</strong> {item?.phone || '-'}</p>
 			</div>
 		</div>
+		<hr>
 	{/each}
 </div>
 

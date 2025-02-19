@@ -82,6 +82,7 @@
 				<p><strong>Area:</strong> <TextAttribute input={item?.geo?.area} /></p>
 			</div>
 		</div>
+		<hr>
 	{/each}
 </div>
 

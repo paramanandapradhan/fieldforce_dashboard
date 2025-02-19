@@ -151,7 +151,7 @@
 						</td>
 						<td class="text-left px-4">{user.email || '-'}</td>
 						<td class="text-left px-4">{user.phone || '-'}</td>
-						<td class="text-left px-4"><TextUserType input={user.type!} /> </td>
+						<td class="text-left px-4"><TextUserSubtype input={user?.subtype} /> </td>
 						<td class="text-left px-4">
 							<div class="flex justify-end">
 								<ButtonMenu

@@ -21,6 +21,7 @@
 		mdiPackageVariantClosed
 	} from '$lib/core/services/app-icons-service';
 	import { appState } from '$lib/core/services/app-state.svelte';
+	import TextUser from '$lib/user/components/text-user.svelte';
 
 	let teams: TeamDataModel[] = $state([]);
 	let pageIndex: number = $state(0);
@@ -140,7 +141,7 @@
 							</div>
 							<div class="text-sm text-base-500">{team.desc || '-'}</div>
 						</td>
-						<td class="text-left px-4">{team.manager || '-'}</td>
+						<td class="text-left px-4"><TextUser input={team?.manager} hideIcon/></td>
 						<td class="text-left px-4">
 							<div class="flex justify-end">
 								<ButtonMenu

@@ -60,8 +60,8 @@
 				<th class="text-left w-14"></th>
 				<th class="text-left p-4">Name</th>
 				<th class="text-left p-4">Type</th>
-				<th class="text-left p-4">City</th>
-				<th class="text-left p-4">Area</th>
+				<th class="text-left p-4">Email</th>
+				<th class="text-left p-4">Phone</th>
 				<th class="text-right p-4"></th>
 			</tr>
 		</thead>
@@ -86,13 +86,13 @@
 						</div>
 					</td>
 					<td class="text-left px-4">
-						<TextUserSubtype input={item.subtype} />
+						<TextUserSubtype input={item?.subtype! || '-'} />
 					</td>
 					<td class="text-left px-4">
-						<TextAttribute input={item?.geo?.city} />
+						{item.email || '-'}
 					</td>
 					<td class="text-left px-4">
-						<TextAttribute input={item?.geo?.area} />
+						{item.phone || '-'}
 					</td>
 					<td class="text-right px-4">
 						<div class="flex justify-end">

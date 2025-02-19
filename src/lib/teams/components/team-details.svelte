@@ -43,7 +43,7 @@
 						><td>Name</td><td>{team?.name || '-'}</td></tr
 					>
 					<tr><td>Description</td><td class="text-base-500 text-sm">{team?.desc || '-'}</td></tr>
-					<tr><td>Manager</td><td> <TextUser input={team?.manager} /></td></tr>
+					<tr><td>Manager</td><td> <TextUser input={team?.manager} hideIcon/></td></tr>
 				</tbody>
 			</table>
 		</div>

@@ -23,8 +23,6 @@
 	import { appState } from '$lib/core/services/app-state.svelte';
 
 	let teams: TeamDataModel[] = $state([]);
-	// let filteredTeams: TeamDataModel[] = $state([]);
-	// let paginatedTeams: TeamDataModel[] = $state([]);
 	let pageIndex: number = $state(0);
 	let pageSize: number = $state(10);
 	let isLoading: boolean = $state(true);

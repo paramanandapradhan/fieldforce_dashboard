@@ -63,7 +63,7 @@
 			<main>
 				<div class="pb-32">
 					<div class="p-4 flex flex-wrap items-center gap-4">
-						<div class="flex-grow"><h1 class="text-xl font-black">Products</h1></div>
+						<div class="flex-grow"><h1 class="text-xl font-black">Tour Visit</h1></div>
 						<div>
 							<Button
 								appearance="base"

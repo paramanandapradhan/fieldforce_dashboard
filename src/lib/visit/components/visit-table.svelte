@@ -69,7 +69,7 @@
 		}
 	}
 	function handleViewVisit(visit: VisitDataModel) {
-		navigate(`/restricted/products/view?productId=${visit._id}`);
+		navigate(`/restricted/visits/view?visitId=${visit._id}`);
 	}
 
 	// Handle page index changes
