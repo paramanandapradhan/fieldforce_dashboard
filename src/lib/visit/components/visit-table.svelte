@@ -122,10 +122,10 @@
 			<thead>
 				<tr>
 					<th class="text-left w-14"></th>
-					<th class="text-left p-4">Vistor</th>
-					<th class="text-left p-4">Visit Type</th>
 					<th class="text-left p-4">Visit Purpose</th>
 					<th class="text-left p-4">Visit Details</th>
+					<th class="text-left p-4">Vistor</th>
+					<th class="text-left p-4">Visit Type</th>
 					<th class="text-left p-4">Customer</th>
 					<th class="text-left p-4">Planned</th>
 					<th class="text-right p-4"></th>
@@ -141,7 +141,6 @@
 								circleClassName="!h-10 !w-10"
 							/>
 						</td>
-						<td class="text-left px-4"><TextUser input={visit.cby} hideIcon /></td>
 						<td class="text-left px-4">
 							<div>
 								<a href="/restricted/visits/view?visitId={visit._id}" class="hover:text-primary">
@@ -152,6 +151,7 @@
 						<td class="text-left px-4"
 							><div class="text-sm text-base-500">{visit.desc || '-'}</div></td
 						>
+						<td class="text-left px-4"><TextUser input={visit.cby} hideIcon /></td>
 						<td class="text-left px-4"> <TextAttribute input={visit?.type || '-'} /> </td>
 						<td class="text-left px-4"><TextUser input={visit?.customer || '-'} hideIcon /> </td>
 						<td class="text-left px-4">
