@@ -1,6 +1,6 @@
 import { getDialogSize, isMobileScreen, openDeleteConfirmDialog, openDialog, openLoadingDialog, openPickerDialog, showErrorToast, showSuccessToast, showToast } from "@cloudparker/moldex.js";
-import type { UserDataModel, UserTypeEnum } from "./user-types";
-import { deleteUser, getAllUsers, syncUsers } from "./user-service";
+import type { UserDataModel, } from "./user-types";
+import { deleteUser, getAllUsers, syncUsers, UserSubtypeEnum, UserTypeEnum } from "./user-service";
 import UserEditDialog from "./components/user-edit-dialog.svelte";
 import { ADMIN_USER_ID } from "$lib/core/services/app-service";
 
@@ -63,8 +63,9 @@ export async function openPartyEditDialog(guest?: UserDataModel) {
 }
 
 
-export async function openUserPickerDialog({ userType, multiple, value, maxlength }: { userType: UserTypeEnum, multiple?: boolean, value?: string, maxlength?: number }) {
-    let items = await getAllUsers({ type: userType }) as UserDataModel[];
+export async function openUserPickerDialog({ userType, userSubType, multiple, value, maxlength, }:
+    { userType: UserTypeEnum, userSubType?: UserSubtypeEnum, multiple?: boolean, value?: string, maxlength?: number }) {
+    let items = await getAllUsers({ type: userType, subtype: userSubType }) as UserDataModel[];
     let res = await openPickerDialog({
         items,
         value,

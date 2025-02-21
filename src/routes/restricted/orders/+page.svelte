@@ -11,6 +11,10 @@
 	import AppNavbar from '$lib/core/components/app-navbar.svelte';
 	import BackgroundGradient from '$lib/core/components/background-gradient.svelte';
 	import RestrictedDrawer from '$lib/drawer/components/restricted-drawer.svelte';
+	import { getAllUsers, UserTypeEnum } from '$lib/user/user-service';
+	import type { CustomerDataModel } from '$lib/user/user-types';
+	import { openUserPickerDialog } from '$lib/user/user-ui-service';
+	import { openProductListDialog } from '$lib/product/product-ui-service';
 
 	let drawerRef: Drawer;
 
@@ -18,7 +22,16 @@
 		drawerRef && drawerRef.openDrawer();
 	}
 
-	function handleAdd() {}
+	async function handleCreateOrder() {
+		let customer =
+			((await openUserPickerDialog({
+				userType: UserTypeEnum.USER_TYPE_CUSTOMER
+			})) as CustomerDataModel) || null;
+		if (customer) {
+			console.log('customer', customer);
+			await openProductListDialog();
+		}
+	}
 </script>
 
 <div class="min-h-full">
@@ -31,7 +44,7 @@
 				<div class="p-4 flex items-center justify-between">
 					<div><h1 class="text-xl font-black">Orders</h1></div>
 					<div>
-						<Button appearance="border-primary" onClick={handleAdd} label="ADD" />
+						<Button appearance="border-primary" onClick={handleCreateOrder} label="Create Order" />
 					</div>
 				</div>
 			</main>

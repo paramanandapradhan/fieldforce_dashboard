@@ -12,6 +12,7 @@ import ProductEditDialog from './components/product-edit-dialog.svelte';
 import type { ProductDataModel } from './product-type';
 import { ADMIN_USER_ID } from '$lib/core/services/app-service';
 import { deleteProduct, syncProducts } from './product-service';
+import ProductListDialog from './components/product-list-dialog.svelte';
 
 export async function openProductEditDialog(product?: ProductDataModel) {
 	let res = openDialog({
@@ -51,4 +52,25 @@ export async function openProductDeleteDialog(product: ProductDataModel) {
 		loading.closeDialog();
 		return product;
 	}
+}
+
+
+
+
+export async function openProductListDialog() {
+	let res = openDialog({
+		bodyComponent: ProductListDialog,
+		props: {},
+		hasTitle: true,
+		hasHeader: true,
+		title: ' Order',
+		hasHeaderBack: isMobileScreen(),
+		hasHeaderClose: !isMobileScreen(),
+		size: getDialogSize(),
+		hasFooter: true,
+		hasFooterCloseButton: true,
+		hasFooterOkButton: true,
+		footerOkButtonLable: 'Save',
+	});
+	return res;
 }

@@ -55,14 +55,14 @@
             <TextField
 				name="Product name"
 				label="Product name"
-				maxlength={150}
+				maxlength={80}
 				bind:value={name}
 				required
 				autofocus
 			/>
         </div>
         <div class="my-4">
-			<TextField name="desc" label="Description" maxlength={250} bind:value={desc} />
+			<TextField name="desc" label="Description" maxlength={100} bind:value={desc} />
 		</div>
         <div class="my-4">
             <NumberField name="mrp" label="MRP" bind:value={mrp}/>
