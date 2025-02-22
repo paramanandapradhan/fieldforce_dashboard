@@ -21,6 +21,11 @@
 		mdiPackageVariantClosed
 	} from '$lib/core/services/app-icons-service';
 	import { appState } from '$lib/core/services/app-state.svelte';
+	import { UserSubtypeEnum } from '$lib/user/user-service';
+	import TextUserSubtype from '$lib/user/components/text-user-subtype.svelte';
+	import TextUser from '$lib/user/components/text-user.svelte';
+	import TextAttributeType from '$lib/attribute/components/text-attribute-type.svelte';
+	import TextAttribute from '$lib/attribute/components/text-attribute.svelte';
 
 	let products: ProductDataModel[] = $state([]);
 	let pageIndex: number = $state(0);
@@ -120,6 +125,8 @@
 					<th class="text-left p-4">Name</th>
 					<th class="text-left p-4">MRP</th>
 					<th class="text-left p-4">Sales Price</th>
+					<th class="text-left p-4">Brand</th>
+					<th class="text-left p-4">Seller</th>
 					<th class="text-right p-4"></th>
 				</tr>
 			</thead>
@@ -146,6 +153,8 @@
 						</td>
 						<td class="text-left px-4">{product.mrp || '-'}</td>
 						<td class="text-left px-4">{product.salesPrice || '-'}</td>
+						<td class="text-left px-4"><TextAttribute input={product?.brand! || '-' }/> </td>
+						<td class="text-left px-4"> <TextUser input={product.seller || '-'} hideIcon/> </td>
 						<td class="text-left px-4">
 							<div class="flex justify-end">
 								<ButtonMenu

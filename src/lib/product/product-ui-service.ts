@@ -1,4 +1,5 @@
 import {
+	DialogSizeEnum,
 	getDialogSize,
 	isMobileScreen,
 	openDeleteConfirmDialog,
@@ -23,7 +24,7 @@ export async function openProductEditDialog(product?: ProductDataModel) {
 		title: product?._id ? 'Edit Product' : 'Add Product',
 		hasHeaderBack: isMobileScreen(),
 		hasHeaderClose: !isMobileScreen(),
-		size: getDialogSize(),
+		size: DialogSizeEnum.FULL,
 		hasFooter: true,
 		hasFooterCloseButton: true,
 		hasFooterOkButton: true,

@@ -4,6 +4,8 @@
 	import type { ProductDataModel } from '../product-type';
 	import { IconCircle } from '@cloudparker/moldex.js';
 	import { mdiPackageVariantClosed } from '$lib/core/services/app-icons-service';
+	import TextAttribute from '$lib/attribute/components/text-attribute.svelte';
+	import TextUser from '$lib/user/components/text-user.svelte';
 
 	type Props = {
 		productId: any;
@@ -44,6 +46,13 @@
 					<tr><td>Description</td><td class="text-base-500 text-sm">{product?.desc || '-'}</td></tr>
 					<tr><td>MRP</td><td>{product?.mrp || '-'}</td></tr>
 					<tr><td>Sales Price</td><td>{product?.salesPrice || '-'}</td></tr>
+					<tr><td>Type</td><td><TextAttribute input={product?.type || '-'}/> </td></tr>
+					<tr><td>UMO</td><td> <TextAttribute input={product?.umo || '-'}/></td></tr>
+					<tr><td>Categories</td><td><TextAttribute input={product?.categories || '-'}/></td></tr>
+					<tr><td>Brand</td><td><TextAttribute input={product?.brand || '-'}/> </td></tr>
+					<tr><td>Batch</td><td>{product?.batch || ''}</td></tr>
+					<tr><td>Note</td><td>{product?.note}</td></tr>
+					<tr><td>Seller</td><td><TextUser input={product?.seller || '-'} hideIcon/> </td></tr>
 				</tbody>
 			</table>
 		</div>

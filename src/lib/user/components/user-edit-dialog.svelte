@@ -95,7 +95,7 @@
 </script>
 
 <form id="user-edit-form" onsubmit={handleSubmit}>
-	<div class="px-6">
+	<div class="px-6 grid grid-cols-1 md:grid-cols-3 gap-4">
 		<div class="my-4">
 			<TextField
 				name="name"
