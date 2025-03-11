@@ -118,29 +118,29 @@
 			</div>
 		</NoData>
 	{:else}
-		<table class="min-w-full divide-y divide-base-200 table-fixed">
+		<table class="min-w-full divide-y divide-base-200 dark:divide-base-500 table-fixed">
 			<thead>
 				<tr>
-					<th class="text-left w-14"></th>
-					<th class="text-left p-4">Name</th>
-					<th class="text-left p-4">MRP</th>
-					<th class="text-left p-4">Sales Price</th>
-					<th class="text-left p-4">Brand</th>
-					<th class="text-left p-4">Seller</th>
-					<th class="text-right p-4"></th>
+					<th class="text-left w-14 dark:text-base-300"></th>
+					<th class="text-left p-4 dark:text-base-300">Name</th>
+					<th class="text-left p-4 dark:text-base-300">MRP</th>
+					<th class="text-left p-4 dark:text-base-300">Sales Price</th>
+					<th class="text-left p-4 dark:text-base-300">Brand</th>
+					<th class="text-left p-4 dark:text-base-300">Seller</th>
+					<th class="text-right p-4 dark:text-base-300"></th>
 				</tr>
 			</thead>
-			<tbody class="divide-y divide-base-200">
+			<tbody class="divide-y divide-base-200 dark:divide-base-500">
 				{#each paginatedProducts as product, index}
 					<tr>
-						<td class="text-left pl-4 py-1 w-14">
+						<td class="text-left pl-4 py-1 w-14 dark:text-base-300">
 							<IconCircle
 								iconPath={mdiPackageVariantClosed}
 								iconClassName="!h-5 !w-5 text-primary"
 								circleClassName="!h-10 !w-10"
 							/>
 						</td>
-						<td class="text-left px-4">
+						<td class="text-left px-4 dark:text-base-300">
 							<div>
 								<a
 									href="/restricted/products/view?productId={product._id}"
@@ -149,13 +149,13 @@
 									{product.name || '-'}
 								</a>
 							</div>
-							<div class="text-sm text-base-500">{product.desc || '-'}</div>
+							<div class="text-sm text-base-500 dark:text-base-400">{product.desc || '-'}</div>
 						</td>
-						<td class="text-left px-4">{product.mrp || '-'}</td>
-						<td class="text-left px-4">{product.salesPrice || '-'}</td>
-						<td class="text-left px-4"><TextAttribute input={product?.brand! || '-' }/> </td>
-						<td class="text-left px-4"> <TextUser input={product.seller || '-'} hideIcon/> </td>
-						<td class="text-left px-4">
+						<td class="text-left px-4 dark:text-base-300">{product.mrp || '-'}</td>
+						<td class="text-left px-4 dark:text-base-300">{product.salesPrice || '-'}</td>
+						<td class="text-left px-4 dark:text-base-300"><TextAttribute input={product?.brand! || '-'} /> </td>
+						<td class="text-left px-4 dark:text-base-300"> <TextUser input={product.seller || '-'} hideIcon /> </td>
+						<td class="text-left px-4 dark:text-base-300">
 							<div class="flex justify-end">
 								<ButtonMenu
 									menus={['View', 'Edit', 'Delete']}

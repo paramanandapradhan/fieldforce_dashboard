@@ -105,7 +105,7 @@
 		</NoData>
 	{:else}
 		{#each paginatedProducts as product, index}
-			<ButtonListItem onClick={() => handleViewProduct(product)}>
+			<ButtonListItem className="dark:hover:bg-base-600" onClick={() => handleViewProduct(product)}>
 				<div>
 					<IconCircle
 						iconPath={mdiPackageVariantClosed}
@@ -117,7 +117,7 @@
 					<div>
 						{product.name || '-'}
 					</div>
-					<div class="text-base-500 text-sm">
+					<div class="text-base-500 dark:text-base-400 text-sm">
 						{product.desc || ''}
 					</div>
 				</div>
