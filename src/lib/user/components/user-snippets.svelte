@@ -1,4 +1,4 @@
-<script lang="ts" module>
+<script context="module" lang="ts">
 	export { userPickerListItemSnippet, customerPickerListItemSnippet };
 </script>
 
