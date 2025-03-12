@@ -14,7 +14,7 @@
 	import { getAllUsers, UserTypeEnum } from '$lib/user/user-service';
 	import type { CustomerDataModel } from '$lib/user/user-types';
 	import { openUserPickerDialog } from '$lib/user/user-ui-service';
-	import { openProductListDialog } from '$lib/product/product-ui-service';
+	import { openAddToCartDialog } from '$lib/product/product-ui-service';
 
 	let drawerRef: Drawer;
 
@@ -29,7 +29,7 @@
 			})) as CustomerDataModel) || null;
 		if (customer) {
 			console.log('customer', customer);
-			await openProductListDialog();
+			await openAddToCartDialog();
 		}
 	}
 </script>

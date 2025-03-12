@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ProductCartListItem from '$lib/product/components/product-list-item.svelte';
+	import ProductCartListItem from '$lib/product/components/product-cart-list-item.svelte';
 	import { getAllProducts } from '$lib/product/product-service';
 
 	import type { ProductDataModel } from '$lib/product/product-type';

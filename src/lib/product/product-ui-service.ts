@@ -13,7 +13,7 @@ import ProductEditDialog from './components/product-edit-dialog.svelte';
 import type { ProductDataModel } from './product-type';
 import { ADMIN_USER_ID } from '$lib/core/services/app-service';
 import { deleteProduct, syncProducts } from './product-service';
-import ProductListDialog from './components/product-list-dialog.svelte';
+import ProductListDialog from './components/product-cart-list-dialog.svelte';
 
 export async function openProductEditDialog(product?: ProductDataModel) {
 	let res = openDialog({
@@ -58,7 +58,7 @@ export async function openProductDeleteDialog(product: ProductDataModel) {
 
 
 
-export async function openProductListDialog() {
+export async function openAddToCartDialog() {
 	let res = openDialog({
 		bodyComponent: ProductListDialog,
 		props: {},
