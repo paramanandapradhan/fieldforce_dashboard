@@ -64,7 +64,7 @@ export async function openProductListDialog() {
 		props: {},
 		hasTitle: true,
 		hasHeader: true,
-		title: ' Order',
+		title: 'Products',
 		hasHeaderBack: isMobileScreen(),
 		hasHeaderClose: !isMobileScreen(),
 		size: getDialogSize(),

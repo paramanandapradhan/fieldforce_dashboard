@@ -3,6 +3,7 @@ import type { UserDataModel, } from "./user-types";
 import { deleteUser, getAllUsers, syncUsers, UserSubtypeEnum, UserTypeEnum } from "./user-service";
 import UserEditDialog from "./components/user-edit-dialog.svelte";
 import { ADMIN_USER_ID } from "$lib/core/services/app-service";
+import { customerPickerListItemSnippet, userPickerListItemSnippet } from "./components/user-snippets.svelte";
 
 
 export async function openUserEditDialog(user?: UserDataModel) {
@@ -79,10 +80,14 @@ export async function openUserPickerDialog({ userType, userSubType, multiple, va
         hasFooterCloseButton: multiple,
         hasFooterOkButton: multiple,
         footerOkButtonLable: 'Select',
-        title: `Pick`
+        hasArrow: true,
+        title: userType == UserTypeEnum.USER_TYPE_CUSTOMER ? `Select Customer` : `Select User`,
+        itemTileSnippet: userType == UserTypeEnum.USER_TYPE_CUSTOMER ? customerPickerListItemSnippet : userPickerListItemSnippet,
     });
     return res;
 }
+
+
 
 export async function openPartyPickerDialog(value?: string[] | string): Promise<string | string[]> {
     // let res: string | string[] = await openComponentDialog({
