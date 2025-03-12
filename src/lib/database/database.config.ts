@@ -102,6 +102,21 @@ export const stores: StoreDefinitionType[] = [
             { keyPath: ['oid', '_id'] },
         ],
     },
+    {
+        name: 'carts', primaryKey: '_id',
+        indexes: [
+            { keyPath: ['oid', 'uid'] },
+            { keyPath: ['oid', '_id'] },
+        ],
+    },
+    {
+        name: 'favorites', primaryKey: '_id',
+        indexes: [
+            { keyPath: 'oid' },
+            { keyPath: ['oid', 'uid'] },
+            { keyPath: ['oid', '_id'] },
+        ],
+    },
 ];
 
 

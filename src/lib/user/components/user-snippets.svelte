@@ -13,11 +13,11 @@
 	<div>
 		<IconCircle iconPath={mdiAccount}></IconCircle>
 	</div>
-	<div class="flex-grow">
+	<div class="flex-grow px-2">
 		<div>
 			{item?.name || ''}
 		</div>
-		<div class="text-sm text-base">
+		<div class="text-xs text-base font-thin">
 			{item?.desc || ''}
 		</div>
 	</div>
@@ -27,11 +27,11 @@
 	<div>
 		<IconCircle iconPath={mdiBriefcaseAccount}></IconCircle>
 	</div>
-	<div class="flex-grow">
+	<div class="flex-grow px-2">
 		<div>
 			{item?.name || ''}
 		</div>
-		<div class="text-sm text-base">
+		<div class="text-xs text-base font-thin">
 			{item?.desc || ''}
 		</div>
 	</div>

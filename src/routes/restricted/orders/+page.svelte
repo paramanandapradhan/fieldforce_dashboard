@@ -23,13 +23,11 @@
 	}
 
 	async function handleCreateOrder() {
-		let customer =
-			((await openUserPickerDialog({
-				userType: UserTypeEnum.USER_TYPE_CUSTOMER
-			})) as CustomerDataModel) || null;
-		if (customer) {
-			console.log('customer', customer);
-			await openAddToCartDialog();
+		let customerId: string = (await openUserPickerDialog({
+			userType: UserTypeEnum.USER_TYPE_CUSTOMER
+		})) as string;
+		if (customerId) {
+			await openAddToCartDialog(customerId);
 		}
 	}
 </script>

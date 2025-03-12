@@ -58,10 +58,12 @@ export async function openProductDeleteDialog(product: ProductDataModel) {
 
 
 
-export async function openAddToCartDialog() {
+export async function openAddToCartDialog(customerId:string) {
 	let res = openDialog({
 		bodyComponent: ProductListDialog,
-		props: {},
+		props: {
+			customerId
+		},
 		hasTitle: true,
 		hasHeader: true,
 		title: 'Products',

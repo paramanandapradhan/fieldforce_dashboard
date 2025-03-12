@@ -33,7 +33,6 @@
 		editableValue += val;
 		if (editableValue > max) editableValue = max;
 		if (editableValue < min) editableValue = min;
-		onChange && onChange(val);
 	}
 
 	function handleInput() {
@@ -43,6 +42,7 @@
 
 	$effect(() => {
 		value = editableValue;
+		onChange && onChange(value);
 	});
 </script>
 

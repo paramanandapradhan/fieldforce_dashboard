@@ -6,10 +6,12 @@
 	type Props = {
 		product: ProductDataModel;
 		quantity?: number;
+		onQuantityChange?: (qty: number) => void;
 	};
 
-	let { product, quantity = 0 }: Props = $props();
+	let { product, quantity = 0, onQuantityChange }: Props = $props();
 	let price = $derived((product.salesPrice || 0) * quantity);
+
 </script>
 
 <div class="flex gap-4">
@@ -31,7 +33,7 @@
 	</div>
 	<div>
 		<div>
-			<ButtonIncrement bind:value={quantity} />
+			<ButtonIncrement bind:value={quantity} onChange={onQuantityChange} />
 		</div>
 		{#if price}
 			<div class="text-center text-sm text-base font-thin pt-2">
