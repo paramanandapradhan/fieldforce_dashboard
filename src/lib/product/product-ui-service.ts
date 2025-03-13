@@ -58,7 +58,7 @@ export async function openProductDeleteDialog(product: ProductDataModel) {
 
 
 
-export async function openAddToCartDialog(customerId:string) {
+export async function openAddToCartDialog(customerId: string) {
 	let res = openDialog({
 		bodyComponent: ProductListDialog,
 		props: {
@@ -67,13 +67,7 @@ export async function openAddToCartDialog(customerId:string) {
 		hasTitle: true,
 		hasHeader: true,
 		title: 'Products',
-		hasHeaderBack: isMobileScreen(),
-		hasHeaderClose: !isMobileScreen(),
-		size: getDialogSize(),
 		hasFooter: true,
-		hasFooterCloseButton: true,
-		hasFooterOkButton: true,
-		footerOkButtonLable: 'Save',
 	});
 	return res;
 }

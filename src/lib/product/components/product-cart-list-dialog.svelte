@@ -4,6 +4,7 @@
 	import {
 		mdiAccount,
 		mdiCart,
+		mdiChevronDoubleRight,
 		mdiHeart,
 		mdiHeartOutline
 	} from '$lib/core/services/app-icons-service';
@@ -29,7 +30,7 @@
 		customerId: string;
 	};
 
-	let { customerId, setHeaderSnippet }: DialogExports & Props = $props();
+	let { customerId, setHeaderSnippet, setFooterSnippet }: DialogExports & Props = $props();
 
 	let cartItems: CartDataModel[] = $state([]);
 
@@ -84,15 +85,14 @@
 				hasHeader: true,
 				hasFooter: true,
 				hasTitle: true,
-				hasFooterCloseButton: true
 			});
-			 
 		} else {
 			showToast({ msg: 'No items in cart!' });
 		}
 	}
 
 	async function load() {
+		setFooterSnippet(footerSnippet);
 		setHeaderSnippet(headerSnippet);
 		await loadCartItems();
 		await loadProducts();
@@ -108,6 +108,22 @@
 		<Button iconPath={mdiHeartOutline}></Button>
 		<ButtonSearch></ButtonSearch>
 		<ProductCartButton {totalQuantity} onClick={handleCartClick}></ProductCartButton>
+	</div>
+{/snippet}
+
+{#snippet footerSnippet()}
+	<div class="flex">
+		<Button
+			appearance="primary"
+			className="px-8"
+			disabled={!totalQuantity}
+			onClick={handleCartClick}
+		>
+			<div>Proceed</div>
+			<div>
+				<Icon path={mdiChevronDoubleRight}></Icon>
+			</div>
+		</Button>
 	</div>
 {/snippet}
 
