@@ -40,7 +40,7 @@
 	<!-- Navigation Buttons -->
 	<div class="flex-1 overflow-y-auto py-2">
 		<Button
-			className={`w-full !text-start !justify-start !gap-4 ${active === '/restricted/home' ? 'bg-primary-50' : ''}`}
+			className={`w-full !text-start !justify-start !gap-4 rounded-none  ${active === '/restricted/home' ? 'bg-primary-50 dark:bg-base-700 font-bold' : ''}`}
 			onClick={(ev) => handleNavigate('/restricted/home', ev)}
 		>
 			<IconCircle iconPath={mdiHomeVariant} iconClassName="text-primary" />
@@ -48,7 +48,7 @@
 		</Button>
 
 		<Button
-			className={`w-full !text-start !justify-start !gap-4 ${active.startsWith('/restricted/products') ? 'bg-primary-50 ' : ''}`}
+			className={`w-full !text-start !justify-start !gap-4 rounded-none  ${active.startsWith('/restricted/products') ? 'bg-primary-50 dark:bg-base-700  font-bold' : ''}`}
 			onClick={(ev) => handleNavigate('/restricted/products', ev)}
 		>
 			<IconCircle iconPath={mdiPackageVariantClosed} iconClassName="text-primary" />
@@ -56,7 +56,7 @@
 		</Button>
 
 		<Button
-			className={`w-full !text-start !justify-start !gap-4 ${active.startsWith('/restricted/orders') ? 'bg-primary-50 ' : ''}`}
+			className={`w-full !text-start !justify-start !gap-4 rounded-none  ${active.startsWith('/restricted/orders') ? 'bg-primary-50 dark:bg-base-700  font-bold' : ''}`}
 			onClick={(ev) => handleNavigate('/restricted/orders', ev)}
 		>
 			<IconCircle iconPath={mdiTextBoxCheckOutline} iconClassName="text-primary" />
@@ -64,7 +64,7 @@
 		</Button>
 
 		<Button
-			className={`w-full !text-start !justify-start !gap-4 ${active.startsWith('/restricted/customers') ? 'bg-primary-50' : ''}`}
+			className={`w-full !text-start !justify-start !gap-4 rounded-none  ${active.startsWith('/restricted/customers') ? 'bg-primary-50 dark:bg-base-700  font-bold' : ''}`}
 			onClick={(ev) => handleNavigate('/restricted/customers', ev)}
 		>
 			<IconCircle iconPath={mdiBriefcaseAccount} iconClassName="text-primary" />
@@ -72,7 +72,7 @@
 		</Button>
 
 		<Button
-			className={`w-full !text-start !justify-start !gap-4 ${active.startsWith('/restricted/routes') ? 'bg-primary-50' : ''}`}
+			className={`w-full !text-start !justify-start !gap-4 rounded-none  ${active.startsWith('/restricted/routes') ? 'bg-primary-50 dark:bg-base-700 font-bold' : ''}`}
 			onClick={(ev) => handleNavigate('/restricted/routes', ev)}
 		>
 			<IconCircle iconPath={mdiMapMarkerPath} iconClassName="text-primary" />
@@ -80,7 +80,7 @@
 		</Button>
 
 		<Button
-			className={`w-full !text-start !justify-start !gap-4 ${active.startsWith('/restricted/users') ? 'bg-primary-50 ' : ''}`}
+			className={`w-full !text-start !justify-start !gap-4 rounded-none  ${active.startsWith('/restricted/users') ? 'bg-primary-50 dark:bg-base-700  font-bold' : ''}`}
 			onClick={(ev) => handleNavigate('/restricted/users', ev)}
 		>
 			<IconCircle iconPath={mdiAccount} iconClassName="text-primary" />
@@ -88,7 +88,7 @@
 		</Button>
 
 		<Button
-			className={`w-full !text-start !justify-start !gap-4 ${active.startsWith('/restricted/teams') ? 'bg-primary-50 ' : ''}`}
+			className={`w-full !text-start !justify-start !gap-4 rounded-none  ${active.startsWith('/restricted/teams') ? 'bg-primary-50 dark:bg-base-700  font-bold' : ''}`}
 			onClick={(ev) => handleNavigate('/restricted/teams', ev)}
 		>
 			<IconCircle iconPath={mdiAccount} iconClassName="text-primary" />
@@ -96,7 +96,7 @@
 		</Button>
 
 		<Button
-			className={`w-full !text-start !justify-start !gap-4 ${active.startsWith('/restricted/attendance') ? 'bg-primary-50 ' : ''}`}
+			className={`w-full !text-start !justify-start !gap-4 rounded-none  ${active.startsWith('/restricted/attendance') ? 'bg-primary-50 dark:bg-base-700  font-bold' : ''}`}
 			onClick={(ev) => handleNavigate('/restricted/attendance', ev)}
 		>
 			<IconCircle iconPath={mdiAccount} iconClassName="text-primary" />
@@ -104,14 +104,14 @@
 		</Button>
 
 		<Button
-			className={`w-full !text-start !justify-start !gap-4 ${active.startsWith('/restricted/visits') ? 'bg-primary-50 ' : ''}`}
+			className={`w-full !text-start !justify-start !gap-4 rounded-none  ${active.startsWith('/restricted/visits') ? 'bg-primary-50 dark:bg-base-700  font-bold' : ''}`}
 			onClick={(ev) => handleNavigate('/restricted/visits', ev)}
 		>
 			<IconCircle iconPath={mdiAccount} iconClassName="text-primary" />
 			<div>Tour Visits</div>
 		</Button>
 		<Button
-			className={`w-full !text-start !justify-start !gap-4 ${active.startsWith('/restricted/activities') ? 'bg-primary-50 ' : ''}`}
+			className={`w-full !text-start !justify-start !gap-4 rounded-none  ${active.startsWith('/restricted/activities') ? 'bg-primary-50 dark:bg-base-700  font-bold' : ''}`}
 			onClick={(ev) => handleNavigate('/restricted/activities', ev)}
 		>
 			<IconCircle iconPath={mdiAccount} iconClassName="text-primary" />
@@ -119,7 +119,7 @@
 		</Button>
 
 		<Button
-			className={`w-full !text-start !justify-start ${active.startsWith('/restricted/attributes') ? 'bg-primary-50 ' : ''}`}
+			className={`w-full !text-start !justify-start rounded-none  ${active.startsWith('/restricted/attributes') ? 'bg-primary-50 dark:bg-base-700  font-bold' : ''}`}
 			onClick={(ev) => handleNavigate('/restricted/attributes', ev)}
 		>
 			<IconCircle iconPath={mdiFormatListBulleted} iconClassName="text-primary" />

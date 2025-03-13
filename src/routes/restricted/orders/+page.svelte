@@ -40,7 +40,7 @@
 		<BackgroundGradient>
 			<main>
 				<div class="p-4 flex items-center justify-between">
-					<div><h1 class="text-xl font-black">Orders</h1></div>
+					<div><h1 class="text-xl font-black dark:text-base-100">Orders</h1></div>
 					<div>
 						<Button appearance="border-primary" onClick={handleCreateOrder} label="Create Order" />
 					</div>
