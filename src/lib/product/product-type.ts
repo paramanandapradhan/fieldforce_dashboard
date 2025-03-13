@@ -5,7 +5,7 @@ export type ProductDataModel = BaseDataModel & {
     name?:string
     desc?:string
     mrp?:number
-    salesPrice?:number
+    salePrice?:number
     type?:string
     umo?:string //Unit of masurment
     categories?:string;

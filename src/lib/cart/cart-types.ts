@@ -5,4 +5,5 @@ export type CartDataModel = {
     product?: string,
     oid?: string,
     quantity?: number,
+    salePrice?:number,
 }

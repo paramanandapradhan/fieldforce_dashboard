@@ -50,7 +50,7 @@
 	<button
 		{id}
 		type="button"
-		class=" w-20 min-w-20 py-1 flex justify-center text-primary border-primary font-blod border rounded {className} {zeroCountClassName}"
+		class=" w-20 min-w-20 py-1 flex justify-center text-primary border-primary font-blod border rounded dark:border-base-400 dark:bg-base-600 dark:text-base-300 {className} {zeroCountClassName}"
 		onclick={() => handleClick(1)}
 	>
 		{label}
@@ -58,7 +58,7 @@
 {:else}
 	<div
 		{id}
-		class="w-20 min-w-20 flex items-center justify-between bg-primary text-white font-blod border rounded {editableValue >=
+		class="w-20 min-w-20 flex items-center justify-between bg-primary text-white font-blod border rounded dark:border-base-400 dark:bg-base-600 {editableValue >=
 		0
 			? positiveCountClassName
 			: negativeCountClassName}"

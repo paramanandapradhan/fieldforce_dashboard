@@ -6,7 +6,7 @@ import type { CartDataModel } from "./cart-types";
 
 const storeName = 'carts';
 
-export function addToCart(product: ProductDataModel, quantity: number = 0, uid: string) {
+export function addToCart({ product, quantity = 0, salePrice = 0, uid }: { product: ProductDataModel, quantity: number, salePrice: number, uid: string }) {
     const store = getLocalDatabaseStore(storeName);
     const oid = getAuthOrgId();
     const _id = `${oid}-${uid}-${product._id}`;
@@ -16,13 +16,19 @@ export function addToCart(product: ProductDataModel, quantity: number = 0, uid: 
         oid,
         product: product._id,
         quantity: quantity || 0,
+        salePrice,
     }
-    let item = store?.get<CartDataModel>(IdbWhere('_id', '==', _id));
-    if (item) {
-        return store?.update<CartDataModel>(payload);
+    if (quantity) {
+        let item = store?.get<CartDataModel>(IdbWhere('_id', '==', _id));
+        if (item) {
+            return store?.update<CartDataModel>(payload);
+        } else {
+            return store?.insert<CartDataModel>(payload);
+        }
     } else {
-        return store?.insert<CartDataModel>(payload);
+        return store?.remove(_id);
     }
+
 }
 
 
