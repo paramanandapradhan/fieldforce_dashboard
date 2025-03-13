@@ -1,7 +1,12 @@
 <script lang="ts">
-	import { addToCart, getCartItems } from '$lib/cart/cart-service';
+	import { addToCart, clearCart, getCartItems } from '$lib/cart/cart-service';
 	import type { CartDataModel } from '$lib/cart/cart-types';
 	import ButtonIncrement from '$lib/core/components/button-increment.svelte';
+	import {
+		mdiAccount,
+		mdiCartRemove,
+		mdiCloseCircleOutline
+	} from '$lib/core/services/app-icons-service';
 	import { getAllProducts } from '$lib/product/product-service';
 
 	import type { ProductDataModel } from '$lib/product/product-type';
@@ -11,6 +16,7 @@
 	import {
 		Button,
 		Icon,
+		openDeleteConfirmDialog,
 		sort,
 		TextareaField,
 		TextCurrency,
@@ -25,7 +31,8 @@
 	type ProductMap = { [key: string]: ProductDataModel };
 	type QuantityMap = { [key: string]: number };
 
-	let { customerId, setHeaderSnippet, setFooterSnippet }: DialogExports & Props = $props();
+	let { customerId, setHeaderSnippet, setFooterSnippet, closeDialog }: DialogExports & Props =
+		$props();
 
 	let cartItems: CartDataModel[] = $state([]);
 
@@ -84,6 +91,19 @@
 		await loadCartItems();
 	}
 
+	async function handleClearCart() {
+		if (
+			await openDeleteConfirmDialog({
+				msg: 'Are you sure to delete all items from Cart?',
+				title: 'Clear Cart',
+				footerOkButtonLable: 'Clear Cart'
+			})
+		) {
+			await clearCart(customerId);
+			closeDialog();
+		}
+	}
+
 	onMount(async () => {
 		setFooterSnippet(footerSnippet);
 		await loadCartItems();
@@ -94,7 +114,7 @@
 {#snippet footerSnippet()}
 	<div class="flex justify-between gap-12">
 		<div>
-			<div class="text-base-400 text-sm">Payble</div>
+			<div class="text-base-400 dark:text-base text-sm">Payble</div>
 			<div class="font-bold text-sm text-base">
 				<TextCurrency input={totalAmount} hasSymbol symbol="₹" />
 			</div>
@@ -108,7 +128,7 @@
 <div class="px-4">
 	<section>
 		<div>
-			<h2 class="text-lg font-thin">Items</h2>
+			<h2 class="text-lg font-thin dark:text-base-300">Items</h2>
 		</div>
 		<div class="my-6">
 			<table class="table-auto w-full text-base-700 dark:text-base-400 text-sm">
@@ -152,33 +172,34 @@
 			</table>
 		</div>
 	</section>
-	<section
-		class="flex justify-end pt-6 mt-6 border-t-2 border-base dark:text-base-300 dark:border-base-300 text-xl text-base ml-36 gap-6"
-	>
+	<section class="flex justify-end pt-6 mt-6 b dark:text-base-300 text-xl text-base ml-36 gap-6">
 		<div>Total :</div>
 		<div>
 			<TextCurrency input={totalAmount} hasSymbol symbol="₹" />
 		</div>
 	</section>
-	<section class="my-6 mt-12 p-4 bg-base-100 rounded">
-		<h3 class="text-lg py-2 text-base font-thin">Delivery Details</h3>
+	<section class="my-6 mt-12 p-4 bg-base-100 dark:bg-base-700 rounded">
+		<h3 class="text-lg py-2 text-base dark:text-base-300 font-thin">Delivery Details</h3>
 		<hr />
 		<div class="my-4">
-			<div class="font-bold"><TextUser input={customerId} hideIcon hideDropdown></TextUser></div>
+			<div class="font-bold dark:text-base-200">
+				<TextUser input={customerId} hideIcon hideDropdown></TextUser>
+			</div>
 			<UserLoader userId={customerId} bind:user={customer}>
 				{#if customer}
 					<div>
-						<span class="text-base"> Phone : </span>
-
-						{customer.delivery?.phone || ''}
+						<span class="text-base dark:text-base-400"> Phone : </span>
+						<span class="dark:text-base-300">
+							{customer.delivery?.phone || ''}
+						</span>
 					</div>
 					<div>
-						<span class="text-base">Email :</span>
-						{customer.delivery?.email || ''}
+						<span class="text-base dark:text-base-400">Email :</span>
+						<span class="dark:text-base-300">{customer.delivery?.email || ''}</span>
 					</div>
 					<div>
-						<div class="text-base">Address:</div>
-						<div>
+						<div class="text-base dark:text-base-400">Address:</div>
+						<div class="dark:text-base-300">
 							<address>
 								{customer.delivery?.address || ''}
 							</address>
@@ -188,16 +209,21 @@
 			</UserLoader>
 		</div>
 	</section>
-	<section class="my-6 p-4 bg-base-100 rounded">
-		<h3 class="text-lg py-2 text-base font-thin">Note</h3>
-		<hr />
+	<section class="my-6 p-4 bg-base-100 dark:bg-base-700 rounded">
+		<h3 class="text-lg py-2 text-base dark:text-base-300 font-thin">Note</h3>
+		<hr class="border-base" />
 		<div class="my-4">
-			<TextareaField placeholder="Write order note" />
+			<TextareaField placeholder="Write order note" maxlength={300} />
 		</div>
 	</section>
-	<!-- <section class="my-6 p-4 bg-base-100 rounded">
-
-	</section> -->
+	<section class="py-8">
+		<div class="flex justify-center">
+			<Button appearance="border" className="px-12" onClick={handleClearCart}>
+				<div><Icon path={mdiCartRemove}></Icon></div>
+				<div>Clear Cart</div>
+			</Button>
+		</div>
+	</section>
 </div>
 
 <style>

@@ -1,5 +1,4 @@
 <script lang="ts">
-	import type { FormEventHandler } from 'svelte/elements';
 
 	type Props = {
 		id?: string;
@@ -27,26 +26,26 @@
 		onChange
 	}: Props = $props();
 
-	let editableValue = $state(value || 0);
 
 	function handleClick(val: number) {
-		editableValue += val;
-		if (editableValue > max) editableValue = max;
-		if (editableValue < min) editableValue = min;
+		value += val;
+		if (value > max) value = max;
+		if (value < min) value = min;
+		onChange && onChange(value);
 	}
 
 	function handleInput() {
-		if (editableValue > max) editableValue = max;
-		if (editableValue < min) editableValue = min;
+		if (value > max) value = max;
+		if (value < min) value = min;
+		onChange && onChange(value);
 	}
 
 	$effect(() => {
-		value = editableValue;
-		onChange && onChange(value);
+		value = value;
 	});
 </script>
 
-{#if editableValue == 0}
+{#if value == 0}
 	<button
 		{id}
 		type="button"
@@ -58,7 +57,7 @@
 {:else}
 	<div
 		{id}
-		class="w-20 min-w-20 flex items-center justify-between bg-primary text-white font-blod border rounded dark:border-base-400 dark:bg-base-600 {editableValue >=
+		class="w-20 min-w-20 flex items-center justify-between bg-primary text-white font-blod border rounded dark:border-base-400 dark:bg-base-600 {value >=
 		0
 			? positiveCountClassName
 			: negativeCountClassName}"
@@ -68,7 +67,7 @@
 				type="button"
 				class="px-2 py-1"
 				onclick={() => handleClick(-1)}
-				disabled={editableValue == min}
+				disabled={value == min}
 			>
 				-
 			</button>
@@ -82,7 +81,7 @@
 				{max}
 				{min}
 				oninput={handleInput}
-				bind:value={editableValue}
+				bind:value={value}
 			/>
 		</div>
 		<div>
@@ -90,7 +89,7 @@
 				type="button"
 				class="px-2 py-1"
 				onclick={() => handleClick(1)}
-				disabled={editableValue == max}
+				disabled={value == max}
 			>
 				+
 			</button>

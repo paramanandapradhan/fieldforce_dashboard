@@ -11,7 +11,6 @@
 
 	let { product, quantity = 0, onQuantityChange }: Props = $props();
 	let price = $derived((product.salePrice || 0) * quantity);
-
 </script>
 
 <div class="flex gap-4">

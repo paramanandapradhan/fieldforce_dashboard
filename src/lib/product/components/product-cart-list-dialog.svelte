@@ -15,7 +15,9 @@
 	import {
 		Button,
 		ButtonSearch,
+		DialogSizeEnum,
 		Icon,
+		isMobileScreen,
 		openDialog,
 		showToast,
 		sort,
@@ -36,7 +38,7 @@
 
 	let products: ProductDataModel[] = $state([]);
 
-	let productQuantityMap: { [key: string]: number } = {};
+	let productQuantityMap: { [key: string]: number } = $state({});
 
 	let totalQuantity: number = $derived.by(() => {
 		return (cartItems || []).reduce((acc: number, item) => {
@@ -85,20 +87,23 @@
 				hasHeader: true,
 				hasFooter: true,
 				hasTitle: true,
+				size: isMobileScreen() ? DialogSizeEnum.FULL : DialogSizeEnum.LG
 			});
+			await load();
 		} else {
 			showToast({ msg: 'No items in cart!' });
 		}
 	}
 
 	async function load() {
-		setFooterSnippet(footerSnippet);
-		setHeaderSnippet(headerSnippet);
+		productQuantityMap = {};
 		await loadCartItems();
 		await loadProducts();
 	}
 
 	onMount(async () => {
+		setFooterSnippet(footerSnippet);
+		setHeaderSnippet(headerSnippet);
 		load();
 	});
 </script>

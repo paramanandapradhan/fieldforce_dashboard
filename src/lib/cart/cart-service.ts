@@ -7,6 +7,7 @@ import type { CartDataModel } from "./cart-types";
 const storeName = 'carts';
 
 export function addToCart({ product, quantity = 0, salePrice = 0, uid }: { product: ProductDataModel, quantity: number, salePrice: number, uid: string }) {
+    console.log('Add to Kart called!', product._id)
     const store = getLocalDatabaseStore(storeName);
     const oid = getAuthOrgId();
     const _id = `${oid}-${uid}-${product._id}`;
@@ -45,5 +46,14 @@ export function removeFromCart(product: ProductDataModel, uid: string) {
     const oid = getAuthOrgId();
     const _id = `${oid}-${uid}-${product._id}`;
     return store?.remove(_id);
+}
+
+
+export async function clearCart(uid: string) {
+    const store = getLocalDatabaseStore(storeName);
+    let items = await getCartItems(uid);
+    let ids = items?.map((item) => item._id!) as string[];
+    console.log('Deleting ids', ids);
+    return await store?.remove(ids)
 }
 

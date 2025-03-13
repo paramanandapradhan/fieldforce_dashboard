@@ -27,7 +27,7 @@
 		"@cloudparker/easy-cropperjs-svelte": "^2.4.0",
 		"@cloudparker/easy-idb": "^1.2.0",
 		"@cloudparker/easy-script-loader-svelte": "^4.1.1",
-		"@cloudparker/moldex.js": "^0.0.93",
+		"@cloudparker/moldex.js": "^0.0.94",
 		"@playwright/test": "^1.51.0",
 		"@sveltejs/adapter-auto": "^4.0.0",
 		"@sveltejs/adapter-static": "^3.0.8",

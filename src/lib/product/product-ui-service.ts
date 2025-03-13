@@ -68,6 +68,7 @@ export async function openAddToCartDialog(customerId: string) {
 		hasHeader: true,
 		title: 'Products',
 		hasFooter: true,
+		size: isMobileScreen() ? DialogSizeEnum.FULL : DialogSizeEnum.LG,
 	});
 	return res;
 }
