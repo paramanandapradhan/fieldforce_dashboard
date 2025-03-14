@@ -32,7 +32,7 @@
 	<ContentArea className="md:pl-72">
 		<BackgroundGradient>
 			<main>
-				<div class="text-center my-4 font-bold text-xl">
+				<div class="text-center my-4 font-bold text-xl text-base-800 dark:text-base-200">
 					<h1>Home Dashboard</h1>
 				</div>
 				{#if authState.isEmailVerificationRequired}

@@ -152,7 +152,7 @@
 							<div class="text-sm text-base-500 dark:text-base-400">{product.desc || '-'}</div>
 						</td>
 						<td class="text-left px-4 dark:text-base-300">{product.mrp || '-'}</td>
-						<td class="text-left px-4 dark:text-base-300">{product.salesPrice || '-'}</td>
+						<td class="text-left px-4 dark:text-base-300">{product.salePrice || '-'}</td>
 						<td class="text-left px-4 dark:text-base-300"><TextAttribute input={product?.brand! || '-'} /> </td>
 						<td class="text-left px-4 dark:text-base-300"> <TextUser input={product.seller || '-'} hideIcon /> </td>
 						<td class="text-left px-4 dark:text-base-300">

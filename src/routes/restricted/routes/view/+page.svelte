@@ -96,21 +96,21 @@
 </script>
 
 <div class="min-h-full">
-	<AppNavbar title="VIEW ROUTE" hasLogo hasTitle hasBack={isMobileScreen()} onBack={goBack}  />
+	<AppNavbar title="VIEW ROUTE" hasLogo hasTitle hasBack={isMobileScreen()} onBack={goBack} />
 	<Drawer bind:this={drawerRef} className="border-r"><RestrictedDrawer /></Drawer>
 	<Sidebar className="border-r "><RestrictedDrawer /></Sidebar>
 	<ContentArea className="md:pl-72">
 		<BackgroundGradient>
 			<main>
 				<div class="p-4 flex items-center justify-between">
-					<div><h1 class="text-xl font-black">Route View</h1></div>
+					<div><h1 class="text-xl font-black dark:text-base-200">Route View</h1></div>
 					<div>
 						<Button appearance="border-primary" onClick={handleEdit} label="Edit" />
 					</div>
 				</div>
-				<div>
+				<div class="pb-32">
 					{#if route != null}
-						<div class="bg-white p-4 shadow rounded-lg m-4">
+						<div class="bg-white dark:bg-base-800 p-4 shadow rounded-lg m-4">
 							<div class="flex md:flex-row flex-col gap-4">
 								<div>
 									<IconCircle
@@ -125,13 +125,13 @@
 							</div>
 						</div>
 
-						<div class="bg-white rounded-lg shadow p-4 m-4">
+						<div class="bg-white dark:bg-base-800 rounded-lg shadow p-4 m-4">
 							<RoutePlanner {route} onChange={handleChange} />
 						</div>
-						<div class="bg-white rounded-lg shadow p-4 m-4">
+						<div class="bg-white dark:bg-base-800 rounded-lg shadow p-4 m-4">
 							<div class="flex">
 								<div class=" flex-grow">
-									<h3 class="text-lg font-bold">Route Customers</h3>
+									<h3 class="text-lg font-bold dark:text-base-200">Route Customers</h3>
 								</div>
 								<div>
 									<Button appearance="base" onClick={handleAddCustomer}>Add Customer</Button>
@@ -139,9 +139,9 @@
 							</div>
 							<div class="my-4">
 								{#if screenSize.isSm || screenSize.isMd || screenSize.isXs}
-								 <RouteCustomerList customers={routeCustomers} onChange={handleChange}/>
+									<RouteCustomerList customers={routeCustomers} onChange={handleChange} />
 								{:else}
-								<RouteCustomerTable customers={routeCustomers} onChange={handleChange} />
+									<RouteCustomerTable customers={routeCustomers} onChange={handleChange} />
 								{/if}
 							</div>
 						</div>

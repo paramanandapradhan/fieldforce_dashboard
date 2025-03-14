@@ -88,7 +88,7 @@
 						iconClassName="!h-5 !w-5 text-primary"
 						circleClassName="!h-10 !w-10"
 					/>
-					<TextUser input={item.userId} hideIcon />
+					<TextUser input={item.userId} hideIcon  itemClass="dark:text-base-200"/>
 				</div>
 				<Button iconPath={mdiDeleteOutline} onClick={() => handleDelete(item)}></Button>
 			</div>
@@ -97,7 +97,7 @@
 					.fill(0)
 					.map((_, day) => day) as day}
 					<div class="flex flex-col items-center">
-						<span class="text-sm font-bold">{weekdayLabels[day]}</span>
+						<span class="text-sm font-bold dark:text-base-400">{weekdayLabels[day]}</span>
 						<Button
 							className="!h-12 !w-12"
 							iconPath={item[day] ? mdiCheck : mdiCircleSmall}

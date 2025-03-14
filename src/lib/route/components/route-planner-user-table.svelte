@@ -77,7 +77,7 @@
 </script>
 
 <div>
-	<table class="min-w-full divide-y divide-base-200 table-fixed">
+	<table class="min-w-full divide-y divide-base-200 dark:divide-base-500 dark:text-base-200 table-fixed">
 		<thead>
 			<tr>
 				<th class="text-left p-4"></th>
@@ -92,9 +92,9 @@
 				<td></td>
 			</tr>
 		</thead>
-		<tbody class="divide-y divide-base-200">
+		<tbody class="divide-y divide-base-200 dark:divide-base-500">
 			{#each items as item, index}
-				<tr class="hover:bg-base-100">
+				<tr class="hover:bg-base-100 dark:hover:bg-base-700">
 					<td class="text-left pl-4 py-1 w-14">
 						<IconCircle
 							iconPath={mdiAccount}

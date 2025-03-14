@@ -41,7 +41,7 @@
 <div>
 	<div class="flex">
 		<div class=" flex-grow">
-			<h3 class="text-lg font-bold">{title}</h3>
+			<h3 class="text-lg font-bold dark:text-base-200">{title}</h3>
 		</div>
 		<div>
 			<Button appearance="base" onClick={handleUserPicker}>{addButtonLabel}</Button>

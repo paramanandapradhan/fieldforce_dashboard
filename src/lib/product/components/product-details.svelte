@@ -28,7 +28,7 @@
 </script>
 
 <div>
-	<h4 class="text-xl font-bold mb-4">Product Details</h4>
+	<h4 class="text-xl font-bold dark:text-base-200 mb-4">Product Details</h4>
 	<div class="flex md:flex-row flex-col gap-4">
 		<div>
 			<IconCircle
@@ -45,7 +45,7 @@
 					>
 					<tr><td>Description</td><td class="text-base-500 text-sm">{product?.desc || '-'}</td></tr>
 					<tr><td>MRP</td><td>{product?.mrp || '-'}</td></tr>
-					<tr><td>Sales Price</td><td>{product?.salesPrice || '-'}</td></tr>
+					<tr><td>Sales Price</td><td>{product?.salePrice || '-'}</td></tr>
 					<tr><td>Type</td><td><TextAttribute input={product?.type || '-'}/> </td></tr>
 					<tr><td>UMO</td><td> <TextAttribute input={product?.umo || '-'}/></td></tr>
 					<tr><td>Categories</td><td><TextAttribute input={product?.categories || '-'}/></td></tr>

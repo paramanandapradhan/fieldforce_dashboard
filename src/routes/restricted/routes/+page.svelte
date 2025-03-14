@@ -58,7 +58,7 @@
 			<main>
 				<div class="pb-32">
 					<div class="p-4 flex items-center gap-4">
-						<div class="flex-grow"><h1 class="text-xl font-black">Routes</h1></div>
+						<div class="flex-grow"><h1 class="text-xl font-black dark:text-base-200">Routes</h1></div>
 						<div>
 							<Button
 								appearance="base"
@@ -73,7 +73,7 @@
 						</div>
 					</div>
 					<div>
-						<div class="bg-white rounded-lg shadow p-4 m-4">
+						<div class="bg-white dark:bg-base-800 rounded-lg shadow p-4 m-4">
 							{#if screenSize.isSm || screenSize.isMd || screenSize.isXs}
 								<RouteList bind:this={routeListRef} />
 							{:else}

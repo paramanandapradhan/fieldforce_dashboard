@@ -37,7 +37,7 @@
 </script>
 
 <div>
-	<h4 class="text-xl font-bold mb-4">Master Details</h4>
+	<h4 class="text-xl font-bold mb-4 dark:text-base-300">Master Details</h4>
 	<div class="flex md:flex-row flex-col gap-4">
 		<div>
 			<IconCircle

@@ -63,29 +63,29 @@
 		<BackgroundGradient>
 			<main>
 				<div class="p-4 flex items-center justify-between">
-					<div><h1 class="text-xl font-black">Customer Details</h1></div>
+					<div><h1 class="text-xl font-black dark:text-base-200">Customer Details</h1></div>
 					<div>
 						<Button appearance="border-primary" onClick={handleEdit} label="Edit" />
 					</div>
 				</div>
 				<div class="pb-32">
 					{#if customer != null}
-					<div class="bg-white p-4 shadow rounded-lg m-4">
+					<div class="bg-white dark:bg-base-800 p-4 shadow rounded-lg m-4">
 						<CustomerDetails {customerId}/>
 					</div>
-					<div class="bg-white p-4 shadow rounded-lg m-4">
+					<div class="bg-white dark:bg-base-800 p-4 shadow rounded-lg m-4">
 						<MasterDetails {customerId}/>
 					</div>
-					<div class="bg-white p-4 shadow rounded-lg m-4">
+					<div class="bg-white dark:bg-base-800 p-4 shadow rounded-lg m-4">
 						<CustomerBillingDetails {customerId}/>
 					</div>
-					<div class="bg-white p-4 shadow rounded-lg m-4">
+					<div class="bg-white dark:bg-base-800 p-4 shadow rounded-lg m-4">
 						<CustomerDeliveryDetails {customerId}/>
 					</div>
-					<div class="bg-white p-4 shadow rounded-lg m-4">
+					<div class="bg-white dark:bg-base-800 p-4 shadow rounded-lg m-4">
 						<CustomerOwnerDetails {customerId}/>
 					</div>
-					<div class="bg-white p-4 shadow rounded-lg m-4">
+					<div class="bg-white dark:bg-base-800 p-4 shadow rounded-lg m-4">
 						<CustomerGeographicalDetails {customerId}/>
 					</div>
 					{/if}
