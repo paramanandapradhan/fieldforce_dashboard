@@ -67,7 +67,7 @@
 			<main>
 				<div class="pb-32">
 					<div class="p-4 flex flex-wrap items-center gap-4">
-						<div class="flex-grow"><h1 class="text-xl font-black">Attributes</h1></div>
+						<div class="flex-grow"><h1 class="text-xl font-black dark:text-base-200">Attributes</h1></div>
 						<div>
 							<Button
 								appearance="base"
@@ -86,7 +86,7 @@
 							/>
 						</div>
 					</div>
-					<div class="m-4 p-2 lg:p-4 bg-white shadow rounded-lg">
+					<div class="m-4 p-2 lg:p-4 bg-white dark:bg-base-800 shadow rounded-lg">
 						<AttributeList bind:this={attributeListRef} />
 					</div>
 				</div>

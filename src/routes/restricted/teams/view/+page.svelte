@@ -100,22 +100,22 @@
 			<main>
 				<div class="pb-32">
 					<div class="p-4 flex items-center justify-between">
-						<div><h1 class="text-xl font-black">Teams Details</h1></div>
+						<div><h1 class="text-xl font-black dark:text-base-200">Teams Details</h1></div>
 						<div>
 							<Button appearance="border-primary" onClick={handleEdit} label="Edit" />
 						</div>
 					</div>
 					<div class="pb-8">
 						{#if team != null}
-							<div class="bg-white p-4 shadow rounded-lg m-4">
+							<div class="bg-white dark:bg-base-800 p-4 shadow rounded-lg m-4">
 								<TeamDetails {teamId} />
 							</div>
 						{/if}
 					</div>
-					<div class="bg-white rounded-lg shadow p-4 m-4">
+					<div class="bg-white dark:bg-base-800 rounded-lg shadow p-4 m-4">
 						<div class="flex">
 							<div class=" flex-grow">
-								<h3 class="text-lg font-bold">Team Members</h3>
+								<h3 class="text-lg font-bold dark:text-base-200">Team Members</h3>
 							</div>
 							<div>
 								<Button appearance="base" onClick={handleAddUser}>Add User</Button>

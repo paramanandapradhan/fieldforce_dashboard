@@ -58,7 +58,7 @@
 			<main>
 				<div class="pb-32">
 					<div class="p-4 flex flex-wrap items-center gap-4">
-						<div class="flex-grow"><h5 class="text-xl font-bold">Users</h5></div>
+						<div class="flex-grow"><h5 class="text-xl font-bold dark:text-base-200">Users</h5></div>
 						<div>
 							<Button
 								appearance="base"
@@ -77,7 +77,7 @@
 							/>
 						</div>
 					</div>
-					<div class="m-4 p-4 bg-white shadow rounded-lg">
+					<div class="m-4 p-4 bg-white dark:bg-base-800 shadow rounded-lg">
 						{#if screenSize.isSm || screenSize.isMd || screenSize.isXs}
 							<UserList bind:this={userListRef} />
 						{:else}

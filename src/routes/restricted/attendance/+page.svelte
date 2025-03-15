@@ -29,7 +29,7 @@
 		<BackgroundGradient>
 			<main>
 				<div class="p-4 flex items-center justify-between">
-					<div><h1 class="text-xl font-black">Attendance</h1></div>
+					<div><h1 class="text-xl font-black dark:text-base-200">Attendance</h1></div>
 					<div>
 						<!-- <Button appearance="border-primary" onClick={handleAdd} label="Add Team" /> -->
 					</div>

@@ -27,7 +27,7 @@
 </script>
 
 <div>
-	<h4 class="text-xl font-bold mb-4">Team Details</h4>
+	<h4 class="text-xl font-bold mb-4 dark:text-base-200">Team Details</h4>
 	<div class="flex md:flex-row flex-col gap-4">
 		<div>
 			<IconCircle

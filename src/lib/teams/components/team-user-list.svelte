@@ -66,7 +66,7 @@
                         circleClassName="!h-10 !w-10"
                     />
                     <div class="flex-grow">
-                        <div class="text-lg font-semibold">
+                        <div class="text-lg font-semibold dark:text-base-300">
                             <a href="/restricted/users/view?userId={item._id}" class="hover:text-primary">
                                 {item.name || ''}
                             </a>
@@ -76,7 +76,7 @@
                 </div>
 				<Button iconPath={mdiDeleteOutline} onClick={() => handleDelete(item)} />
 			</div>
-			<div class="mt-3">
+			<div class="mt-3 dark:text-base-400">
 				<p><strong>Type:</strong> <TextUserSubtype input={item.subtype! || '-'} /></p>
 				<p><strong>Email:</strong> {item?.email || '-'}</p>
 				<p><strong>Phone:</strong> {item?.phone || '-'}</p>
