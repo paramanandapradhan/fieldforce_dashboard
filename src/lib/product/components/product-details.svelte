@@ -51,8 +51,9 @@
 					<tr><td>Categories</td><td><TextAttribute input={product?.categories || '-'}/></td></tr>
 					<tr><td>Brand</td><td><TextAttribute input={product?.brand || '-'}/> </td></tr>
 					<tr><td>Batch</td><td>{product?.batch || ''}</td></tr>
-					<tr><td>Note</td><td>{product?.note}</td></tr>
 					<tr><td>Seller</td><td><TextUser input={product?.seller || '-'} hideIcon/> </td></tr>
+					<tr><td>Details</td><td>{product?.details || '-'}</td></tr>
+					<tr><td>Note</td><td>{product?.note || '-'}</td></tr>
 				</tbody>
 			</table>
 		</div>

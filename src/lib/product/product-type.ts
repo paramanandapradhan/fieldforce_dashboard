@@ -12,5 +12,6 @@ export type ProductDataModel = BaseDataModel & {
     brand?:string;
     batch?:string;
     note?:string;
+    details?:string
     seller?:string
 }

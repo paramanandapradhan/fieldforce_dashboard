@@ -30,6 +30,7 @@
 	let brand = $state(product?.brand || '');
 	let batch = $state(product?.batch || '');
 	let note = $state(product?.note || '');
+	let details = $state(product?.details || '');
 	let seller = $state(product?.seller || '');
 
 	async function handleSubmit(ev: SubmitEvent) {
@@ -44,6 +45,7 @@
 		brand = (brand || '').trim();
 		batch = (batch || '').trim();
 		note = (note || '').trim();
+		details = (details || '').trim()
 		seller = (seller || '').trim();
 
 		if (name) {
@@ -60,6 +62,7 @@
 				brand,
 				batch,
 				note,
+				details,
 				seller
 			};
 			let id = null;
@@ -82,7 +85,7 @@
 
 <form id="product-edit-form" onsubmit={handleSubmit}>
 	<div class="px-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-		<div class="my-4">
+		<div>
 			<TextField
 				name="Product name"
 				label="Product name"
@@ -92,16 +95,31 @@
 				autofocus
 			/>
 		</div>
-		<div class="my-4">
-			<TextareaField name="desc" label="Description" maxlength={100} bind:value={desc} />
+		<div>
+			<TextField name="desc" label="Description" maxlength={100} bind:value={desc} />
 		</div>
-		<div class="my-4">
+		<div></div>
+		<div>
 			<NumberField name="mrp" label="MRP" bind:value={mrp} required />
 		</div>
-		<div class="my-4">
+		<div>
 			<NumberField name="sales price" label="Sales Price" bind:value={salePrice} required />
 		</div>
-		<div class="my-4">
+		<div></div>
+		<div>
+			<AttributeComboboxField
+				attributeType={AttributeTypeEnum.BRAND}
+				name="brand"
+				label="Brand"
+				bind:value={brand}
+				createButtonLabel="Add Brand"
+			/>
+		</div>
+		<div>
+			<TextField name="batch" label="Batch" maxlength={200} bind:value={batch} />
+		</div>
+		<div></div>
+		<div>
 			<AttributeComboboxField
 				attributeType={AttributeTypeEnum.TYPE}
 				name="type"
@@ -110,7 +128,7 @@
 				createButtonLabel="Add Product Type"
 			/>
 		</div>
-		<div class="my-4">
+		<div>
 			<AttributeComboboxField
 				attributeType={AttributeTypeEnum.UMO}
 				name="umo"
@@ -119,7 +137,8 @@
 				createButtonLabel="Add UMO"
 			/>
 		</div>
-		<div class="my-4">
+		<div></div>
+		<div>
 			<AttributeComboboxField
 				attributeType={AttributeTypeEnum.CATEGORIES}
 				name="categories"
@@ -129,22 +148,7 @@
 				multiple
 			/>
 		</div>
-		<div class="my-4">
-			<AttributeComboboxField
-				attributeType={AttributeTypeEnum.BRAND}
-				name="brand"
-				label="Brand"
-				bind:value={brand}
-				createButtonLabel="Add Brand"
-			/>
-		</div>
-		<div class="my-4">
-			<TextField name="batch" label="Batch" maxlength={200} bind:value={batch} />
-		</div>
-		<div class="my-4">
-			<TextareaField name="note" label="Note" maxlength={500} bind:value={note} />
-		</div>
-		<div class="my-4">
+		<div>
 			<CustomerComboboxField
 				userType={UserTypeEnum.USER_TYPE_CUSTOMER}
 				userSubtype={UserSubtypeEnum.USER_SUBTYPE_USER_DISTRIBUTOR}
@@ -154,5 +158,13 @@
 				required
 			/>
 		</div>
+		<div></div>
+		<div>
+			<TextareaField name="details" label="Details" maxlength={500} bind:value={details} />
+		</div>
+		<div>
+			<TextareaField name="note" label="Note" maxlength={500} bind:value={note} />
+		</div>
+		
 	</div>
 </form>

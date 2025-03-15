@@ -96,7 +96,7 @@
 
 <form id="user-edit-form" onsubmit={handleSubmit}>
 	<div class="px-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-		<div class="my-4">
+		<div>
 			<TextField
 				name="name"
 				label="User name"
@@ -106,19 +106,19 @@
 				autofocus
 			/>
 		</div>
-		<div class="my-4">
+		<div>
 			<TextField name="desc" label="Description" maxlength={250} bind:value={desc} />
 		</div>
-		<div class="my-4">
+		<div>
 			<EmailField name="email" label="Email" bind:value={email} required />
 		</div>
-		<div class="my-4">
+		<div>
 			<PhoneField name="phone" label="Phone" bind:value={phone} dialCode="+91" />
 		</div>
-		<div class="my-4">
+		<div>
 			<ComboboxField name="subtype" label="User Type" items={USER_SUBTYPES} bind:value={subtype} />
 		</div>
-		<div class="my-4">
+		<div>
 			<UserComboboxField
 				name="manager"
 				label="Manager"
@@ -126,10 +126,10 @@
 				userType={UserTypeEnum.USER_TYPE_USER}
 			/>
 		</div>
-		<div class="my-4">
+		<div>
 			<TeamComboboxField name="team" label="Team" bind:value={team} />
 		</div>
-		<div class="my-4">
+		<div>
 			<AttributeComboboxField
 				attributeType={AttributeTypeEnum.USER_DESIGNATION}
 				name="desig"
@@ -138,7 +138,7 @@
 				createButtonLabel="Add Designation"
 			/>
 		</div>
-		<div class="my-4">
+		<div>
 			<AttributeComboboxField
 				attributeType={AttributeTypeEnum.USER_DEPARTMENT}
 				name="dept"
@@ -147,20 +147,19 @@
 				createButtonLabel="Add Department"
 			/>
 		</div>
-		<div class="my-4">
-			<TextareaField name="address" label="Address" bind:value={address} />
-		</div>
-		<div class="my-4">
+		<div>
 			<DateField name="dob" label="Date Of Birth" bind:value={dob} />
 		</div>
-		<div class="my-4">
+		<div>
 			<DateField name="doj" label="Date Of Joining" bind:value={doj} />
 		</div>
-
-		<div class="my-4">
+		<div>
+			<TextareaField name="address" label="Address" bind:value={address} />
+		</div>
+		<div>
 			<CheckboxField name="canOrder" label="Can Place Order" bind:value={canOrder} />
 		</div>
-		<div class="my-4">
+		<div>
 			<CheckboxField name="isActive" label="Active" bind:value={isActive} />
 		</div>
 	</div>
