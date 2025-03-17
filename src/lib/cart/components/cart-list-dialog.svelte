@@ -19,6 +19,7 @@
 	import type { CustomerDataModel } from '$lib/user/user-types';
 	import {
 		Button,
+		DialogSizeEnum,
 		Icon,
 		openConfirmDialog,
 		openDeleteConfirmDialog,
@@ -122,11 +123,12 @@
 			(await openConfirmDialog({
 				msg: 'Are you sure to place the order now?',
 				title: 'Order',
-				footerOkButtonLable: 'Place Order'
+				footerOkButtonLable: 'Place Order',
+				size: DialogSizeEnum.SM
 			}))
 		) {
 			isPlacingOrder = true;
-			let loader = await openLoadingDialog({ msg: 'Placing Order...' });
+			let loader = await openLoadingDialog({ msg: 'Placing Order...', size: DialogSizeEnum.SM });
 			try {
 				let sellerOrderMap = await prepareSellerOrders();
 				let orders = Object.keys(sellerOrderMap).map(async (sellerId) => {
@@ -150,7 +152,7 @@
 					}
 				});
 				await Promise.all(orders);
-				await showToast({ msg: 'Order Places Successfully!' });
+				await showToast({ msg: 'Order success!' });
 				await clearCart(customerId);
 				await syncOrders();
 				await closeDialog(true);
@@ -201,8 +203,8 @@
 {#snippet footerSnippet()}
 	<div class="flex justify-between gap-12">
 		<div>
-			<div class="text-base-400 dark:text-base text-sm">Payble</div>
-			<div class="font-bold text-sm text-base">
+			<div class="text-base-400 dark:text-base-500 text-sm">Payble</div>
+			<div class="font-bold text-sm text-base dark:text-base-400">
 				<TextCurrency input={totalAmount} hasSymbol symbol="₹" />
 			</div>
 		</div>
