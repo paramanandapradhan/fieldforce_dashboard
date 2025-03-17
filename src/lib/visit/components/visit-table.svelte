@@ -118,7 +118,7 @@
 			</div>
 		</NoData>
 	{:else}
-		<table class="min-w-full divide-y divide-base-200 dark:divide-base-500 dark:text-base-200 table-fixed">
+		<table class="min-w-full divide-y divide-base-200 dark:divide-base-600 dark:text-base-200 table-fixed">
 			<thead>
 				<tr>
 					<th class="text-left w-14"></th>
@@ -131,7 +131,7 @@
 					<th class="text-right p-4"></th>
 				</tr>
 			</thead>
-			<tbody class="divide-y divide-base-200 dark:divide-base-500">
+			<tbody class="divide-y divide-base-200 dark:divide-base-600">
 				{#each paginatedVisits as visit, index}
 					<tr>
 						<td class="text-left pl-4 py-1 w-14">

@@ -1,4 +1,5 @@
 import {
+	DialogSizeEnum,
 	getDialogSize,
 	isMobileScreen,
 	openDeleteConfirmDialog,
@@ -12,6 +13,7 @@ import OrderEditDialog from './components/order-edit-dialog.svelte';
 import type { OrderDataModel } from './order-type';
 import { ADMIN_USER_ID } from '$lib/core/services/app-service';
 import { deleteOrder, syncOrders } from './order-service';
+import OrderDetailsDialog from './components/order-details-dialog.svelte';
 
 export async function openOrderEditDialog(order?: OrderDataModel) {
 	let res = openDialog({
@@ -53,4 +55,16 @@ export async function openOrderDeleteDialog(order: OrderDataModel) {
 	}
 }
 
-
+export async function openOrderDetailsDialog(orderId?: string) {
+	let res = openDialog({
+		bodyComponent: OrderDetailsDialog,
+		props: { orderId },
+		hasTitle: true,
+		hasHeader: true,
+		title: 'Order Details',
+		hasHeaderBack: isMobileScreen(),
+		hasHeaderClose: !isMobileScreen(),
+		size: isMobileScreen() ? DialogSizeEnum.FULL : DialogSizeEnum.LG
+	});
+	return res;
+}

@@ -1,0 +1,160 @@
+<script lang="ts">
+	import { onMount } from 'svelte';
+	import { getAllOrders } from '../order-service';
+	import type { OrderDataModel } from '../order-type';
+	import {
+		Button,
+		ButtonListItem,
+		IconCircle,
+		Loading,
+		NoData,
+		Pagination,
+		SearchField,
+		sort,
+		TextDate
+	} from '@cloudparker/moldex.js';
+	import {
+		mdiMagnify,
+		mdiNotebookOutline,
+		mdiPackageVariantClosed,
+
+		mdiTextBoxCheckOutline
+
+	} from '$lib/core/services/app-icons-service';
+	import TextUserType from '$lib/user/components/text-user-type.svelte';
+	import TextUser from '$lib/user/components/text-user.svelte';
+	import TextAttribute from '$lib/attribute/components/text-attribute.svelte';
+
+	import { getProduct } from '$lib/product/product-service';
+	import type { OrgDataModel } from '$lib/org/org-types';
+	import { openOrderDetailsDialog } from '../order-ui-service';
+
+	let orders: OrderDataModel[] = $state([]);
+	let pageIndex: number = $state(0);
+	let pageSize: number = $state(10);
+	let searchText: string = $state('');
+	let isLoading: boolean = $state(true);
+
+	let filteredOrders = $derived(
+		orders.filter((item) => {
+			const matchSearch = searchText
+				? item.customer?.toLowerCase().includes(searchText.toLowerCase())
+				: true;
+			return matchSearch;
+		})
+	);
+
+	let paginatedOrders = $derived(
+		filteredOrders.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize)
+	);
+
+	export async function loadOrders() {
+		isLoading = true;
+		let array = await getAllOrders();
+		orders = sort({ array, field: 'date', desc:true, isDate: true });
+		isLoading = false;
+	}
+
+	// async function handleMenu(ev: MouseEvent, menu: string, product: ProductDataModel) {
+	// 	switch (menu) {
+	// 		case 'Edit':
+	// 			await openProductEditDialog(product);
+	// 			await loadProducts();
+	// 			break;
+	// 		case 'Delete':
+	// 			await openProductDeleteDialog(product);
+	// 			await loadProducts();
+	// 			break;
+	// 		case 'View':
+	// 			handleViewProduct(product);
+	// 			break;
+	// 	}
+	// }
+
+	// function handleViewProduct(product: ProductDataModel) {
+	// 	navigate(`/restricted/products/view?productId=${product._id}`);
+	// }
+
+	// Handle page index changes
+	function handlePageIndexChange(newPageIndex: number) {
+		pageIndex = newPageIndex;
+	}
+
+	// Handle page size changes
+	function handlePageSizeChange(newPageSize: number) {
+		pageSize = newPageSize;
+		pageIndex = 0;
+	}
+
+	async function handleOpenOrderDetailsDialog(order: OrderDataModel) {
+		if (order._id) {
+			await openOrderDetailsDialog(order._id);
+		}
+	}
+
+	onMount(() => {
+		loadOrders();
+	});
+</script>
+
+<div>
+	<div class="p-4">
+		<SearchField bind:value={searchText} placeholder="Search Products..." />
+	</div>
+
+	{#if isLoading}
+		<Loading />
+	{:else if searchText && filteredOrders.length <= 0}
+		<NoData>
+			<IconCircle
+				iconPath={mdiMagnify}
+				circleClassName="!bg-base-100 !w-12 !h-12"
+				iconClassName="!w-6 !h-6 text-base-400"
+			/>
+			<div class="text-center text-base-400 text-sm mt-4">
+				No search results found for "{searchText}"!.
+			</div>
+		</NoData>
+	{:else if filteredOrders.length <= 0}
+		<NoData>
+			<IconCircle
+				iconPath={mdiTextBoxCheckOutline}
+				circleClassName="!bg-base-100 !w-12 !h-12"
+				iconClassName="!w-6 !h-6 text-base-400"
+			/>
+			<div class="text-center text-base-400 text-sm mt-4">
+				No Orders ! <br />Please add orders!
+			</div>
+		</NoData>
+	{:else}
+		{#each paginatedOrders as order, index}
+			<ButtonListItem
+				className="dark:hover:bg-base-600"
+				onClick={() => handleOpenOrderDetailsDialog(order)}
+			>
+				<div>
+					<IconCircle
+						iconPath={mdiTextBoxCheckOutline}
+						iconClassName="!h-5 !w-5 text-primary"
+						circleClassName="!h-10 !w-10"
+					/>
+				</div>
+				<div class="flex-grow px-2">
+					<TextDate input={order?.cat || '-'} />
+				</div>
+				<div class="flex justify-end">
+					<TextUser input={order?.customer || '-'} hideIcon />
+				</div>
+			</ButtonListItem>
+		{/each}
+		<div class="p-4">
+			<Pagination
+				length={filteredOrders?.length}
+				{pageIndex}
+				{pageSize}
+				onPageSizeChange={handlePageSizeChange}
+				onPageIndexChange={handlePageIndexChange}
+			/>
+		</div>
+	{/if}
+</div>
