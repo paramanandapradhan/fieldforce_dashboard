@@ -9,7 +9,9 @@
 		mdiCartRemove,
 		mdiCloseCircleOutline
 	} from '$lib/core/services/app-icons-service';
-	import { getAllProducts } from '$lib/product/product-service';
+	import { createOrder, syncOrders } from '$lib/order/order-service';
+	import type { OrderDataModel } from '$lib/order/order-type';
+	import { getAllProducts, syncProducts } from '$lib/product/product-service';
 
 	import type { ProductDataModel } from '$lib/product/product-type';
 	import TextUser from '$lib/user/components/text-user.svelte';
@@ -18,7 +20,10 @@
 	import {
 		Button,
 		Icon,
+		openConfirmDialog,
 		openDeleteConfirmDialog,
+		openLoadingDialog,
+		showToast,
 		sort,
 		TextareaField,
 		TextCurrency,
@@ -33,8 +38,7 @@
 	type ProductMap = { [key: string]: ProductDataModel };
 	type QuantityMap = { [key: string]: number };
 
-	let { customerId, setHeaderSnippet, setFooterSnippet, closeDialog }: DialogExports & Props =
-		$props();
+	let { customerId, setFooterSnippet, closeDialog }: DialogExports & Props = $props();
 
 	let cartItems: CartDataModel[] = $state([]);
 
@@ -47,6 +51,8 @@
 	let orderType: string = $state('');
 	let paymentMode: string = $state('');
 	let note: string = $state('');
+
+	let isPlacingOrder: boolean = $state(false);
 
 	let totalQuantity: number = $derived.by(() => {
 		return (cartItems || []).reduce((acc: number, item) => {
@@ -110,6 +116,81 @@
 		}
 	}
 
+	async function handlePlaceOrder() {
+		if (
+			!isPlacingOrder &&
+			(await openConfirmDialog({
+				msg: 'Are you sure to place the order now?',
+				title: 'Order',
+				footerOkButtonLable: 'Place Order'
+			}))
+		) {
+			isPlacingOrder = true;
+			let loader = await openLoadingDialog({ msg: 'Placing Order...' });
+			try {
+				let sellerOrderMap = await prepareSellerOrders();
+				let orders = Object.keys(sellerOrderMap).map(async (sellerId) => {
+					let items: CartDataModel[] = sellerOrderMap[sellerId];
+					if (items?.length) {
+						let amount: number = items.reduce((acc, item) => {
+							acc += (item.quantity || 1) * (item.salePrice || 0);
+							return acc;
+						}, 0);
+						let payload: OrderDataModel = {
+							customer: customerId,
+							seller: sellerId,
+							items,
+							note,
+							paymentMode,
+							orderType,
+							amount,
+							date: new Date()
+						};
+						await createOrder(payload);
+					}
+				});
+				await Promise.all(orders);
+				await showToast({ msg: 'Order Places Successfully!' });
+				await clearCart(customerId);
+				await syncOrders();
+				await closeDialog(true);
+			} catch (error) {
+				console.error(error);
+				await showToast({ msg: `Unable to place order now!` });
+			}
+			await loader.closeDialog();
+			isPlacingOrder = false;
+		}
+	}
+
+	async function prepareSellerOrders() {
+		await syncProducts();
+		await loadProducts();
+		await loadCartItems();
+
+		let sellerOrderMap: any = {};
+		cartItems.forEach((item: CartDataModel) => {
+			if (item.product) {
+				let product = productMap[item.product];
+				if (product) {
+					let orderList: any[] = sellerOrderMap[product.seller || ''];
+					if (!orderList) {
+						orderList = [];
+						sellerOrderMap[product.seller || ''] = orderList;
+					}
+					orderList.push({
+						product: item.product,
+						quantity: item.quantity || 1,
+						salePrice: product.salePrice || 0,
+						seller: product.seller
+					});
+				}
+			}
+		});
+
+		return sellerOrderMap;
+	}
+
 	onMount(async () => {
 		setFooterSnippet(footerSnippet);
 		await loadCartItems();
@@ -125,7 +206,13 @@
 				<TextCurrency input={totalAmount} hasSymbol symbol="₹" />
 			</div>
 		</div>
-		<Button appearance="primary" className="px-8" disabled={!totalQuantity}>
+		<Button
+			appearance="primary"
+			className="px-8"
+			onClick={handlePlaceOrder}
+			disabled={!totalQuantity || isPlacingOrder}
+			spinner={isPlacingOrder}
+		>
 			<div>Place Order</div>
 		</Button>
 	</div>

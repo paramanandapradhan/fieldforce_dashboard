@@ -3,6 +3,7 @@ import { APP_ID } from '$lib/core/services/app-environment-service';
 import { DatabaseService } from '$lib/database/database-service';
 import { IdbWhere } from '@cloudparker/easy-idb';
 import type { OrderDataModel } from './order-type';
+import { convertNumToAlphabets, numberToWords } from '@cloudparker/moldex.js';
 
 class OrderDatabaseService extends DatabaseService<OrderDataModel> {
 	// Indicates if sync is enabled
@@ -48,6 +49,14 @@ class OrderDatabaseService extends DatabaseService<OrderDataModel> {
 
 	public async getOrderCache(id: string) {
 		return super.getOneCache(id);
+	}
+
+	protected async generateId(): Promise<string> {
+		let id =  await this.createFirestoreId();
+		let date = new Date();
+		let year = `${date.getFullYear()}`.padStart(4, '0'); // find last twi digit
+		let month = `${date.getMonth()}`.padStart(2, '0');
+		return convertNumToAlphabets(parseInt(`${year}${month}${id}`)).toUpperCase();
 	}
 
 	protected async findOrdersLocal() {

@@ -32,7 +32,8 @@
 		customerId: string;
 	};
 
-	let { customerId, setHeaderSnippet, setFooterSnippet }: DialogExports & Props = $props();
+	let { customerId, setHeaderSnippet, setFooterSnippet, closeDialog }: DialogExports & Props =
+		$props();
 
 	let cartItems: CartDataModel[] = $state([]);
 
@@ -78,7 +79,7 @@
 
 	async function handleCartClick() {
 		if (totalQuantity) {
-			let res = await openDialog({
+			let isOrderPlaced: boolean = await openDialog({
 				bodyComponent: CartListDialog,
 				props: {
 					customerId
@@ -89,7 +90,11 @@
 				hasTitle: true,
 				size: isMobileScreen() ? DialogSizeEnum.FULL : DialogSizeEnum.LG
 			});
-			await load();
+			if (isOrderPlaced) {
+				await closeDialog(true);
+			} else {
+				await load();
+			}
 		} else {
 			showToast({ msg: 'No items in cart!' });
 		}
