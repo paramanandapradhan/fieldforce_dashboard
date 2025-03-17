@@ -11,15 +11,14 @@
 		Pagination,
 		SearchField,
 		sort,
+		TextCurrency,
 		TextDate
 	} from '@cloudparker/moldex.js';
 	import {
 		mdiMagnify,
 		mdiNotebookOutline,
 		mdiPackageVariantClosed,
-
 		mdiTextBoxCheckOutline
-
 	} from '$lib/core/services/app-icons-service';
 	import TextUserType from '$lib/user/components/text-user-type.svelte';
 	import TextUser from '$lib/user/components/text-user.svelte';
@@ -51,7 +50,7 @@
 	export async function loadOrders() {
 		isLoading = true;
 		let array = await getAllOrders();
-		orders = sort({ array, field: 'date', desc:true, isDate: true });
+		orders = sort({ array, field: 'date', desc: true, isDate: true });
 		isLoading = false;
 	}
 
@@ -140,10 +139,23 @@
 					/>
 				</div>
 				<div class="flex-grow px-2">
-					<TextDate input={order?.cat || '-'} />
+					<div title="Order ID">
+						{order._id}
+					</div>
+					<div class="text-xs font-light text-base dark:text-base-500">
+						<TextDate input={order?.cat} />
+					</div>
+					<!-- <div class="mt-2 space-y-1">
+						<p class="text-xs text-base-500">
+							Customer: <TextUser input={order?.customer || '-'} hideIcon />
+						</p>
+						<p class="text-xs text-base-500">
+							Items: {order?.items?.length || 0}
+						</p>
+					</div> -->
 				</div>
 				<div class="flex justify-end">
-					<TextUser input={order?.customer || '-'} hideIcon />
+					<TextCurrency input={order?.amount || 0} hasSymbol symbol="₹" />
 				</div>
 			</ButtonListItem>
 		{/each}

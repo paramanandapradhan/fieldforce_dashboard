@@ -51,20 +51,6 @@
 	export async function loadOrders() {
 		isLoading = true;
 		let array = await getAllOrders();
-		for (let order of array) {
-			if (order.items && order.items.length > 0) {
-				order.items = await Promise.all(
-					order.items.map(async (item) => {
-						const product = await getProduct(item.product!);
-						return {
-							...item,
-							productDetails: product
-						};
-					})
-				);
-			}
-		}
-
 		orders = sort({ array, field: 'date', desc: true, isDate: true });
 		isLoading = false;
 	}
@@ -200,7 +186,7 @@
 						<td class="text-left px-4 dark:text-base-300">
 							{order?.items?.length || 0}
 						</td>
-						<td class="  px-4 dark:text-base-300 text-right">
+						<td class="px-4 dark:text-base-300 text-right">
 							<TextCurrency input={order?.amount || 0} hasSymbol symbol="₹" />
 						</td>
 						<td class="text-right px-4 dark:text-base-300">

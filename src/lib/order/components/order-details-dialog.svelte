@@ -28,18 +28,6 @@
 		order = await getOrder(orderId);
 		orderStatus = order?.status || '';
 		console.log('order Details: ', order);
-
-		if (order?.items && order.items.length > 0) {
-			order.items = await Promise.all(
-				order.items.map(async (item) => {
-					const product = await getProduct(item.product!);
-					return {
-						...item,
-						productDetails: product
-					};
-				})
-			);
-		}
 	}
 
 	async function handleOrderStausChange() {
@@ -84,7 +72,7 @@
 						<td>Payment Mode</td><td><TextAttribute input={order?.paymentMode || '-'} /></td>
 					</tr>
 					<tr>
-						<td>Amount</td><td>{order?.amount || '-'}</td>
+						<td>Amount</td><td><TextCurrency input={order?.amount || 0} hasSymbol symbol="₹" /></td>
 					</tr>
 					<tr>
 						<td>Note</td><td>{order?.note || '-'}</td>
