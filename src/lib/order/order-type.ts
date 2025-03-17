@@ -10,5 +10,6 @@ export type OrderDataModel = BaseDataModel & {
     paymentMode?: string,
     orderType?: string,
     amount?: number,
-    date?: any
+    date?: any,
+    status?:string,
 }

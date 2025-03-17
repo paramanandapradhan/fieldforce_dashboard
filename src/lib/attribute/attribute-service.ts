@@ -3,6 +3,8 @@ import { DatabaseService } from "$lib/database/database-service";
 import { APP_ID } from "$lib/core/services/app-environment-service";
 import { IdbWhere } from "@cloudparker/easy-idb";
 import type { AttributeTypeConfig, AttributeDataModel } from "./attribute-types";
+import { mdiCircle, mdiCircleSmall } from "$lib/core/services/app-icons-service";
+import { mdiCheckCircle } from "@cloudparker/moldex.js";
 
 // Define the enum with all attribute types
 export enum AttributeTypeEnum {
@@ -60,7 +62,7 @@ export const attributeTypeConfigs: AttributeTypeConfig[] = [
     { _id: AttributeTypeEnum.BRAND, label: 'Brand' },
     { _id: AttributeTypeEnum.ORDER_TYPE, label: 'Order Type' },
     { _id: AttributeTypeEnum.PAYMENT_MODE, label: 'Payment Mode' },
-    { _id: AttributeTypeEnum.ORDER_STATUS, label: 'Order Status' },
+    { _id: AttributeTypeEnum.ORDER_STATUS, label: 'Order Status', hasTextColor: true, hasColor: true, hasIcon: true, iconPath: mdiCircle, iconClassName: '!w-3 !h-3' },
 ];
 
 

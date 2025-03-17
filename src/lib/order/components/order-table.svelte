@@ -150,6 +150,7 @@
 
 					<th class="text-left p-4 dark:text-base-300">Customer</th>
 					<th class="text-left p-4 dark:text-base-300">Seller</th>
+					<th class="text-left p-4 dark:text-base-300">Status</th>
 					<th class="text-left p-4 dark:text-base-300">Items</th>
 					<!-- <th class="text-left p-4 dark:text-base-300">Order Type</th>
 					<th class="text-left p-4 dark:text-base-300">Paymentmode</th> -->
@@ -178,7 +179,7 @@
 									{order._id}
 								</button>
 							</div>
-							<div class="text-sm font-light text-base dark:text-base-500">
+							<div class="text-xs font-light text-base dark:text-base-500">
 								<TextDate input={order?.cat} />
 							</div>
 						</td>
@@ -192,9 +193,10 @@
 						<!-- <td class="text-left px-4 dark:text-base-300"
 							><TextAttribute input={order?.orderType || '-'} />
 						</td>
+						-->
 						<td class="text-left px-4 dark:text-base-300">
-							<TextAttribute input={order?.paymentMode || '-'} />
-						</td> -->
+							<TextAttribute input={order?.status} />
+						</td>
 						<td class="text-left px-4 dark:text-base-300">
 							{order?.items?.length || 0}
 						</td>

@@ -7,12 +7,14 @@ export type AttributeTypeConfig = {
     _id?: AttributeTypeEnum,
     label?: string,
     hasIcon?: boolean,
-    hasChnageIcon?: boolean,
+    hasChangeIcon?: boolean,
     hasColor?: boolean,
     hasListing?: boolean,
     hasOrder?: boolean,
     iconPath?: string,
     parent?: string,
+    iconClassName?: string,
+    hasTextColor?: boolean,
 };
 
 export type AttributeDataModel = BaseDataModel & {

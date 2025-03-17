@@ -33,6 +33,7 @@
 		hasDropdownFooterCreateButton = true,
 		attributeType,
 		parent,
+		onChange,
 		...props
 	}: ComboboxFieldProps & InputFieldProps & Props = $props();
 
@@ -82,5 +83,6 @@
 	dropdownFooterClassName="border-t"
 	createButtonClassName="border-primary text-primary hover:text-primary"
 	onCreateButtonClick={handelCreate}
+	{onChange}
 	{...props}
 />

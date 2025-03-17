@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { TextField, type DialogExports } from '@cloudparker/moldex.js';
+	import { ColorField, TextField, type DialogExports } from '@cloudparker/moldex.js';
 	import type { AttributeDataModel } from '../attribute-types';
 	import {
 		AttributeTypeEnum,
@@ -14,6 +14,7 @@
 		attributeType: AttributeTypeEnum;
 		attribute?: AttributeDataModel;
 		nameLabel?: string;
+		hasColor?: string;
 	};
 
 	let {
@@ -24,21 +25,24 @@
 		closeDialog,
 		setOkEnabled,
 		setOkSpinner,
+		hasColor,
 		setResult
 	}: DialogExports & Props = $props();
 
 	let name: string = $state(attribute?.name || '');
 	let desc: string = $state(attribute?.desc || '');
+	let color: string = $state(attribute?.color || '');
 
 	async function handleSubmit(ev: SubmitEvent) {
 		ev.preventDefault();
 		name = (name || '').trim();
 		desc = (desc || '').trim();
+		color = (color || '').trim();
 		if (name && attributeType) {
 			try {
 				setOkEnabled(false);
 				setOkSpinner(true);
-				let payload: AttributeDataModel = { name, desc, type: attributeType };
+				let payload: AttributeDataModel = { name, desc, color, type: attributeType };
 				if (parent) {
 					payload.parent = parent;
 				}
@@ -77,6 +81,9 @@
 		</div>
 		<div class="my-4">
 			<TextField name="desc" maxlength={200} label="Description" bind:value={desc} />
+		</div>
+		<div class="my-4">
+			<ColorField name="color" label="Color" bind:value={color} />
 		</div>
 	</div>
 </form>

@@ -18,6 +18,7 @@ export async function openAttributeEditDialog({ attribute, attributeType, parent
                 attribute,
                 attributeType,
                 nameLabel,
+                hasColor: attributeTypeConfig?.hasColor,
             },
             hasHeader: true,
             hasFooter: true,

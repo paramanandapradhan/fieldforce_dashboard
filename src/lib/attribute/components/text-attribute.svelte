@@ -1,43 +1,69 @@
 <script lang="ts">
-	import type { Snippet } from 'svelte';
-	import { getAttribute } from '../attribute-service';
-	import type { AttributeDataModel } from '../attribute-types';
+	import { onMount, type Snippet } from 'svelte';
+	import { getAttribute, getAttributeTypeConfig } from '../attribute-service';
+	import type { AttributeDataModel, AttributeTypeConfig } from '../attribute-types';
+	import { Icon } from '@cloudparker/moldex.js';
 
 	type Props = {
 		input?: string | string[];
 		emptyText?: string;
-		view?: Snippet<[string[]]>;
+		snippet?: Snippet<[AttributeDataModel[], AttributeTypeConfig | undefined | null]>;
 	};
 
-	let { view, input, emptyText = '-' }: Props = $props();
+	let { snippet, input, emptyText = '-' }: Props = $props();
 
-	let attributeNamesPromise: Promise<string[]> = $derived.by(async () => {
-		let results: (AttributeDataModel | null)[] = [];
+	let attributes: AttributeDataModel[] = $state([]);
+	let attribute: AttributeDataModel | null = $state(null);
+	let attributeNames: string = $state('');
+	let attributeTypeConfig: AttributeTypeConfig | null | undefined = $state(null);
+
+	async function loadAttributes() {
 		if (Array.isArray(input)) {
-			results = await Promise.all(input.map(async (o) => await getAttribute(o)));
+			attributes = (
+				(await Promise.all(input.map(async (o) => await getAttribute(o)))) || []
+			).filter(Boolean) as AttributeDataModel[];
 		} else if (input) {
-			console.log('input', input);
-			let attr = await getAttribute(input);
-			console.log('attr', attr);
-			results = [attr];
+			let attr = (await getAttribute(input)) as AttributeDataModel;
+			if (attr) {
+				attributes = [attr];
+			} else {
+				attributes = [];
+			}
 		}
-		let res = (results || []).filter((o) => o).map((o: AttributeDataModel | null) => o?.name || '');
 
-		console.log('res', res);
-		return res;
+		attribute = attributes[0];
+
+		if (attribute?.type) {
+			attributeTypeConfig = getAttributeTypeConfig(attribute?.type);
+		}
+
+		attributeNames = (attributes || [])
+			.map((o: AttributeDataModel | null) => o?.name || '')
+			.join(', ');
+	}
+
+	onMount(() => {
+		loadAttributes();
 	});
 </script>
 
-{#snippet defaultView(attributeNames: string[])}
-	{attributeNames.join(', ') || emptyText}
+{#snippet defaultView()}
+	<span class="flex gap-2 items-center">
+		{#if attributeTypeConfig?.hasIcon && attributeTypeConfig?.iconPath}
+			<Icon
+				className={attributeTypeConfig?.iconClassName}
+				path={attributeTypeConfig?.iconPath}
+				color={attributeTypeConfig?.hasColor ? attribute?.color : ''}
+			/>
+		{/if}
+		<span style={attributeTypeConfig?.hasTextColor ? `color:${attribute?.color || ''}` : ''}>
+			{attributeNames || emptyText}
+		</span>
+	</span>
 {/snippet}
 
-<span>
-	{#await attributeNamesPromise then attributeNames}
-		{#if view}
-			{@render view(attributeNames)}
-		{:else}
-			{@render defaultView(attributeNames)}
-		{/if}
-	{/await}
-</span>
+{#if snippet}
+	{@render snippet(attributes, attributeTypeConfig)}
+{:else}
+	{@render defaultView()}
+{/if}
