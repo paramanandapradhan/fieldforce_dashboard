@@ -46,6 +46,7 @@ export type CustomerDataModel = UserDataModel & {
     owner?: CustomerOwner,
     master?: CustomerMaster,
     geo?: CustomerGeo;
+    canPlaceOrder?:boolean,
 }
 
 export type RetailerDatabodel = CustomerDataModel & {};
@@ -78,7 +79,7 @@ export type CustomerMaster = {
     customerType?: string,
     company?: string,
     branch?: string,
-    distributor?: string,
+    seller?: string,
     sm?: string,
     tsm?: string,
     route?: string,

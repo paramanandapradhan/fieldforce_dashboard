@@ -45,7 +45,7 @@
 		brand = (brand || '').trim();
 		batch = (batch || '').trim();
 		note = (note || '').trim();
-		details = (details || '').trim()
+		details = (details || '').trim();
 		seller = (seller || '').trim();
 
 		if (name) {
@@ -151,7 +151,7 @@
 		<div>
 			<CustomerComboboxField
 				userType={UserTypeEnum.USER_TYPE_CUSTOMER}
-				userSubtype={UserSubtypeEnum.USER_SUBTYPE_USER_DISTRIBUTOR}
+				userSubtype={UserSubtypeEnum.USER_SUBTYPE_CUSTOMER_SELLER}
 				name="seller"
 				label="Seller"
 				bind:value={seller}
@@ -165,6 +165,5 @@
 		<div>
 			<TextareaField name="note" label="Note" maxlength={500} bind:value={note} />
 		</div>
-		
 	</div>
 </form>

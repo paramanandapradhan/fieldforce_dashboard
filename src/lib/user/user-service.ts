@@ -15,7 +15,7 @@ export enum UserSubtypeEnum {
     USER_SUBTYPE_USER_STAFF = 's',
     USER_SUBTYPE_USER_SM = 'm',
     USER_SUBTYPE_USER_TSM = 't',
-    USER_SUBTYPE_USER_DISTRIBUTOR = 'd',
+    USER_SUBTYPE_CUSTOMER_SELLER = 'd',   //sistributor
     USER_SUBTYPE_CUSTOMER_CONSUMER = 'c',
     USER_SUBTYPE_CUSTOMER_RETAILER = 'r',
 }
@@ -25,12 +25,12 @@ export const USER_SUBTYPES = [
     { _id: UserSubtypeEnum.USER_SUBTYPE_USER_STAFF, name: 'Staff' },
     { _id: UserSubtypeEnum.USER_SUBTYPE_USER_SM, name: 'SM' },
     { _id: UserSubtypeEnum.USER_SUBTYPE_USER_TSM, name: 'TSM' },
-    { _id: UserSubtypeEnum.USER_SUBTYPE_USER_DISTRIBUTOR, name: 'Distributor' },
 ]
 
 export const CUSTOMER_SUBTYPES = [
     { _id: UserSubtypeEnum.USER_SUBTYPE_CUSTOMER_CONSUMER, name: 'Consumer' },
     { _id: UserSubtypeEnum.USER_SUBTYPE_CUSTOMER_RETAILER, name: 'Retailer' },
+    { _id: UserSubtypeEnum.USER_SUBTYPE_CUSTOMER_SELLER, name: 'Seller' },
 ]
 
 class UserDatabaseService extends DatabaseService<UserDataModel | CustomerDataModel> {

@@ -25,6 +25,7 @@
 	} from '@cloudparker/moldex.js';
 	import UserComboboxField from './user-combobox-field.svelte';
 	import RouteComboboxField from '$lib/route/components/route-combobox-field.svelte';
+	import CustomerComboboxField from './customer-combobox-field.svelte';
 
 	export type CustomerProps = {
 		customer?: CustomerDataModel;
@@ -74,7 +75,7 @@
 
 	let masterCompany = $state(customer?.master?.company || '');
 	let masterBranch = $state(customer?.master?.branch || '');
-	let masterDistributor = $state(customer?.master?.distributor || '');
+	let masterSeller = $state(customer?.master?.seller || '');
 	let masterSm = $state(customer?.master?.sm || '');
 	let masterTsm = $state(customer?.master?.tsm || '');
 	let masterRoute = $state(customer?.master?.route || '');
@@ -125,12 +126,12 @@
 		ownerAddress = (ownerAddress || '').trim();
 		ownerPhone = (ownerPhone || '').trim();
 		ownerEmail = (ownerEmail || '').trim();
-		ownerDob = (ownerDob || '');
+		ownerDob = ownerDob || '';
 
 		categories = categories || [];
 		masterCompany = (masterCompany || '').trim();
 		masterBranch = (masterBranch || '').trim();
-		masterDistributor = (masterDistributor || '').trim();
+		masterSeller = (masterSeller || '').trim();
 		masterSm = (masterSm || '').trim();
 		masterTsm = (masterTsm || '').trim();
 		masterRoute = (masterRoute || '').trim();
@@ -138,7 +139,7 @@
 		masterClazz = (masterClazz || '').trim();
 		masterLabel = (masterLabel || '').trim();
 		masterExtId = (masterExtId || '').trim();
-		masterCreditLimit = (masterCreditLimit || '')
+		masterCreditLimit = masterCreditLimit || '';
 
 		geoCountry = (geoCountry || '').trim();
 		geoState = (geoState || '').trim();
@@ -155,7 +156,7 @@
 			setOkEnabled(false);
 			setOkSpinner(true);
 
-			let payload = {
+			let payload:CustomerDataModel = {
 				name,
 				desc,
 				email,
@@ -190,7 +191,7 @@
 				master: {
 					company: masterCompany,
 					branch: masterBranch,
-					distributor: masterDistributor,
+					seller: masterSeller,
 					sm: masterSm,
 					tsm: masterTsm,
 					route: masterRoute,
@@ -335,13 +336,13 @@
 					/>
 				</div>
 				<div>
-					<UserComboboxField
+					<CustomerComboboxField
 						userType={UserTypeEnum.USER_TYPE_USER}
-						userSubtype={UserSubtypeEnum.USER_SUBTYPE_USER_DISTRIBUTOR}
-						name="masterDistributor"
-						label="Distributor"
-						bind:value={masterDistributor}
-						createButtonLabel="Add Distributor"
+						userSubtype={UserSubtypeEnum.USER_SUBTYPE_CUSTOMER_SELLER}
+						name="masterSeller"
+						label="Seller"
+						bind:value={masterSeller}
+						createButtonLabel="Add Seller"
 					/>
 				</div>
 				<div>

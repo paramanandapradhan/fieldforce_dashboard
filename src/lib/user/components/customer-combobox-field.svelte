@@ -10,6 +10,7 @@
 	import type { CustomerDataModel, UserDataModel } from '../user-types';
 	import { getAllUsers, UserSubtypeEnum, UserTypeEnum } from '../user-service';
 	import { openUserEditDialog } from '../user-ui-service';
+	import { openCustomerEditDialog } from '../customer-ui-service';
 
 	type Props = {
 		userType: UserTypeEnum;
@@ -41,8 +42,13 @@
 	});
 
 	export async function loadCustomers() {
-		let array = ((await getAllUsers({ type: UserTypeEnum.USER_TYPE_CUSTOMER })) as CustomerDataModel[]) || [];
-		console.log('loadUsers', { type: UserTypeEnum.USER_TYPE_CUSTOMER, subtype: userSubtype }, array);
+		let array =
+			((await getAllUsers({ type: userType, subtype: userSubtype })) as CustomerDataModel[]) || [];
+		console.log(
+			'loadUsers',
+			{ type: UserTypeEnum.USER_TYPE_CUSTOMER, subtype: userSubtype },
+			array
+		);
 		users = sort({ array, field: 'name' });
 	}
 
@@ -53,7 +59,7 @@
 	async function handelCreate() {
 		console.log('handelCreate');
 		if (userType) {
-			let res = await openUserEditDialog({ subtype: userSubtype });
+			let res = await openCustomerEditDialog({ type: userType, subtype: userSubtype });
 			if (res) {
 				loadCustomers();
 			}

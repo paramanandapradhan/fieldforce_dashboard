@@ -27,7 +27,9 @@ export enum AttributeTypeEnum {
     TYPE = '21',
     UMO = '22',
     CATEGORIES = '23',
-    BRAND = '24'
+    BRAND = '24',
+    ORDER_TYPE = '25',
+    PAYMENT_MODE = '26'
 }
 
 // Create the configuration array with an item for every enum value.
@@ -55,6 +57,8 @@ export const attributeTypeConfigs: AttributeTypeConfig[] = [
     { _id: AttributeTypeEnum.UMO, label: 'UMO' },
     { _id: AttributeTypeEnum.CATEGORIES, label: 'Categories' },
     { _id: AttributeTypeEnum.BRAND, label: 'Brand' },
+    { _id: AttributeTypeEnum.ORDER_TYPE, label: 'Order Type' },
+    { _id: AttributeTypeEnum.PAYMENT_MODE, label: 'Payment Mode' },
 ];
 
 

@@ -48,19 +48,19 @@
 		</Button>
 
 		<Button
-			className={`w-full !text-start !justify-start !gap-4 rounded-none  ${active.startsWith('/restricted/products') ? 'bg-primary-50 dark:bg-base-700  font-bold' : ''}`}
-			onClick={(ev) => handleNavigate('/restricted/products', ev)}
-		>
-			<IconCircle iconPath={mdiPackageVariantClosed} iconClassName="text-primary" />
-			<div>Products</div>
-		</Button>
-
-		<Button
 			className={`w-full !text-start !justify-start !gap-4 rounded-none  ${active.startsWith('/restricted/orders') ? 'bg-primary-50 dark:bg-base-700  font-bold' : ''}`}
 			onClick={(ev) => handleNavigate('/restricted/orders', ev)}
 		>
 			<IconCircle iconPath={mdiTextBoxCheckOutline} iconClassName="text-primary" />
 			<div>Orders</div>
+		</Button>
+
+		<Button
+			className={`w-full !text-start !justify-start !gap-4 rounded-none  ${active.startsWith('/restricted/products') ? 'bg-primary-50 dark:bg-base-700  font-bold' : ''}`}
+			onClick={(ev) => handleNavigate('/restricted/products', ev)}
+		>
+			<IconCircle iconPath={mdiPackageVariantClosed} iconClassName="text-primary" />
+			<div>Products</div>
 		</Button>
 
 		<Button

@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { AttributeTypeEnum } from '$lib/attribute/attribute-service';
+	import AttributeComboboxField from '$lib/attribute/components/attribute-combobox-field.svelte';
 	import { addToCart, clearCart, getCartItems } from '$lib/cart/cart-service';
 	import type { CartDataModel } from '$lib/cart/cart-types';
 	import ButtonIncrement from '$lib/core/components/button-increment.svelte';
@@ -41,6 +43,10 @@
 	let productQuantityMap: QuantityMap = $state({});
 	let productMap: ProductMap = $state({});
 	let customer: CustomerDataModel | null = $state(null);
+
+	let orderType: string = $state('');
+	let paymentMode: string = $state('');
+	let note: string = $state('');
 
 	let totalQuantity: number = $derived.by(() => {
 		return (cartItems || []).reduce((acc: number, item) => {
@@ -209,13 +215,36 @@
 			</UserLoader>
 		</div>
 	</section>
+
 	<section class="my-6 p-4 bg-base-100 dark:bg-base-700 rounded">
 		<h3 class="text-lg py-2 text-base dark:text-base-300 font-thin">Note</h3>
 		<hr class="border-base" />
 		<div class="my-4">
-			<TextareaField placeholder="Write order note" maxlength={300} />
+			<AttributeComboboxField
+				bind:value={orderType}
+				name="orderType"
+				label="Order Type"
+				attributeType={AttributeTypeEnum.ORDER_TYPE}
+			/>
+		</div>
+		<div class="my-4">
+			<AttributeComboboxField
+				bind:value={paymentMode}
+				name="paymentMode"
+				label="Payment Mode"
+				attributeType={AttributeTypeEnum.PAYMENT_MODE}
+			/>
+		</div>
+		<div class="my-4">
+			<TextareaField
+				bind:value={note}
+				label="Note"
+				placeholder="Write order note"
+				maxlength={300}
+			/>
 		</div>
 	</section>
+
 	<section class="py-8">
 		<div class="flex justify-center">
 			<Button appearance="border" className="px-12" onClick={handleClearCart}>
