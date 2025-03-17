@@ -64,7 +64,9 @@ export async function openOrderDetailsDialog(orderId?: string) {
 		title: 'Order Details',
 		hasHeaderBack: isMobileScreen(),
 		hasHeaderClose: !isMobileScreen(),
-		size: isMobileScreen() ? DialogSizeEnum.FULL : DialogSizeEnum.LG
+		size: isMobileScreen() ? DialogSizeEnum.FULL : DialogSizeEnum.LG,
+		hasFooter: true,
+		hasFooterCloseButton: true,
 	});
 	return res;
 }

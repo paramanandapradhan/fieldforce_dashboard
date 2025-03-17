@@ -10,6 +10,7 @@
 		Pagination,
 		SearchField,
 		sort,
+		TextCurrency,
 		TextDate
 	} from '@cloudparker/moldex.js';
 	import {
@@ -17,9 +18,7 @@
 		mdiMagnify,
 		mdiNotebookOutline,
 		mdiPackageVariantClosed,
-
 		mdiTextBoxCheckOutline
-
 	} from '$lib/core/services/app-icons-service';
 	import TextUserType from '$lib/user/components/text-user-type.svelte';
 	import TextUser from '$lib/user/components/text-user.svelte';
@@ -66,7 +65,7 @@
 			}
 		}
 
-		orders = sort({ array, field: 'date', desc:true, isDate: true });
+		orders = sort({ array, field: 'date', desc: true, isDate: true });
 		isLoading = false;
 	}
 
@@ -102,7 +101,9 @@
 	}
 
 	async function handleOpenOrderDetailsDialog(order: OrderDataModel) {
-		if (order._id) await openOrderDetailsDialog(order._id);
+		if (order._id) {
+			await openOrderDetailsDialog(order._id);
+		}
 	}
 
 	onMount(() => {
@@ -146,12 +147,13 @@
 					<th class="text-left w-14 dark:text-base-300"></th>
 					<!-- <th class="text-left p-4 dark:text-base-300">ID</th> -->
 					<th class="text-left p-4 dark:text-base-300">Date</th>
-					<th class="text-left p-4 dark:text-base-300">Items</th>
+
 					<th class="text-left p-4 dark:text-base-300">Customer</th>
 					<th class="text-left p-4 dark:text-base-300">Seller</th>
+					<th class="text-left p-4 dark:text-base-300">Items</th>
 					<!-- <th class="text-left p-4 dark:text-base-300">Order Type</th>
 					<th class="text-left p-4 dark:text-base-300">Paymentmode</th> -->
-					<th class="text-left p-4 dark:text-base-300">Amount</th>
+					<th class="text-right p-4 dark:text-base-300">Amount</th>
 					<th class="text-right p-4 dark:text-base-300"></th>
 				</tr>
 			</thead>
@@ -167,28 +169,26 @@
 						</td>
 
 						<td class="text-left px-4 dark:text-base-300">
-							<TextDate input={order?.date || '-'} />
+							<div title="Order ID">
+								<button
+									class="hover:text-primary"
+									type="button"
+									onclick={() => handleOpenOrderDetailsDialog(order)}
+								>
+									{order._id}
+								</button>
+							</div>
+							<div class="text-sm font-light text-base dark:text-base-500">
+								<TextDate input={order?.cat} />
+							</div>
+						</td>
+
+						<td class="text-left px-4 dark:text-base-300">
+							<TextUser input={order?.customer || '-'} hideIcon />
 						</td>
 						<td class="text-left px-4 dark:text-base-300">
-							{#if order.items && order.items.length > 0}
-								<ul class="list-disc pl-4">
-									{#each order.items as item}
-										<li>
-											{item.productDetails?.name || 'Unknown Product'}
-											( Price: {item.salePrice || 0}, Qty: {item.quantity || 0})
-										</li>
-									{/each}
-								</ul>
-							{:else}
-								-
-							{/if}
+							<TextUser input={order?.seller || '-'} hideIcon />
 						</td>
-						<td class="text-left px-4 dark:text-base-300"
-							><TextUser input={order?.customer || '-'} hideIcon />
-						</td>
-						<td class="text-left px-4 dark:text-base-300"
-							><TextUser input={order?.seller || '-'} hideIcon /></td
-						>
 						<!-- <td class="text-left px-4 dark:text-base-300"
 							><TextAttribute input={order?.orderType || '-'} />
 						</td>
@@ -196,7 +196,10 @@
 							<TextAttribute input={order?.paymentMode || '-'} />
 						</td> -->
 						<td class="text-left px-4 dark:text-base-300">
-							{order?.amount || '-'}
+							{order?.items?.length || 0}
+						</td>
+						<td class="  px-4 dark:text-base-300 text-right">
+							<TextCurrency input={order?.amount || 0} hasSymbol symbol="₹" />
 						</td>
 						<td class="text-right px-4 dark:text-base-300">
 							<div class="flex justify-end">

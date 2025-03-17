@@ -3,13 +3,14 @@
 	import { getOrder } from '../order-service';
 	import type { OrderDataModel } from '../order-type';
 	import { getProduct } from '$lib/product/product-service';
-	import { IconCircle, TextDate } from '@cloudparker/moldex.js';
+	import { IconCircle, TextCopy, TextCurrency, TextDate } from '@cloudparker/moldex.js';
 	import {
 		mdiPackageVariantClosed,
 		mdiTextBoxCheckOutline
 	} from '$lib/core/services/app-icons-service';
 	import TextUser from '$lib/user/components/text-user.svelte';
 	import TextAttribute from '$lib/attribute/components/text-attribute.svelte';
+	import OrderItemsList from './order-items-list.svelte';
 
 	type Props = {
 		orderId: any;
@@ -42,21 +43,19 @@
 </script>
 
 <div class="px-8">
-	<!-- <h4 class="text-xl font-bold dark:text-base-200 mb-4">Order Details</h4> -->
-
 	<div>
-		<IconCircle
-			iconPath={mdiTextBoxCheckOutline}
-			iconClassName="text-primary"
-			circleClassName=" "
-		/>
-	</div>
-
-	<div>
-		<table class="table-fixed w-full">
+		<table class="table-fixed w-full text-base dark:text-base-300">
 			<tbody>
 				<tr>
-					<td>ID</td> <td>{order?._id || '-'}</td>
+					<td>ID</td>
+					<td
+						>
+						<TextCopy
+							input={order?._id || '-'}
+							buttonClassName="dark:bg-base-700 ms-4"
+							iconClassName="!h-4 !w-4"
+						/>
+					</td>
 				</tr>
 				<tr>
 					<td>Date</td> <td><TextDate input={order?.date || '-'} /> </td>
@@ -71,7 +70,7 @@
 					<td>Order Type</td><td><TextAttribute input={order?.orderType || '-'} /></td>
 				</tr>
 				<tr>
-					<td>Paymentmode</td><td><TextAttribute input={order?.paymentMode || '-'} /></td>
+					<td>Payment Mode</td><td><TextAttribute input={order?.paymentMode || '-'} /></td>
 				</tr>
 				<tr>
 					<td>Amount</td><td>{order?.amount || '-'}</td>
@@ -84,50 +83,18 @@
 	</div>
 
 	<div class="my-6">
-		<h3 class="text-lg font-medium mt-4 mb-1 text-base-800 dark:text-base-200">Items</h3>
-		<table class="min-w-full divide-y divide-base-200 dark:divide-base-600 table-fixed py-1">
-			<thead>
-				<tr class="text-base-400">
-					<th class="text-left">Product Name</th>
-					<th class="text-left">Quantity</th>
-					<th class="text-left">Sale Price</th>
-				</tr>
-			</thead>
-			<tbody>
-				{#each order?.items! as item}
-					<tr class="text-base-400">
-						<td>{item.productDetails?.name || 'Unknown Product'}</td>
-						<td>{item.quantity}</td>
-						<td>{item.salePrice}</td>
-					</tr>
-				{/each}
-			</tbody>
-		</table>
+		<OrderItemsList {orderId} />
+		<div class="text-right text-base dark:text-base-300 font-black flex justify-end mt-6">
+			<div class="border-t py-4">
+				Total : <TextCurrency input={order?.amount || 0} hasSymbol symbol="₹" />
+			</div>
+		</div>
 	</div>
 </div>
 
 <style>
 	td:nth-child(1) {
-		color: var(--color-base-400);
+		opacity: 0.6;
 		width: 180px;
-	}
-	td:nth-child(2) {
-		color: var(--color-base-500);
-		height: 40px;
-		width: auto;
-		max-width: 500px;
-		word-wrap: break-word;
-		overflow-wrap: break-word;
-	}
-
-	/* Responsive adjustments for small screens */
-	@media (max-width: 768px) {
-		td:nth-child(1) {
-			width: 100px; /* Further reduce width on small screens */
-		}
-		td:nth-child(2) {
-			max-width: 100%; /* Allow full width on small screens */
-			padding-left: 20px; /* Reduce left padding for tighter spacing */
-		}
 	}
 </style>
