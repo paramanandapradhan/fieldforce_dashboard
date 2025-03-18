@@ -2,8 +2,13 @@
 	import { onMount } from 'svelte';
 	import { getAllProducts } from '../product-service';
 	import type { ProductDataModel } from '../product-type';
-	import { openProductDeleteDialog, openProductEditDialog } from '../product-ui-service';
 	import {
+		openProductBasicDetailsDialog,
+		openProductDeleteDialog,
+		openProductEditDialog
+	} from '../product-ui-service';
+	import {
+		Button,
 		ButtonMenu,
 		IconCircle,
 		Loading,
@@ -12,10 +17,14 @@
 		NoData,
 		Pagination,
 		SearchField,
-		sort
+		sort,
+
+		TextCurrency
+
 	} from '@cloudparker/moldex.js';
 	import {
 		mdiAccount,
+		mdiInformationOutline,
 		mdiMagnify,
 		mdiNotebookOutline,
 		mdiPackageVariantClosed
@@ -83,6 +92,12 @@
 		pageIndex = 0;
 	}
 
+	async function handleOpenProductBasicInfo(product: ProductDataModel) {
+		if (product?._id) {
+			await openProductBasicDetailsDialog(product._id);
+		}
+	}
+
 	onMount(() => {
 		loadProducts();
 	});
@@ -127,7 +142,8 @@
 					<th class="text-left p-4 dark:text-base-300">Sales Price</th>
 					<th class="text-left p-4 dark:text-base-300">Brand</th>
 					<th class="text-left p-4 dark:text-base-300">Seller</th>
-					<th class="text-right p-4 dark:text-base-300"></th>
+					<th class="text-right dark:text-base-300"></th>
+					<th class="text-right dark:text-base-300"></th>
 				</tr>
 			</thead>
 			<tbody class="divide-y divide-base-200 dark:divide-base-600">
@@ -151,11 +167,27 @@
 							</div>
 							<div class="text-sm text-base-500 dark:text-base-400">{product.desc || '-'}</div>
 						</td>
-						<td class="text-left px-4 dark:text-base-300">{product.mrp || '-'}</td>
-						<td class="text-left px-4 dark:text-base-300">{product.salePrice || '-'}</td>
-						<td class="text-left px-4 dark:text-base-300"><TextAttribute input={product?.brand! || '-'} /> </td>
-						<td class="text-left px-4 dark:text-base-300"> <TextUser input={product.seller || '-'} hideIcon /> </td>
+						<td class="text-left px-4 dark:text-base-300"><TextCurrency input={product?.mrp || 0} hasSymbol symbol="₹" /></td>
+						<td class="text-left px-4 dark:text-base-300"><TextCurrency input={product?.salePrice || 0} hasSymbol symbol="₹" /></td>
+						<td class="text-left px-4 dark:text-base-300"
+							><TextAttribute input={product?.brand! || '-'} />
+						</td>
 						<td class="text-left px-4 dark:text-base-300">
+							<TextUser input={product.seller || '-'} hideIcon />
+						</td>
+						<td class="text-right dark:text-base-300">
+							<div class="flex justify-end">
+								<Button
+									iconPath={mdiInformationOutline}
+									size="xs"
+									onClick={() => handleOpenProductBasicInfo(product)}
+									iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
+										? ''
+										: 'dark:hover:text-base-200'}"
+								/>
+							</div>
+						</td>
+						<td class="text-right dark:text-base-300">
 							<div class="flex justify-end">
 								<ButtonMenu
 									menus={['View', 'Edit', 'Delete']}

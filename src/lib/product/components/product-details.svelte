@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { getProduct } from '../product-service';
 	import type { ProductDataModel } from '../product-type';
-	import { IconCircle } from '@cloudparker/moldex.js';
+	import { IconCircle, TextCurrency } from '@cloudparker/moldex.js';
 	import { mdiPackageVariantClosed } from '$lib/core/services/app-icons-service';
 	import TextAttribute from '$lib/attribute/components/text-attribute.svelte';
 	import TextUser from '$lib/user/components/text-user.svelte';
@@ -44,8 +44,8 @@
 						><td>Name</td><td>{product?.name || '-'}</td></tr
 					>
 					<tr><td>Description</td><td class="text-base-500 text-sm">{product?.desc || '-'}</td></tr>
-					<tr><td>MRP</td><td>{product?.mrp || '-'}</td></tr>
-					<tr><td>Sales Price</td><td>{product?.salePrice || '-'}</td></tr>
+					<tr><td>MRP</td><td><TextCurrency input={product?.mrp || 0} hasSymbol symbol="₹" /></td></tr>
+					<tr><td>Sales Price</td><td><TextCurrency input={product?.salePrice || 0} hasSymbol symbol="₹" /></td></tr>
 					<tr><td>Type</td><td><TextAttribute input={product?.type || '-'}/> </td></tr>
 					<tr><td>UMO</td><td> <TextAttribute input={product?.umo || '-'}/></td></tr>
 					<tr><td>Categories</td><td><TextAttribute input={product?.categories || '-'}/></td></tr>

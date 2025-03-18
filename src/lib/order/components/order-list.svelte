@@ -15,6 +15,7 @@
 		TextDate
 	} from '@cloudparker/moldex.js';
 	import {
+		mdiInformationOutline,
 		mdiMagnify,
 		mdiNotebookOutline,
 		mdiPackageVariantClosed,
@@ -26,7 +27,8 @@
 
 	import { getProduct } from '$lib/product/product-service';
 	import type { OrgDataModel } from '$lib/org/org-types';
-	import { openOrderDetailsDialog } from '../order-ui-service';
+	import { openOrderBasicDetailsDialog, openOrderDetailsDialog } from '../order-ui-service';
+	import { appState } from '$lib/core/services/app-state.svelte';
 
 	let orders: OrderDataModel[] = $state([]);
 	let pageIndex: number = $state(0);
@@ -90,6 +92,12 @@
 			await openOrderDetailsDialog(order._id);
 		}
 	}
+	async function handleOpenBasicInfo(ev: MouseEvent, order: OrderDataModel) {
+		ev.stopPropagation();
+		if (order?._id) {
+			await openOrderBasicDetailsDialog(order._id);
+		}
+	}
 
 	onMount(() => {
 		loadOrders();
@@ -142,8 +150,7 @@
 					<div title="Order ID" class="w-full">
 						{order._id} ({order?.items?.length || 0})
 					</div>
-					<div class="text-xs font-light text-base dark:text-base-500">
-						<span>Customer: </span>
+					<div class="text-xs font-light text-base dark:text-base-400">
 						<span><TextUser input={order?.customer || '-'} hideIcon /></span>
 					</div>
 					<div class="text-xs font-light text-base dark:text-base-500">
@@ -158,8 +165,18 @@
 						</p>
 					</div> -->
 				</div>
-				<div class="flex justify-end">
+				<div>
 					<TextCurrency input={order?.amount || 0} hasSymbol symbol="₹" />
+				</div>
+				<div class="flex justify-end">
+					<Button
+						iconPath={mdiInformationOutline}
+						size="xs"
+						onClick={(ev) => handleOpenBasicInfo(ev, order)}
+						iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
+							? ''
+							: 'dark:hover:text-base-200'}"
+					/>
 				</div>
 			</ButtonListItem>
 		{/each}

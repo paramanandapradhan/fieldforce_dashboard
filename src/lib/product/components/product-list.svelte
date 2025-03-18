@@ -1,5 +1,6 @@
 <script lang="ts">
 	import {
+	Button,
 		ButtonListItem,
 		ButtonMenu,
 		IconCircle,
@@ -13,10 +14,11 @@
 	} from '@cloudparker/moldex.js';
 	import { getAllProducts } from '../product-service';
 	import type { ProductDataModel } from '../product-type';
-	import { openProductDeleteDialog, openProductEditDialog } from '../product-ui-service';
+	import { openProductBasicDetailsDialog, openProductDeleteDialog, openProductEditDialog } from '../product-ui-service';
 	import { onMount } from 'svelte';
 	import WindowInfiniteScroll from '$lib/core/components/window-infinite-scroll.svelte';
 	import {
+	mdiInformationOutline,
 		mdiNotebookOutline,
 		mdiPackageVariantClosed
 	} from '$lib/core/services/app-icons-service';
@@ -67,6 +69,13 @@
 	// Infinite scrolling logic
 	function loadMore() {
 		pageIndex++;
+	}
+
+	async function handleOpenProductBasicInfo(ev:MouseEvent, product: ProductDataModel) {
+		ev.stopPropagation()
+		if (product?._id) {
+			await openProductBasicDetailsDialog(product._id);
+		}
 	}
 
 	onMount(() => {
@@ -120,6 +129,16 @@
 					<div class="text-base-500 dark:text-base-400 text-sm">
 						{product.desc || ''}
 					</div>
+				</div>
+				<div class="flex justify-end">
+					<Button
+						iconPath={mdiInformationOutline}
+						size="xs"
+						onClick={(ev) => handleOpenProductBasicInfo(ev,product)}
+						iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
+							? ''
+							: 'dark:hover:text-base-200'}"
+					/>
 				</div>
 				<div class="flex justify-end">
 					<ButtonMenu

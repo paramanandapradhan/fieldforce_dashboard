@@ -14,6 +14,7 @@ import type { ProductDataModel } from './product-type';
 import { ADMIN_USER_ID } from '$lib/core/services/app-service';
 import { deleteProduct, syncProducts } from './product-service';
 import ProductListDialog from './components/product-cart-list-dialog.svelte';
+import ProductBasicDetailsDialog from './components/product-basic-details-dialog.svelte';
 
 export async function openProductEditDialog(product?: ProductDataModel) {
 	let res = openDialog({
@@ -71,4 +72,20 @@ export async function openAddToCartDialog(customerId: string) {
 		size: isMobileScreen() ? DialogSizeEnum.FULL : DialogSizeEnum.LG,
 	});
 	return res;
+}
+
+export async function openProductBasicDetailsDialog(productId: string) {
+    let res = await openDialog({
+        bodyComponent: ProductBasicDetailsDialog,
+        props: {
+            productId
+        },
+        hasHeader: true,
+        hasHeaderBack: isMobileScreen(),
+        hasHeaderClose: !isMobileScreen(),
+        hasTitle: true,
+        title: 'Product',
+    });
+
+    return res;
 }
