@@ -45,7 +45,7 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="mt-6 p-6 border-t bg-base-100 flex-grow">
+		<div class="mt-6 p-6 border-t bg-base-100 dark:bg-base-700 flex-grow">
 			<BaseDataModelDetails data={attribute!} />
 		</div>
 	</div>

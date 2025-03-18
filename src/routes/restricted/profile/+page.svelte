@@ -63,10 +63,10 @@
 			<main class="">
 				<div class="flex justify-center">
 					<div class="w-full max-w-[800px]">
-						<div class="p-8">
-							<h1 class="text-2xl font-bold">Profile</h1>
+						<div class="p-4">
+							<h1 class="text-2xl font-bold dark:text-base-200">Profile</h1>
 						</div>
-						<div class="m-8 bg-white rounded-2xl p-6 shadow">
+						<div class="my-8 lg:mx-6 mx-2 bg-white dark:bg-base-800 rounded-2xl p-4 shadow">
 							<UserDetails {userId} showRootUserInfo></UserDetails>
 							<!-- {#if user}
 								<UserDetails
@@ -81,15 +81,15 @@
 								<Spinner/>
 							{/if} -->
 						</div>
-						<div class="m-8 bg-white rounded-2xl p-6 shadow">
+						<div class="my-8 lg:mx-6 mx-2 bg-white dark:bg-base-800 rounded-2xl p-4 shadow">
 							<div class="mb-4">
-								<h2 class="font-bold">Basic Information</h2>
+								<h2 class="font-bold dark:text-base-300">Basic Information</h2>
 							</div>
 							<BaseDataModelDetails data={user!} />
 						</div>
-						<div class="m-8 bg-white rounded-2xl p-6 shadow">
+						<div class="my-8 lg:mx-6 mx-2 bg-white dark:bg-base-800 rounded-2xl p-4 shadow">
 							<div>
-								<h2 class="font-bold">Login Details</h2>
+								<h2 class="font-bold dark:text-base-300">Login Details</h2>
 							</div>
 							<UserLoginDetails />
 						</div>

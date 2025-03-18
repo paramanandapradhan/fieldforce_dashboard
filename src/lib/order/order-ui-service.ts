@@ -14,6 +14,7 @@ import type { OrderDataModel } from './order-type';
 import { ADMIN_USER_ID } from '$lib/core/services/app-service';
 import { deleteOrder, syncOrders } from './order-service';
 import OrderDetailsDialog from './components/order-details-dialog.svelte';
+import OrderBasicDetailsDialog from './components/order-basic-details-dialog.svelte';
 
 export async function openOrderEditDialog(order?: OrderDataModel) {
 	let res = openDialog({
@@ -69,4 +70,20 @@ export async function openOrderDetailsDialog(orderId?: string) {
 		hasFooterCloseButton: true,
 	});
 	return res;
+}
+
+export async function openOrderBasicDetailsDialog(orderId: string) {
+    let res = await openDialog({
+        bodyComponent: OrderBasicDetailsDialog,
+        props: {
+            orderId
+        },
+        hasHeader: true,
+        hasHeaderBack: isMobileScreen(),
+        hasHeaderClose: !isMobileScreen(),
+        hasTitle: true,
+        title: 'Order',
+    });
+
+    return res;
 }

@@ -73,8 +73,12 @@
 
 <style>
 	td:nth-child(1) {
-		width: 128px;
+		width: 180px;
         height: 36px;
-		color: grey;
+		color: var(--color-base-400)
+	}
+	td:nth-child(2) {
+		
+		color: var(--color-base-500)
 	}
 </style>

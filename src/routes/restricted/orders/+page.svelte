@@ -86,13 +86,15 @@
 							/>
 						</div>
 					</div>
-					<div class="m-4 p-4 bg-white dark:bg-base-800 shadow rounded-lg">
-						{#if screenSize.isSm || screenSize.isMd || screenSize.isXs}
+					{#if screenSize.isSm || screenSize.isMd || screenSize.isXs}
+						<div class="">
 							<OrderList bind:this={orderListRef} />
-						{:else}
+						</div>
+					{:else}
+						<div class="m-4 p-4 bg-white dark:bg-base-800 shadow rounded-lg">
 							<OrderTable bind:this={orderTableRef} />
-						{/if}
-					</div>
+						</div>
+					{/if}
 				</div>
 			</main>
 		</BackgroundGradient>

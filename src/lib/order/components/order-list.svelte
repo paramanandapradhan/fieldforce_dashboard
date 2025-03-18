@@ -139,8 +139,12 @@
 					/>
 				</div>
 				<div class="flex-grow px-2">
-					<div title="Order ID">
-						{order._id}
+					<div title="Order ID" class="w-full">
+						{order._id} ({order?.items?.length || 0})
+					</div>
+					<div class="text-xs font-light text-base dark:text-base-500">
+						<span>Customer: </span>
+						<span><TextUser input={order?.customer || '-'} hideIcon /></span>
 					</div>
 					<div class="text-xs font-light text-base dark:text-base-500">
 						<TextDate input={order?.cat} />

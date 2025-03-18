@@ -26,7 +26,7 @@
 
 	import { getProduct } from '$lib/product/product-service';
 	import type { OrgDataModel } from '$lib/org/org-types';
-	import { openOrderDetailsDialog } from '../order-ui-service';
+	import { openOrderBasicDetailsDialog, openOrderDetailsDialog } from '../order-ui-service';
 	import { appState } from '$lib/core/services/app-state.svelte';
 
 	let orders: OrderDataModel[] = $state([]);
@@ -38,7 +38,7 @@
 	let filteredOrders = $derived(
 		orders.filter((item) => {
 			const matchSearch = searchText
-				? item.customer?.toLowerCase().includes(searchText.toLowerCase())
+				? item._id?.toLowerCase().includes(searchText.toLowerCase())
 				: true;
 			return matchSearch;
 		})
@@ -89,6 +89,12 @@
 	async function handleOpenOrderDetailsDialog(order: OrderDataModel) {
 		if (order._id) {
 			await openOrderDetailsDialog(order._id);
+		}
+	}
+
+	async function handleOpenBasicInfo(order:OrderDataModel){
+		if(order?._id){
+			await openOrderBasicDetailsDialog(order._id)
 		}
 	}
 
@@ -194,7 +200,7 @@
 								<Button
 									iconPath={mdiInformationOutline}
 									size="xs"
-									onClick={() => handleOpenOrderDetailsDialog(order)}
+									onClick={() => handleOpenBasicInfo(order)}
 									iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
 										? ''
 										: 'dark:hover:text-base-200'}"
