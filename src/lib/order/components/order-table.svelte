@@ -4,9 +4,11 @@
 	import type { OrderDataModel } from '../order-type';
 	import {
 		Button,
+		ButtonMenu,
 		IconCircle,
 		Loading,
 		NoData,
+		openLoadingDialog,
 		Pagination,
 		SearchField,
 		sort,
@@ -26,7 +28,11 @@
 
 	import { getProduct } from '$lib/product/product-service';
 	import type { OrgDataModel } from '$lib/org/org-types';
-	import { openOrderBasicDetailsDialog, openOrderDetailsDialog } from '../order-ui-service';
+	import {
+		downloadOrderSheet,
+		openOrderBasicDetailsDialog,
+		openOrderDetailsDialog
+	} from '../order-ui-service';
 	import { appState } from '$lib/core/services/app-state.svelte';
 
 	let orders: OrderDataModel[] = $state([]);
@@ -92,9 +98,22 @@
 		}
 	}
 
-	async function handleOpenBasicInfo(order:OrderDataModel){
-		if(order?._id){
-			await openOrderBasicDetailsDialog(order._id)
+	async function handleOpenBasicInfo(order: OrderDataModel) {
+		if (order?._id) {
+			await openOrderBasicDetailsDialog(order._id);
+		}
+	}
+
+	async function handleMenu(ev: Event, menu: string) {
+		switch (menu) {
+			case 'Order Sheet':
+				let loader = await openLoadingDialog();
+				await downloadOrderSheet();
+				loader.closeDialog();
+				break;
+
+			default:
+				break;
 		}
 	}
 
@@ -104,8 +123,13 @@
 </script>
 
 <div>
-	<div class="p-4 max-w-72">
-		<SearchField bind:value={searchText} placeholder="Search Products..." />
+	<div class="p-4 flex items-center">
+		<div></div>
+		<div class="flex-grow"></div>
+		<div>
+			<ButtonMenu menus={['Order Sheet']} onMenu={(ev, menu) => handleMenu(ev, menu as string)} />
+		</div>
+		<!-- <SearchField bind:value={searchText} placeholder="Search Products..." /> -->
 	</div>
 
 	{#if isLoading}

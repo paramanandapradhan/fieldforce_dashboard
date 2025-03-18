@@ -33,7 +33,7 @@ export type UserDataModel = BaseDataModel & {
     geo?: CustomerGeo;
     isActive?: boolean,
     canOrder?: boolean,
-
+    extId?: string,
 }
 
 export type UserDataModelExtraType<T> = UserDataModel & {
@@ -46,7 +46,7 @@ export type CustomerDataModel = UserDataModel & {
     owner?: CustomerOwner,
     master?: CustomerMaster,
     geo?: CustomerGeo;
-    canPlaceOrder?:boolean,
+    canPlaceOrder?: boolean,
 }
 
 export type RetailerDatabodel = CustomerDataModel & {};
