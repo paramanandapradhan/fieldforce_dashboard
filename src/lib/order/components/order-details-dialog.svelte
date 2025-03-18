@@ -108,6 +108,6 @@
 <style>
 	td:nth-child(1) {
 		opacity: 0.6;
-		width: 180px;
+		width: 140px;
 	}
 </style>
