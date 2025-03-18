@@ -18,9 +18,10 @@
 	import {
 		mdiAccount,
 		mdiDotsHorizontal,
+		mdiInformationOutline,
 		mdiNotebookOutline
 	} from '$lib/core/services/app-icons-service';
-	import { openUserDeleteDialog, openUserEditDialog } from '../user-ui-service';
+	import { openUserBasicDetailsDialog, openUserDeleteDialog, openUserEditDialog } from '../user-ui-service';
 	import { appState } from '$lib/core/services/app-state.svelte';
 	import TextUserSubtype from './text-user-subtype.svelte';
 	import TextUserType from './text-user-type.svelte';
@@ -87,6 +88,13 @@
 		pageSize = newPageSize;
 		pageIndex = 0;
 	}
+
+	async function handleOpenUserBasicInfo(user:UserDataModel){
+		if(user?._id){
+			await openUserBasicDetailsDialog(user?._id)
+		}
+
+	}
 </script>
 
 <AuthUserReady onReady={handleReady} />
@@ -128,7 +136,8 @@
 					<th class="text-left p-4">Email</th>
 					<th class="text-left p-4">Phone</th>
 					<th class="text-left p-4">Type</th>
-					<th class="text-right p-4"></th>
+					<th class="text-right"></th>
+					<th class="text-right"></th>
 				</tr>
 			</thead>
 			<tbody class="divide-y divide-base-200 dark:divide-base-600">
@@ -152,7 +161,19 @@
 						<td class="text-left px-4">{user.email || '-'}</td>
 						<td class="text-left px-4">{user.phone || '-'}</td>
 						<td class="text-left px-4"><TextUserSubtype input={user?.subtype} /> </td>
-						<td class="text-left px-4">
+						<td class="text-right dark:text-base-300">
+							<div class="flex justify-end">
+								<Button
+									iconPath={mdiInformationOutline}
+									size="xs"
+									onClick={() => handleOpenUserBasicInfo(user)}
+									iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
+										? ''
+										: 'dark:hover:text-base-200'}"
+								/>
+							</div>
+						</td>
+						<td class="text-left">
 							<div class="flex justify-end">
 								<ButtonMenu
 									menus={['View', 'Edit', 'Delete']}

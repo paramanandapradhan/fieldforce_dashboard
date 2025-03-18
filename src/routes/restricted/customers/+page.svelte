@@ -55,7 +55,9 @@
 			<main>
 				<div class="pb-32">
 					<div class="p-4 flex flex-wrap items-center gap-4">
-						<div class="flex-grow"><h1 class="text-xl font-black dark:text-base-200">Customers</h1></div>
+						<div class="flex-grow">
+							<h1 class="text-xl font-black dark:text-base-200">Customers</h1>
+						</div>
 						<div>
 							<Button
 								appearance="base"
@@ -74,13 +76,13 @@
 							/>
 						</div>
 					</div>
-					<div class="m-4 p-4 bg-white dark:bg-base-800 shadow rounded-lg">
-						{#if screenSize.isSm || screenSize.isMd || screenSize.isXs}
-							<CustomerList bind:this={customerListRef} />
-						{:else}
+					{#if screenSize.isSm || screenSize.isMd || screenSize.isXs}
+						<CustomerList bind:this={customerListRef} />
+					{:else}
+						<div class="m-4 p-4 bg-white dark:bg-base-800 shadow rounded-lg">
 							<CustomerTable bind:this={customerTableRef} />
-						{/if}
-					</div>
+						</div>
+					{/if}
 				</div>
 			</main>
 		</BackgroundGradient>

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import {
+		Button,
 		ButtonMenu,
 		IconCircle,
 		Loading,
@@ -13,6 +14,7 @@
 
 	import {
 		mdiBriefcaseAccount,
+		mdiInformationOutline,
 		mdiMapMarkerPath,
 		mdiNotebookOutline
 	} from '$lib/core/services/app-icons-service';
@@ -21,7 +23,11 @@
 	import type { CustomerDataModel } from '../user-types';
 	import TextUserSubtype from './text-user-subtype.svelte';
 	import TextAttribute from '$lib/attribute/components/text-attribute.svelte';
-	import { openCustomerDeleteDialog, openCustomerEditDialog } from '../customer-ui-service';
+	import {
+		openCustomerBasicDetailsDialog,
+		openCustomerDeleteDialog,
+		openCustomerEditDialog
+	} from '../customer-ui-service';
 	import { appState } from '$lib/core/services/app-state.svelte';
 
 	type Props = {
@@ -91,6 +97,12 @@
 		pageIndex = 0;
 	}
 
+	async function handleOpenCustomerBasicInfo(customer: CustomerDataModel) {
+		if (customer?._id) {
+			await openCustomerBasicDetailsDialog(customer._id);
+		}
+	}
+
 	onMount(() => {
 		loadCustomers();
 	});
@@ -125,15 +137,19 @@
 			</div>
 		</NoData>
 	{:else}
-		<table class="min-w-full divide-y divide-base-200 dark:divide-base-600 table-fixed dark:text-base-200">
+		<table
+			class="min-w-full divide-y divide-base-200 dark:divide-base-600 table-fixed dark:text-base-200"
+		>
 			<thead>
 				<tr>
 					<th class="text-left w-14"></th>
 					<th class="text-left p-4">Name</th>
+					<th class="text-left p-4">Phone</th>
 					<th class="text-left p-4">Type</th>
 					<th class="text-left p-4">City</th>
 					<th class="text-left p-4">Area</th>
-					<th class="text-right p-4"></th>
+					<th class="text-right"></th>
+					<th class="text-right"></th>
 				</tr>
 			</thead>
 			<tbody class="divide-y divide-base-200 dark:divide-base-600">
@@ -160,6 +176,9 @@
 							</div>
 						</td>
 						<td class="text-left px-4">
+							{item?.phone || '-'} 
+						</td>
+						<td class="text-left px-4">
 							<TextUserSubtype input={item.subtype} />
 						</td>
 						<td class="text-left px-4">
@@ -168,7 +187,19 @@
 						<td class="text-left px-4">
 							<TextAttribute input={item?.geo?.area} />
 						</td>
-						<td class="text-right px-4">
+						<td class="text-right dark:text-base-300">
+							<div class="flex justify-end">
+								<Button
+									iconPath={mdiInformationOutline}
+									size="xs"
+									onClick={() => handleOpenCustomerBasicInfo(item)}
+									iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
+										? ''
+										: 'dark:hover:text-base-200'}"
+								/>
+							</div>
+						</td>
+						<td class="text-right">
 							<div class="flex justify-end">
 								<ButtonMenu
 									menus={['View', 'Edit', 'Delete']}

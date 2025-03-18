@@ -4,6 +4,7 @@ import { deleteUser, getAllUsers, syncUsers, UserSubtypeEnum, UserTypeEnum } fro
 import UserEditDialog from "./components/user-edit-dialog.svelte";
 import { ADMIN_USER_ID } from "$lib/core/services/app-service";
 import { customerPickerListItemSnippet, userPickerListItemSnippet } from "./components/user-snippets.svelte";
+import UserBasicDetailsDialog from "./components/user-basic-details-dialog.svelte";
 
 
 export async function openUserEditDialog(user?: UserDataModel) {
@@ -98,4 +99,20 @@ export async function openPartyPickerDialog(value?: string[] | string): Promise<
     // })
     // return res;
     return '';
+}
+
+export async function openUserBasicDetailsDialog(userId: string) {
+    let res = await openDialog({
+        bodyComponent: UserBasicDetailsDialog,
+        props: {
+            userId
+        },
+        hasHeader: true,
+        hasHeaderBack: isMobileScreen(),
+        hasHeaderClose: !isMobileScreen(),
+        hasTitle: true,
+        title: 'User',
+    });
+
+    return res;
 }
