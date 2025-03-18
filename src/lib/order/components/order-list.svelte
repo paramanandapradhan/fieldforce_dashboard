@@ -1,7 +1,10 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { getAllOrders } from '../order-service';
-	import type { OrderDataModel } from '../order-type';
+	import {
+		mdiInformationOutline,
+		mdiMagnify,
+		mdiTextBoxCheckOutline
+	} from '$lib/core/services/app-icons-service';
+	import TextUser from '$lib/user/components/text-user.svelte';
 	import {
 		Button,
 		ButtonListItem,
@@ -14,21 +17,13 @@
 		TextCurrency,
 		TextDate
 	} from '@cloudparker/moldex.js';
-	import {
-		mdiInformationOutline,
-		mdiMagnify,
-		mdiNotebookOutline,
-		mdiPackageVariantClosed,
-		mdiTextBoxCheckOutline
-	} from '$lib/core/services/app-icons-service';
-	import TextUserType from '$lib/user/components/text-user-type.svelte';
-	import TextUser from '$lib/user/components/text-user.svelte';
-	import TextAttribute from '$lib/attribute/components/text-attribute.svelte';
+	import { onMount } from 'svelte';
+	import { getAllOrders } from '../order-service';
+	import type { OrderDataModel } from '../order-type';
 
-	import { getProduct } from '$lib/product/product-service';
-	import type { OrgDataModel } from '$lib/org/org-types';
-	import { openOrderBasicDetailsDialog, openOrderDetailsDialog } from '../order-ui-service';
 	import { appState } from '$lib/core/services/app-state.svelte';
+	import { openOrderBasicDetailsDialog, openOrderDetailsDialog } from '../order-ui-service';
+	import TextAttribute from '$lib/attribute/components/text-attribute.svelte';
 
 	let orders: OrderDataModel[] = $state([]);
 	let pageIndex: number = $state(0);
@@ -142,20 +137,33 @@
 				<div>
 					<IconCircle
 						iconPath={mdiTextBoxCheckOutline}
-						iconClassName="!h-5 !w-5 text-primary"
-						circleClassName="!h-10 !w-10"
+						iconClassName="!h-5 !w-5 text-primary  "
+						circleClassName="!h-10 !w-10  "
 					/>
 				</div>
 				<div class="flex-grow px-2">
-					<div title="Order ID" class="w-full">
-						{order._id} ({order?.items?.length || 0})
+					<div class="flex gap-4">
+						<div title="Order ID" class="flex-grow text-sm">
+							{order._id}
+						</div>
+						<div class="text-sm" title="Items Count">{order?.items?.length || 0}</div>
+						<div class="font-bold w-24 text-right text-sm" title="Amount">
+							<TextCurrency input={order?.amount || 0} hasSymbol symbol="₹" />
+						</div>
 					</div>
+					<div class="flex justify-between gap-4 text-xs font-light text-base dark:text-base-500">
+						<div>
+							<TextAttribute input={order.status} />
+						</div>
+						<div class="">
+							<TextDate input={order?.cat} />
+						</div>
+					</div>
+
 					<div class="text-xs font-light text-base dark:text-base-400">
-						<span><TextUser input={order?.customer || '-'} hideIcon /></span>
+						<span title="Customer"><TextUser input={order?.customer || '-'} hideIcon /></span>
 					</div>
-					<div class="text-xs font-light text-base dark:text-base-500">
-						<TextDate input={order?.cat} />
-					</div>
+
 					<!-- <div class="mt-2 space-y-1">
 						<p class="text-xs text-base-500">
 							Customer: <TextUser input={order?.customer || '-'} hideIcon />
@@ -165,10 +173,8 @@
 						</p>
 					</div> -->
 				</div>
-				<div>
-					<TextCurrency input={order?.amount || 0} hasSymbol symbol="₹" />
-				</div>
-				<div class="flex justify-end">
+
+				<!-- <div class="flex justify-end">
 					<Button
 						iconPath={mdiInformationOutline}
 						size="xs"
@@ -177,7 +183,7 @@
 							? ''
 							: 'dark:hover:text-base-200'}"
 					/>
-				</div>
+				</div> -->
 			</ButtonListItem>
 		{/each}
 		<div class="p-4">

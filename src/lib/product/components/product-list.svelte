@@ -1,6 +1,6 @@
 <script lang="ts">
 	import {
-	Button,
+		Button,
 		ButtonListItem,
 		ButtonMenu,
 		IconCircle,
@@ -14,11 +14,15 @@
 	} from '@cloudparker/moldex.js';
 	import { getAllProducts } from '../product-service';
 	import type { ProductDataModel } from '../product-type';
-	import { openProductBasicDetailsDialog, openProductDeleteDialog, openProductEditDialog } from '../product-ui-service';
+	import {
+		openProductBasicDetailsDialog,
+		openProductDeleteDialog,
+		openProductEditDialog
+	} from '../product-ui-service';
 	import { onMount } from 'svelte';
 	import WindowInfiniteScroll from '$lib/core/components/window-infinite-scroll.svelte';
 	import {
-	mdiInformationOutline,
+		mdiInformationOutline,
 		mdiNotebookOutline,
 		mdiPackageVariantClosed
 	} from '$lib/core/services/app-icons-service';
@@ -71,8 +75,8 @@
 		pageIndex++;
 	}
 
-	async function handleOpenProductBasicInfo(ev:MouseEvent, product: ProductDataModel) {
-		ev.stopPropagation()
+	async function handleOpenProductBasicInfo(ev: MouseEvent, product: ProductDataModel) {
+		ev.stopPropagation();
 		if (product?._id) {
 			await openProductBasicDetailsDialog(product._id);
 		}
@@ -114,7 +118,10 @@
 		</NoData>
 	{:else}
 		{#each paginatedProducts as product, index}
-			<ButtonListItem className="dark:hover:bg-base-600" onClick={() => handleViewProduct(product)}>
+			<ButtonListItem
+				className="dark:hover:bg-base-600 pr-2"
+				onClick={() => handleViewProduct(product)}
+			>
 				<div>
 					<IconCircle
 						iconPath={mdiPackageVariantClosed}
@@ -133,8 +140,8 @@
 				<div class="flex justify-end">
 					<Button
 						iconPath={mdiInformationOutline}
-						size="xs"
-						onClick={(ev) => handleOpenProductBasicInfo(ev,product)}
+						className="!px-2"
+						onClick={(ev) => handleOpenProductBasicInfo(ev, product)}
 						iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
 							? ''
 							: 'dark:hover:text-base-200'}"
@@ -142,10 +149,11 @@
 				</div>
 				<div class="flex justify-end">
 					<ButtonMenu
+						className="!px-2"
 						menus={['View', 'Edit', 'Delete']}
 						iconPath={mdiDotsHorizontal}
 						onMenu={(ev, menu) => handleMenu(ev, menu as string, product)}
-						iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
+						iconClassName=" text-base-400 hover:text-base-800 {appState.theme == 'light'
 							? ''
 							: 'dark:hover:text-base-200'}"
 					/>

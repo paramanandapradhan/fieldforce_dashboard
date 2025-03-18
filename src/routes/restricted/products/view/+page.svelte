@@ -36,38 +36,39 @@
 		}
 	}
 
-	async function handleEdit(){
-		if(product){
-			let res = await openProductEditDialog(product)
-			if(res){
-				loadProducts()
+	async function handleEdit() {
+		if (product) {
+			let res = await openProductEditDialog(product);
+			if (res) {
+				loadProducts();
 			}
 		}
 	}
 
 	onMount(() => {
-		loadProducts()
-	})
+		loadProducts();
+	});
 </script>
 
 <div class="min-h-full">
-	<AppNavbar title="VIEW PRODUCT" hasLogo hasTitle hasBack={isMobileScreen()} onBack={goBack} />
+	<AppNavbar title="Product" hasLogo hasTitle hasBack={isMobileScreen()} onBack={goBack} />
 	<Drawer bind:this={drawerRef} className="border-r"><RestrictedDrawer /></Drawer>
 	<Sidebar className="border-r "><RestrictedDrawer /></Sidebar>
 	<ContentArea className="md:pl-72">
 		<BackgroundGradient>
 			<main>
 				<div class="p-4 flex items-center justify-between">
-					<div><h1 class="text-xl font-black dark:text-base-200">Products Details</h1></div>
+					<div></div>
+					<!-- <div><h1 class="text-xl font-black dark:text-base-200">Products Details</h1></div> -->
 					<div>
 						<Button appearance="border-primary" onClick={handleEdit} label="Edit" />
 					</div>
 				</div>
 				<div class="pb-32">
 					{#if product != null}
-					<div class="bg-white dark:bg-base-800 p-4 shadow rounded-lg m-4">
-						<ProductDetails {productId}/>
-					</div>
+						<div class="bg-white dark:bg-base-800 p-4 shadow rounded-lg m-4">
+							<ProductDetails {productId} />
+						</div>
 					{/if}
 				</div>
 			</main>

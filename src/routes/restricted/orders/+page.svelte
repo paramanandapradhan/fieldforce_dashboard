@@ -87,7 +87,7 @@
 						</div>
 					</div>
 					{#if screenSize.isSm || screenSize.isMd || screenSize.isXs}
-						<div class="">
+						<div class="m-4  bg-white dark:bg-base-800 shadow rounded-lg">
 							<OrderList bind:this={orderListRef} />
 						</div>
 					{:else}

@@ -41,7 +41,7 @@
 	});
 </script>
 
-<div class="px-8">
+<div class="px-4">
 	<div class="flex flex-col lg:flex-row gap-6">
 		<div>
 			<table class="table-fixed w-full text-base dark:text-base-300">
@@ -81,7 +81,7 @@
 			</table>
 		</div>
 		{#if orderStatus}
-			<div class="min-w-60 bg-base-100 p-4 rounded">
+			<div class="min-w-60 bg-base-100 dark:bg-base-700 p-4 rounded">
 				<AttributeComboboxField
 					bind:value={orderStatus}
 					attributeType={AttributeTypeEnum.ORDER_STATUS}
