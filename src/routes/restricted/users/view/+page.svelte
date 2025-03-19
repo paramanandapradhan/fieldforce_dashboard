@@ -21,53 +21,49 @@
 
 	let drawerRef: Drawer;
 
-	let userId:string = $derived(page.url.searchParams.get('userId') || '')
-	let user: UserDataModel | null =$state(null)
+	let userId: string = $derived(page.url.searchParams.get('userId') || '');
+	let user: UserDataModel | null = $state(null);
 
 	function handleMore() {
 		drawerRef && drawerRef.openDrawer();
 	}
 
-	async function loadUser(){
-		if(userId){
-			user = await getUser(userId)
+	async function loadUser() {
+		if (userId) {
+			user = await getUser(userId);
 		} else {
-			user = null
+			user = null;
 		}
 	}
 
-	async function handleEdit(){
-		if(user){
-			let res = await openUserEditDialog(user)
-			if(res){
-				loadUser()
+	async function handleEdit() {
+		if (user) {
+			let res = await openUserEditDialog(user);
+			if (res) {
+				loadUser();
 			}
 		}
 	}
 
 	onMount(() => {
-		loadUser()
-	})
-	
+		loadUser();
+	});
 </script>
 
 <div class="min-h-full">
-	<AppNavbar  title="VIEW USER" hasLogo hasTitle hasBack={isMobileScreen()} onBack={goBack}/>
+	<AppNavbar title="VIEW USER" hasLogo hasTitle hasBack={isMobileScreen()} onBack={goBack} />
 	<Drawer bind:this={drawerRef} className="border-r"><RestrictedDrawer /></Drawer>
 	<Sidebar className="border-r "><RestrictedDrawer /></Sidebar>
 	<ContentArea className="md:pl-72">
 		<BackgroundGradient>
 			<main>
-				<div class="p-4 flex items-center justify-between">
-					<div><h1 class="text-xl font-black dark:text-base-200">User Details</h1></div>
-					<div>
-						<Button appearance="border-primary" onClick={handleEdit} label="Edit" />
-					</div>
+				<div class="p-4 flex items-center justify-end">
+					<Button appearance="border-primary" onClick={handleEdit} label="Edit" />
 				</div>
 				<div class="pb-32">
 					{#if user != null}
 						<div class="bg-white dark:bg-base-800 p-4 shadow rounded-lg m-4">
-							<UserDetails {userId}/>
+							<UserDetails {userId} />
 						</div>
 					{/if}
 				</div>

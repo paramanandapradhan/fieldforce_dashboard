@@ -99,13 +99,10 @@
 		<BackgroundGradient>
 			<main>
 				<div class="pb-32">
-					<div class="p-4 flex items-center justify-between">
-						<div><h1 class="text-xl font-black dark:text-base-200">Teams Details</h1></div>
-						<div>
-							<Button appearance="border-primary" onClick={handleEdit} label="Edit" />
-						</div>
+					<div class="p-4 flex items-center justify-end">
+						<Button appearance="border-primary" onClick={handleEdit} label="Edit" />
 					</div>
-					<div class="pb-8">
+					<div class="pb-2">
 						{#if team != null}
 							<div class="bg-white dark:bg-base-800 p-4 shadow rounded-lg m-4">
 								<TeamDetails {teamId} />

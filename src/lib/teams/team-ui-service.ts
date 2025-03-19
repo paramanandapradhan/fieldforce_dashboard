@@ -12,6 +12,7 @@ import TeamEditDialog from './components/team-edit-dialog.svelte';
 import type { TeamDataModel } from './team-type';
 import { ADMIN_USER_ID } from '$lib/core/services/app-service';
 import { deleteTeam, syncTeams } from './team-service';
+import TeamBasicDetailsDialog from './components/team-basic-details-dialog.svelte';
 
 export async function openTeamEditDialog(team?: TeamDataModel) {
 	let res = openDialog({
@@ -52,4 +53,21 @@ export async function openTeamDeleteDialog(team: TeamDataModel) {
 		loading.closeDialog();
 		return team;
 	}
+}
+
+
+export async function openTeamBasicDetailsDialog(teamId: string) {
+    let res = await openDialog({
+        bodyComponent: TeamBasicDetailsDialog,
+        props: {
+            teamId
+        },
+        hasHeader: true,
+        hasHeaderBack: isMobileScreen(),
+        hasHeaderClose: !isMobileScreen(),
+        hasTitle: true,
+        title: 'Team',
+    });
+
+    return res;
 }

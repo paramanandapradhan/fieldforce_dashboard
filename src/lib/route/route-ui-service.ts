@@ -2,6 +2,7 @@ import { isMobileScreen, openDeleteConfirmDialog, openDialog, openLoadingDialog,
 import type { RouteDataModel } from "./route-types";
 import RouteEditDialog from "./components/route-edit-dialog.svelte";
 import { deleteRoute, syncRoutes } from "./route-service";
+import RouteBasicDetailsDialog from "./components/route-basic-details-dialog.svelte";
 
 export async function openRouteEditDialog(route?: RouteDataModel) {
     let res = await openDialog<RouteDataModel>({
@@ -39,4 +40,20 @@ export async function openRouteDeleteDialog(route?: RouteDataModel) {
         loading.closeDialog();
         return route;
     }
+}
+
+export async function openRouteBasicDetailsDialog(routeId: string) {
+    let res = await openDialog({
+        bodyComponent: RouteBasicDetailsDialog,
+        props: {
+            routeId
+        },
+        hasHeader: true,
+        hasHeaderBack: isMobileScreen(),
+        hasHeaderClose: !isMobileScreen(),
+        hasTitle: true,
+        title: 'Route',
+    });
+
+    return res;
 }

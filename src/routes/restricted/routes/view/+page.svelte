@@ -111,17 +111,8 @@
 				<div class="pb-32">
 					{#if route != null}
 						<div class="bg-white dark:bg-base-800 p-4 shadow rounded-lg m-4">
-							<div class="flex md:flex-row flex-col gap-4">
-								<div>
-									<IconCircle
-										iconPath={mdiMapMarkerPath}
-										iconClassName="  text-primary"
-										circleClassName=" "
-									/>
-								</div>
-								<div>
-									<RouteDetails {route} />
-								</div>
+							<div>
+								<RouteDetails {route} />
 							</div>
 						</div>
 

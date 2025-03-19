@@ -1,12 +1,14 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	import { IconCircle } from '@cloudparker/moldex.js';
-	import { mdiPackageVariantClosed } from '$lib/core/services/app-icons-service';
+	import { Button, IconCircle } from '@cloudparker/moldex.js';
+	import { mdiInformationOutline, mdiPackageVariantClosed } from '$lib/core/services/app-icons-service';
 	import type { VisitDataModel } from '../visite-type';
 	import { getVisit } from '../visit-service';
 	import TextUser from '$lib/user/components/text-user.svelte';
 	import TextAttribute from '$lib/attribute/components/text-attribute.svelte';
+	import { appState } from '$lib/core/services/app-state.svelte';
+	import { openVisitsBasicDetailsDialog } from '../visite-ui-service';
 
 	type Props = {
 		visitId: any;
@@ -23,14 +25,19 @@
 		}
 	}
 
+	async function handleOpenVisitsBasicInfoDialog(visit: VisitDataModel) {
+		if (visit?._id) {
+			await openVisitsBasicDetailsDialog(visit._id);
+		}
+	}
+
 	onMount(() => {
 		loadVisit();
 	});
 </script>
 
 <div>
-	<h4 class="text-xl font-bold mb-4 dark:text-base-300">Tour Visit Details</h4>
-	<div class="flex md:flex-row flex-col gap-4">
+	<div class="flex items-center gap-4">
 		<div>
 			<IconCircle
 				iconPath={mdiPackageVariantClosed}
@@ -38,27 +45,41 @@
 				circleClassName=" "
 			/>
 		</div>
-		<div>
-			<table class="table-fixed w-full">
-				<tbody>
-					<tr class="lg:text-lg lg:font-bold font-semibold"
-						><td>Title</td><td>{visit?.name || '-'}</td></tr
-					>
-					<tr><td>Description</td><td class="text-base-500 text-sm">{visit?.desc || '-'}</td></tr>
-					<tr><td>Visit Type</td><td><TextAttribute input={visit?.type || '-'} /> </td></tr>
-					<tr><td>Customer</td><td><TextUser input={visit?.customer || '-'}  hideIcon/></td></tr>
-					<tr
-						><td>Planned</td><td
-							>{#if visit?.isPlanned == true}
-								Yes
-							{:else}
-								No
-							{/if}</td
-						></tr
-					>
-				</tbody>
-			</table>
+		<div class="flex-grow">
+			<h4 class="text-xl font-bold dark:text-base-200">Visit Details</h4>
 		</div>
+		<div class="flex justify-end">
+			<Button
+				iconPath={mdiInformationOutline}
+				size="xs"
+				onClick={() => handleOpenVisitsBasicInfoDialog(visit!)}
+				iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
+					? ''
+					: 'dark:hover:text-base-200'}"
+			/>
+		</div>
+	</div>
+
+	<div class="mt-6">
+		<table class="table-fixed w-full">
+			<tbody>
+				<tr class="lg:text-lg lg:font-bold font-semibold"
+					><td>Title</td><td>{visit?.name || '-'}</td></tr
+				>
+				<tr><td>Description</td><td class="text-base-500 text-sm">{visit?.desc || '-'}</td></tr>
+				<tr><td>Visit Type</td><td><TextAttribute input={visit?.type || '-'} /> </td></tr>
+				<tr><td>Customer</td><td><TextUser input={visit?.customer || '-'} hideIcon /></td></tr>
+				<tr
+					><td>Planned</td><td
+						>{#if visit?.isPlanned == true}
+							Yes
+						{:else}
+							No
+						{/if}</td
+					></tr
+				>
+			</tbody>
+		</table>
 	</div>
 </div>
 

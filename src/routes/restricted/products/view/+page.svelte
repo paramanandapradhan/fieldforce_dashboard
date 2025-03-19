@@ -51,7 +51,7 @@
 </script>
 
 <div class="min-h-full">
-	<AppNavbar title="Product" hasLogo hasTitle hasBack={isMobileScreen()} onBack={goBack} />
+	<AppNavbar title="View Product" hasLogo hasTitle hasBack={isMobileScreen()} onBack={goBack} />
 	<Drawer bind:this={drawerRef} className="border-r"><RestrictedDrawer /></Drawer>
 	<Sidebar className="border-r "><RestrictedDrawer /></Sidebar>
 	<ContentArea className="md:pl-72">

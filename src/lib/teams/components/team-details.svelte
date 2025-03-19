@@ -2,9 +2,11 @@
 	import { onMount } from 'svelte';
 	import { getTeam } from '../team-service';
 	import type { TeamDataModel } from '../team-type';
-	import { IconCircle } from '@cloudparker/moldex.js';
-	import { mdiPackageVariantClosed } from '$lib/core/services/app-icons-service';
+	import { Button, IconCircle } from '@cloudparker/moldex.js';
+	import { mdiInformationOutline, mdiPackageVariantClosed } from '$lib/core/services/app-icons-service';
 	import TextUser from '$lib/user/components/text-user.svelte';
+	import { appState } from '$lib/core/services/app-state.svelte';
+	import { openTeamBasicDetailsDialog } from '../team-ui-service';
 
 	type Props = {
 		teamId: any;
@@ -21,14 +23,19 @@
 		}
 	}
 
+	async function handleOpenTeamBasicInfoDialog(team: TeamDataModel) {
+		if (team?._id) {
+			await openTeamBasicDetailsDialog(team._id);
+		}
+	}
+
 	onMount(() => {
 		loadTeam();
 	});
 </script>
 
 <div>
-	<h4 class="text-xl font-bold mb-4 dark:text-base-200">Team Details</h4>
-	<div class="flex md:flex-row flex-col gap-4">
+	<div class="flex items-center gap-4">
 		<div>
 			<IconCircle
 				iconPath={mdiPackageVariantClosed}
@@ -36,17 +43,31 @@
 				circleClassName=" "
 			/>
 		</div>
-		<div>
-			<table class="table-fixed w-full">
-				<tbody>
-					<tr class="lg:text-lg lg:font-bold font-semibold"
-						><td>Name</td><td>{team?.name || '-'}</td></tr
-					>
-					<tr><td>Description</td><td class="text-base-500 text-sm">{team?.desc || '-'}</td></tr>
-					<tr><td>Manager</td><td> <TextUser input={team?.manager} hideIcon/></td></tr>
-				</tbody>
-			</table>
+		<div class="flex-grow">
+			<h4 class="text-xl font-bold dark:text-base-200">Team Details</h4>
 		</div>
+		<div class="flex justify-end">
+			<Button
+				iconPath={mdiInformationOutline}
+				size="xs"
+				onClick={() => handleOpenTeamBasicInfoDialog(team!)}
+				iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
+					? ''
+					: 'dark:hover:text-base-200'}"
+			/>
+		</div>
+	</div>
+
+	<div class="mt-6">
+		<table class="table-fixed w-full">
+			<tbody>
+				<tr class="lg:text-lg lg:font-bold font-semibold"
+					><td>Name</td><td>{team?.name || '-'}</td></tr
+				>
+				<tr><td>Description</td><td class="text-base-500 text-sm">{team?.desc || '-'}</td></tr>
+				<tr><td>Manager</td><td> <TextUser input={team?.manager} hideIcon /></td></tr>
+			</tbody>
+		</table>
 	</div>
 </div>
 

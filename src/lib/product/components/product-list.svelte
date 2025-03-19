@@ -75,13 +75,6 @@
 		pageIndex++;
 	}
 
-	async function handleOpenProductBasicInfo(ev: MouseEvent, product: ProductDataModel) {
-		ev.stopPropagation();
-		if (product?._id) {
-			await openProductBasicDetailsDialog(product._id);
-		}
-	}
-
 	onMount(() => {
 		loadProducts();
 	});
@@ -136,16 +129,6 @@
 					<div class="text-base-500 dark:text-base-400 text-sm">
 						{product.desc || ''}
 					</div>
-				</div>
-				<div class="flex justify-end">
-					<Button
-						iconPath={mdiInformationOutline}
-						className="!px-2"
-						onClick={(ev) => handleOpenProductBasicInfo(ev, product)}
-						iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
-							? ''
-							: 'dark:hover:text-base-200'}"
-					/>
 				</div>
 				<div class="flex justify-end">
 					<ButtonMenu

@@ -2,8 +2,13 @@
 	import { onMount } from 'svelte';
 	import { getAllTeams } from '../team-service';
 	import type { TeamDataModel } from '../team-type';
-	import { openTeamDeleteDialog, openTeamEditDialog } from '../team-ui-service';
 	import {
+		openTeamBasicDetailsDialog,
+		openTeamDeleteDialog,
+		openTeamEditDialog
+	} from '../team-ui-service';
+	import {
+		Button,
 		ButtonMenu,
 		IconCircle,
 		Loading,
@@ -16,6 +21,7 @@
 	} from '@cloudparker/moldex.js';
 	import {
 		mdiAccount,
+		mdiInformationOutline,
 		mdiMagnify,
 		mdiNotebookOutline,
 		mdiPackageVariantClosed
@@ -79,6 +85,12 @@
 		pageIndex = 0;
 	}
 
+	async function handleOpenTeamBasicInfoDialog(team: TeamDataModel) {
+		if (team?._id) {
+			await openTeamBasicDetailsDialog(team._id);
+		}
+	}
+
 	onMount(() => {
 		loadTeams();
 	});
@@ -114,13 +126,15 @@
 			</div>
 		</NoData>
 	{:else}
-		<table class="min-w-full divide-y divide-base-200 dark:divide-base-600 dark:text-base-200 table-fixed">
+		<table
+			class="min-w-full divide-y divide-base-200 dark:divide-base-600 dark:text-base-200 table-fixed"
+		>
 			<thead>
 				<tr>
 					<th class="text-left w-14"></th>
 					<th class="text-left p-4">Name</th>
 					<th class="text-left p-4">Manager</th>
-					<th class="text-right p-4"></th>
+					<th class="text-right"></th>
 				</tr>
 			</thead>
 			<tbody class="divide-y divide-base-200 dark:divide-base-600">
@@ -141,9 +155,18 @@
 							</div>
 							<div class="text-sm text-base-500">{team.desc || '-'}</div>
 						</td>
-						<td class="text-left px-4"><TextUser input={team?.manager} hideIcon/></td>
-						<td class="text-left px-4">
-							<div class="flex justify-end">
+						<td class="text-left px-4"><TextUser input={team?.manager} hideIcon /></td>
+						<td class="text-left">
+							<div class="flex justify-end gap-2">
+								<Button
+									iconPath={mdiInformationOutline}
+									size="xs"
+									onClick={() => handleOpenTeamBasicInfoDialog(team)}
+									iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
+										? ''
+										: 'dark:hover:text-base-200'}"
+								/>
+
 								<ButtonMenu
 									menus={['View', 'Edit', 'Delete']}
 									iconPath={mdiDotsHorizontal}

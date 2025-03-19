@@ -123,7 +123,7 @@
 						{route.desc || ''}
 					</div>
 				</div>
-				<div>
+				<div class="flex justify-end">
 					<ButtonMenu
 						menus={['View', 'Edit', 'Delete']}
 						onMenu={(ev, menu) => handleMenu(ev, menu as string, route)}

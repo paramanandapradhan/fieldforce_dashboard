@@ -1,5 +1,6 @@
 <script lang="ts">
 	import {
+		Button,
 		ButtonMenu,
 		IconCircle,
 		Loading,
@@ -14,8 +15,16 @@
 	import type { RouteDataModel } from '../route-types';
 	import TextUser from '$lib/user/components/text-user.svelte';
 	import { onMount } from 'svelte';
-	import { mdiMapMarkerPath, mdiNotebookOutline } from '$lib/core/services/app-icons-service';
-	import { openRouteDeleteDialog, openRouteEditDialog } from '../route-ui-service';
+	import {
+		mdiInformationOutline,
+		mdiMapMarkerPath,
+		mdiNotebookOutline
+	} from '$lib/core/services/app-icons-service';
+	import {
+		openRouteBasicDetailsDialog,
+		openRouteDeleteDialog,
+		openRouteEditDialog
+	} from '../route-ui-service';
 	import { appState } from '$lib/core/services/app-state.svelte';
 
 	type Props = {};
@@ -80,6 +89,12 @@
 		pageIndex = 0;
 	}
 
+	async function handleOpenRouteBasicInfoDialog(route: RouteDataModel) {
+		if (route?._id) {
+			await openRouteBasicDetailsDialog(route._id);
+		}
+	}
+
 	onMount(() => {
 		loadRoutes();
 	});
@@ -114,14 +129,16 @@
 			</div>
 		</NoData>
 	{:else}
-		<table class="min-w-full divide-y divide-base-200 dark:divide-base-600 dark:text-base-200 table-fixed">
+		<table
+			class="min-w-full divide-y divide-base-200 dark:divide-base-600 dark:text-base-200 table-fixed"
+		>
 			<thead>
 				<tr>
 					<th class="text-left w-14"></th>
 					<th class="text-left p-4">Name</th>
 					<th class="text-left p-4">Manager</th>
 					<th class="text-left p-4">Visit Plan</th>
-					<th class="text-right p-4"></th>
+					<th class="text-right"></th>
 				</tr>
 			</thead>
 			<tbody class="divide-y divide-base-200 dark:divide-base-600">
@@ -147,9 +164,17 @@
 						<td class="text-left px-4">
 							<TextUser input={route.manager} hideIcon />
 						</td>
-						<td class="text-left px-4"></td>
-						<td class="text-right px-4">
+						<td class="text-left px-4">{route.plans ? Object.keys(route.plans).length : 0}</td>
+						<td class="text-right">
 							<div class="flex justify-end">
+								<Button
+									iconPath={mdiInformationOutline}
+									size="xs"
+									onClick={() => handleOpenRouteBasicInfoDialog(route)}
+									iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
+										? ''
+										: 'dark:hover:text-base-200'}"
+								/>
 								<ButtonMenu
 									menus={['View', 'Edit', 'Delete']}
 									onMenu={(ev, menu) => handleMenu(ev, menu as string, route)}

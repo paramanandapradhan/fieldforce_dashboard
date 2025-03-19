@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 
 	import {
+		Button,
 		ButtonMenu,
 		IconCircle,
 		Loading,
@@ -14,6 +15,7 @@
 	} from '@cloudparker/moldex.js';
 	import {
 		mdiAccount,
+		mdiInformationOutline,
 		mdiMagnify,
 		mdiNotebookOutline,
 		mdiPackageVariantClosed
@@ -21,7 +23,11 @@
 	import { appState } from '$lib/core/services/app-state.svelte';
 	import type { VisitDataModel } from '../visite-type';
 	import { getAllVisits } from '../visit-service';
-	import { openVisitDeleteDialog, openVisitEditDialog } from '../visite-ui-service';
+	import {
+		openVisitDeleteDialog,
+		openVisitEditDialog,
+		openVisitsBasicDetailsDialog
+	} from '../visite-ui-service';
 	import TextUserSubtype from '$lib/user/components/text-user-subtype.svelte';
 	import TextUser from '$lib/user/components/text-user.svelte';
 	import TextAttributeType from '$lib/attribute/components/text-attribute-type.svelte';
@@ -83,6 +89,12 @@
 		pageIndex = 0;
 	}
 
+	async function handleOpenVisitsBasicInfoDialog(visit: VisitDataModel) {
+		if (visit?._id) {
+			await openVisitsBasicDetailsDialog(visit._id);
+		}
+	}
+
 	onMount(() => {
 		loadVisits();
 	});
@@ -118,7 +130,9 @@
 			</div>
 		</NoData>
 	{:else}
-		<table class="min-w-full divide-y divide-base-200 dark:divide-base-600 dark:text-base-200 table-fixed">
+		<table
+			class="min-w-full divide-y divide-base-200 dark:divide-base-600 dark:text-base-200 table-fixed"
+		>
 			<thead>
 				<tr>
 					<th class="text-left w-14"></th>
@@ -128,7 +142,7 @@
 					<th class="text-left p-4">Visit Type</th>
 					<th class="text-left p-4">Customer</th>
 					<th class="text-left p-4">Planned</th>
-					<th class="text-right p-4"></th>
+					<th class="text-right"></th>
 				</tr>
 			</thead>
 			<tbody class="divide-y divide-base-200 dark:divide-base-600">
@@ -151,7 +165,7 @@
 						<td class="text-left px-4"
 							><div class="text-sm text-base-500">{visit.desc || '-'}</div></td
 						>
-						<td class="text-left px-4"><TextUser input={visit.cby} hideIcon /></td>
+						<td class="text-left px-4"><TextUser input={visit.cby || '-'} hideIcon /></td>
 						<td class="text-left px-4"> <TextAttribute input={visit?.type || '-'} /> </td>
 						<td class="text-left px-4"><TextUser input={visit?.customer || '-'} hideIcon /> </td>
 						<td class="text-left px-4">
@@ -161,8 +175,17 @@
 								No
 							{/if}
 						</td>
-						<td class="text-left px-4">
+						<td class="text-left">
 							<div class="flex justify-end">
+								<Button
+									iconPath={mdiInformationOutline}
+									size="xs"
+									onClick={() => handleOpenVisitsBasicInfoDialog(visit)}
+									iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
+										? ''
+										: 'dark:hover:text-base-200'}"
+								/>
+
 								<ButtonMenu
 									menus={['View', 'Edit', 'Delete']}
 									iconPath={mdiDotsHorizontal}

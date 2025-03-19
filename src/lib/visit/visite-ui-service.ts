@@ -12,6 +12,7 @@ import type { VisitDataModel } from './visite-type';
 import VisitEditDialog from './components/visit-edit-dialog.svelte';
 import { ADMIN_USER_ID } from '$lib/core/services/app-service';
 import { deleteVisit, syncVisits } from './visit-service';
+import VisitBasicDetailsDialog from './components/visit-basic-details-dialog.svelte';
 
 
 export async function openVisitEditDialog(visit?: VisitDataModel) {
@@ -53,4 +54,21 @@ export async function openVisitDeleteDialog(visit?: VisitDataModel) {
 		loading.closeDialog();
 		return visit;
 	}
+}
+
+
+export async function openVisitsBasicDetailsDialog(visitsId: string) {
+    let res = await openDialog({
+        bodyComponent: VisitBasicDetailsDialog,
+        props: {
+            visitsId
+        },
+        hasHeader: true,
+        hasHeaderBack: isMobileScreen(),
+        hasHeaderClose: !isMobileScreen(),
+        hasTitle: true,
+        title: 'Viaits',
+    });
+
+    return res;
 }

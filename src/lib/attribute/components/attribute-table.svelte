@@ -7,7 +7,6 @@
 		IconCircle,
 		Loading,
 		mdiMagnify,
-		navigate,
 		NoData,
 		Pagination,
 		SearchField,
@@ -101,15 +100,11 @@
 		pageSize = newPageSize;
 		pageIndex = 0;
 	}
-
-	function handleViewAttribute(attr: AttributeDataModel) {
-		navigate(`/restricted/attributes/view?attributeId=${attr._id}`);
-	}
 </script>
 
 <AuthAttributeReady onReady={handleReady} />
 <div>
-	<div class="p-4">
+	<div class="p-4 max-w-80">
 		<SearchField bind:value={searchText} placeholder="Search Attribute Name or Type..." />
 	</div>
 	{#if isLoading}
@@ -137,33 +132,63 @@
 			</div>
 		</NoData>
 	{:else}
-		{#each paginatedAttribute as attr, index}
-			<ButtonListItem onClick={() => handleViewAttribute(attr)}>
-				<div>
-					<IconCircle
-						iconPath={mdiFormatListBulleted}
-						iconClassName="!h-5 !w-5 text-primary"
-						circleClassName="!h-10 !w-10"
-					/>
-				</div>
+		<table
+			class="min-w-full divide-y divide-base-200 dark:divide-base-600 dark:text-base-200 table-fixed"
+		>
+			<thead>
+				<tr>
+					<th class="text-left w-14"></th>
+					<th class="text-left p-4">Name</th>
+					<th class="text-left p-4">Type</th>
+					<th class="text-right"></th>
+				</tr>
+			</thead>
+			<tbody class="divide-y divide-base-200 dark:divide-base-600">
+				{#each paginatedAttribute as attr, index}
+					<tr>
+						<td class="text-left pl-4 py-1 w-14">
+							<IconCircle
+								iconPath={mdiFormatListBulleted}
+								iconClassName="!h-5 !w-5 text-primary"
+								circleClassName="!h-10 !w-10"
+							/>
+						</td>
+						<td class="text-left px-4">
+							<div>
+								<a href="/restricted/attributes/view?attributeId={attr._id}" class="hover:text-primary">
+									{attr.name || '-'}
+								</a>
+							</div>
+							<div class="text-sm text-base-500">{attr.desc || '-'}</div>
+						</td>
+						<td class="text-left px-4"><TextAttributeType input={attr.type} /></td>
+						<td class="text-left">
+							<div class="flex justify-end gap-2">
+								<Button
+									iconPath={mdiInformationOutline}
+									size="xs"
+									onClick={(ev) => handleItemClick(ev, attr)}
+									iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
+										? ''
+										: 'dark:hover:text-base-200'}"
+								/>
 
-				<div class="flex-grow">
-					<div>{attr.name || ''}</div>
-					<!-- <div class="text-sm text-base-400">{attr.desc || ''}</div> -->
-					<div class="text-sm text-base-400"><TextAttributeType input={attr.type} /></div>
-				</div>
-				<div>
-					<ButtonMenu
-						menus={['Edit', 'Delete']}
-						onMenu={(ev, menu) => handleMenu(ev, menu as string, attr)}
-						iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
-							? ''
-							: 'dark:hover:text-base-200'}"
-						size="xs"
-					/>
-				</div>
-			</ButtonListItem>
-		{/each}
+								<div>
+									<ButtonMenu
+										menus={['Edit', 'Delete']}
+										onMenu={(ev, menu) => handleMenu(ev, menu as string, attr)}
+										iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
+											? ''
+											: 'dark:hover:text-base-200'}"
+										size="xs"
+									/>
+								</div>
+							</div>
+						</td>
+					</tr>
+				{/each}
+			</tbody>
+		</table>
 		<div class="p-4">
 			<Pagination
 				length={filteredAttribute?.length}

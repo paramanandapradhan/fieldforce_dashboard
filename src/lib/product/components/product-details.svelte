@@ -60,34 +60,30 @@
 		</div>
 	</div>
 
-	<div class="flex md:flex-row flex-col gap-4 mt-6">
-		<div>
-			<table class="table-fixed w-full">
-				<tbody>
-					<tr class="lg:text-lg lg:font-bold font-semibold">
-						<td>Name</td><td>{product?.name || '-'}</td>
-					</tr>
-					<tr><td>Description</td><td class="text-base-500 text-sm">{product?.desc || '-'}</td></tr>
-					<tr
-						><td>MRP</td><td><TextCurrency input={product?.mrp || 0} hasSymbol symbol="₹" /></td
-						></tr
-					>
-					<tr
-						><td>Sales Price</td><td
-							><TextCurrency input={product?.salePrice || 0} hasSymbol symbol="₹" /></td
-						></tr
-					>
-					<tr><td>Type</td><td><TextAttribute input={product?.type || '-'} /> </td></tr>
-					<tr><td>UMO</td><td> <TextAttribute input={product?.umo || '-'} /></td></tr>
-					<tr><td>Categories</td><td><TextAttribute input={product?.categories || '-'} /></td></tr>
-					<tr><td>Brand</td><td><TextAttribute input={product?.brand || '-'} /> </td></tr>
-					<tr><td>Batch</td><td>{product?.batch || ''}</td></tr>
-					<tr><td>Seller</td><td><TextUser input={product?.seller || '-'} hideIcon /> </td></tr>
-					<tr><td>Details</td><td>{product?.details || '-'}</td></tr>
-					<tr><td>Note</td><td>{product?.note || '-'}</td></tr>
-				</tbody>
-			</table>
-		</div>
+	<div class="mt-6">
+		<table class="table-fixed w-full">
+			<tbody>
+				<tr class="lg:text-lg lg:font-bold font-semibold">
+					<td>Name</td><td>{product?.name || '-'}</td>
+				</tr>
+				<tr><td>Description</td><td class="text-base-500 text-sm">{product?.desc || '-'}</td></tr>
+				<tr><td>MRP</td><td><TextCurrency input={product?.mrp || 0} hasSymbol symbol="₹" /></td></tr
+				>
+				<tr
+					><td>Sales Price</td><td
+						><TextCurrency input={product?.salePrice || 0} hasSymbol symbol="₹" /></td
+					></tr
+				>
+				<tr><td>Type</td><td><TextAttribute input={product?.type || '-'} /> </td></tr>
+				<tr><td>UMO</td><td> <TextAttribute input={product?.umo || '-'} /></td></tr>
+				<tr><td>Categories</td><td><TextAttribute input={product?.categories || '-'} /></td></tr>
+				<tr><td>Brand</td><td><TextAttribute input={product?.brand || '-'} /> </td></tr>
+				<tr><td>Batch</td><td>{product?.batch || ''}</td></tr>
+				<tr><td>Seller</td><td><TextUser input={product?.seller || '-'} hideIcon /> </td></tr>
+				<tr><td>Details</td><td>{product?.details || '-'}</td></tr>
+				<tr><td>Note</td><td>{product?.note || '-'}</td></tr>
+			</tbody>
+		</table>
 	</div>
 </div>
 

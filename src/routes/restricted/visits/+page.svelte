@@ -12,20 +12,18 @@
 	import AppNavbar from '$lib/core/components/app-navbar.svelte';
 	import BackgroundGradient from '$lib/core/components/background-gradient.svelte';
 	import RestrictedDrawer from '$lib/drawer/components/restricted-drawer.svelte';
-	
+
 	import { syncProducts } from '$lib/product/product-service';
 	import { mdiSync } from '$lib/core/services/app-icons-service';
-	
-	
+
 	import { openVisitEditDialog } from '$lib/visit/visite-ui-service';
 	import VisitList from '$lib/visit/components/visit-list.svelte';
 	import VisitTable from '$lib/visit/components/visit-table.svelte';
 	import { syncVisits } from '$lib/visit/visit-service';
 
 	let drawerRef: Drawer;
-	let visitListRef:VisitList;
-	let visitTableRef:VisitTable
-	
+	let visitListRef: VisitList;
+	let visitTableRef: VisitTable;
 
 	let isSyncInProgress = $state(false);
 
@@ -43,7 +41,6 @@
 	async function loadVisits() {
 		visitTableRef && visitTableRef.loadVisits();
 		visitListRef && visitListRef.loadVisits();
-
 	}
 
 	async function handleSync() {
@@ -63,7 +60,9 @@
 			<main>
 				<div class="pb-32">
 					<div class="p-4 flex flex-wrap items-center gap-4">
-						<div class="flex-grow"><h1 class="text-xl font-black dark:text-base-200">Tour Visit</h1></div>
+						<div class="flex-grow">
+							<h1 class="text-xl font-black dark:text-base-200">Tour Visit</h1>
+						</div>
 						<div>
 							<Button
 								appearance="base"
@@ -82,13 +81,15 @@
 							/>
 						</div>
 					</div>
-					<div class="m-4 p-4 bg-white dark:bg-base-800 shadow rounded-lg">
-						{#if screenSize.isSm || screenSize.isMd || screenSize.isXs}
-							<VisitList  bind:this ={visitListRef}/>
-						{:else}
+					{#if screenSize.isSm || screenSize.isMd || screenSize.isXs}
+						<div class="m-4 bg-white dark:bg-base-800 shadow rounded-lg">
+							<VisitList bind:this={visitListRef} />
+						</div>
+					{:else}
+						<div class="m-4 p-4 bg-white dark:bg-base-800 shadow rounded-lg">
 							<VisitTable bind:this={visitTableRef} />
-						{/if}
-					</div>
+						</div>
+					{/if}
 				</div>
 			</main>
 		</BackgroundGradient>

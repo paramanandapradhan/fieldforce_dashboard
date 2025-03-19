@@ -77,7 +77,9 @@
 						</div>
 					</div>
 					{#if screenSize.isSm || screenSize.isMd || screenSize.isXs}
-						<CustomerList bind:this={customerListRef} />
+						<div class="m-4 bg-white dark:bg-base-800 shadow rounded-lg">
+							<CustomerList bind:this={customerListRef} />
+						</div>
 					{:else}
 						<div class="m-4 p-4 bg-white dark:bg-base-800 shadow rounded-lg">
 							<CustomerTable bind:this={customerTableRef} />

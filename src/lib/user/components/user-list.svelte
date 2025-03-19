@@ -15,8 +15,17 @@
 	} from '@cloudparker/moldex.js';
 	import { getAllUsers, UserTypeEnum } from '../user-service';
 	import type { UserDataModel } from '../user-types';
-	import { mdiAccount, mdiDotsHorizontal, mdiInformationOutline, mdiNotebookOutline } from '$lib/core/services/app-icons-service';
-	import { openUserBasicDetailsDialog, openUserDeleteDialog, openUserEditDialog } from '../user-ui-service';
+	import {
+		mdiAccount,
+		mdiDotsHorizontal,
+		mdiInformationOutline,
+		mdiNotebookOutline
+	} from '$lib/core/services/app-icons-service';
+	import {
+		openUserBasicDetailsDialog,
+		openUserDeleteDialog,
+		openUserEditDialog
+	} from '../user-ui-service';
 	import WindowInfiniteScroll from '$lib/core/components/window-infinite-scroll.svelte';
 	import { appState } from '$lib/core/services/app-state.svelte';
 
@@ -67,14 +76,6 @@
 		navigate(`/restricted/users/view?userId=${user._id}`);
 	}
 
-	async function handleOpenUserBasicInfo(ev:MouseEvent, user:UserDataModel){
-		ev.stopPropagation()
-		if(user?._id){
-			await openUserBasicDetailsDialog(user?._id)
-		}
-
-	}
-
 	// Infinite scrolling logic
 	function loadMore() {
 		pageIndex++;
@@ -89,7 +90,7 @@
 <div>
 	{#if isLoading}
 		<Loading />
-		{:else if searchText && filteredUsers.length <= 0}
+	{:else if searchText && filteredUsers.length <= 0}
 		<NoData>
 			<IconCircle
 				iconPath={mdiMagnify}
@@ -129,16 +130,7 @@
 						{user.desc || ''}
 					</div>
 				</div>
-				<div class="flex justify-end">
-					<Button
-						iconPath={mdiInformationOutline}
-						size="xs"
-						onClick={(ev) => handleOpenUserBasicInfo(ev,user)}
-						iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
-							? ''
-							: 'dark:hover:text-base-200'}"
-					/>
-				</div>
+
 				<div class="flex justify-end">
 					<ButtonMenu
 						menus={['View', 'Edit', 'Delete']}

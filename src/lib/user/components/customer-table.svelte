@@ -149,7 +149,6 @@
 					<th class="text-left p-4">City</th>
 					<th class="text-left p-4">Area</th>
 					<th class="text-right"></th>
-					<th class="text-right"></th>
 				</tr>
 			</thead>
 			<tbody class="divide-y divide-base-200 dark:divide-base-600">
@@ -176,7 +175,7 @@
 							</div>
 						</td>
 						<td class="text-left px-4">
-							{item?.phone || '-'} 
+							{item?.phone || '-'}
 						</td>
 						<td class="text-left px-4">
 							<TextUserSubtype input={item.subtype} />
@@ -187,7 +186,8 @@
 						<td class="text-left px-4">
 							<TextAttribute input={item?.geo?.area} />
 						</td>
-						<td class="text-right dark:text-base-300">
+
+						<td class="text-right">
 							<div class="flex justify-end">
 								<Button
 									iconPath={mdiInformationOutline}
@@ -197,10 +197,6 @@
 										? ''
 										: 'dark:hover:text-base-200'}"
 								/>
-							</div>
-						</td>
-						<td class="text-right">
-							<div class="flex justify-end">
 								<ButtonMenu
 									menus={['View', 'Edit', 'Delete']}
 									onMenu={(ev, menu) => handleMenu(ev, menu as string, item)}

@@ -6,14 +6,24 @@
 		openAttributeTypePickerDialog
 	} from '$lib/attribute/attribute-ui-service';
 	import AttributeList from '$lib/attribute/components/attribute-list.svelte';
+	import AttributeTable from '$lib/attribute/components/attribute-table.svelte';
 	import TextAttribute from '$lib/attribute/components/text-attribute.svelte';
 	import AppNavbar from '$lib/core/components/app-navbar.svelte';
 	import BackgroundGradient from '$lib/core/components/background-gradient.svelte';
 	import { mdiSync } from '$lib/core/services/app-icons-service';
 	import RestrictedDrawer from '$lib/drawer/components/restricted-drawer.svelte';
-	import { Button, ContentArea, Drawer, isMobileScreen, Sidebar } from '@cloudparker/moldex.js';
+	import {
+		Button,
+		ContentArea,
+		Drawer,
+		isMobileScreen,
+		screenSize,
+		Sidebar
+	} from '@cloudparker/moldex.js';
 
 	let attributeListRef: AttributeList;
+	let attributeTableRef:AttributeTable;
+
 	let drawerRef: Drawer;
 	let country = $state('');
 	let isSyncInProgress = $state(false);
@@ -37,6 +47,7 @@
 
 	async function loadAttributes() {
 		attributeListRef && attributeListRef.loadAttributes();
+		attributeTableRef && attributeTableRef.loadAttributes()
 	}
 
 	async function handleSync() {
@@ -67,7 +78,9 @@
 			<main>
 				<div class="pb-32">
 					<div class="p-4 flex flex-wrap items-center gap-4">
-						<div class="flex-grow"><h1 class="text-xl font-black dark:text-base-200">Attributes</h1></div>
+						<div class="flex-grow">
+							<h1 class="text-xl font-black dark:text-base-200">Attributes</h1>
+						</div>
 						<div>
 							<Button
 								appearance="base"
@@ -86,9 +99,16 @@
 							/>
 						</div>
 					</div>
-					<div class="m-4 p-2 lg:p-4 bg-white dark:bg-base-800 shadow rounded-lg">
-						<AttributeList bind:this={attributeListRef} />
+					{#if screenSize.isSm || screenSize.isMd || screenSize.isXs}
+						<div class="m-4 bg-white dark:bg-base-800 shadow rounded-lg">
+							<AttributeList bind:this={attributeListRef} />
+						</div>
+					{:else}
+					<div class="m-4 p-4 bg-white dark:bg-base-800 shadow rounded-lg">
+						<AttributeTable bind:this={attributeTableRef}/>
 					</div>
+					{/if}
+					
 				</div>
 			</main>
 		</BackgroundGradient>

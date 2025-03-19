@@ -1,6 +1,6 @@
 <script lang="ts">
 	import {
-	Button,
+		Button,
 		ButtonListItem,
 		ButtonMenu,
 		IconCircle,
@@ -13,13 +13,22 @@
 		sort
 	} from '@cloudparker/moldex.js';
 
-	import { mdiBriefcaseAccount, mdiInformationOutline, mdiMapMarkerPath, mdiNotebookOutline } from '$lib/core/services/app-icons-service';
+	import {
+		mdiBriefcaseAccount,
+		mdiInformationOutline,
+		mdiMapMarkerPath,
+		mdiNotebookOutline
+	} from '$lib/core/services/app-icons-service';
 	import { onMount } from 'svelte';
 	import { getAllUsers, UserTypeEnum } from '../user-service';
 	import type { CustomerDataModel } from '../user-types';
 	import TextUserSubtype from './text-user-subtype.svelte';
 	import TextAttribute from '$lib/attribute/components/text-attribute.svelte';
-	import { openCustomerBasicDetailsDialog, openCustomerDeleteDialog, openCustomerEditDialog } from '../customer-ui-service';
+	import {
+		openCustomerBasicDetailsDialog,
+		openCustomerDeleteDialog,
+		openCustomerEditDialog
+	} from '../customer-ui-service';
 	import { appState } from '$lib/core/services/app-state.svelte';
 	import WindowInfiniteScroll from '$lib/core/components/window-infinite-scroll.svelte';
 
@@ -89,13 +98,6 @@
 		pageIndex++;
 	}
 
-	async function handleOpenCustomerBasicInfo(ev:MouseEvent, customer: CustomerDataModel) {
-		ev.stopPropagation()
-		if (customer?._id) {
-			await openCustomerBasicDetailsDialog(customer._id);
-		}
-	}
-
 	onMount(() => {
 		loadCustomers();
 	});
@@ -148,16 +150,7 @@
 						{item.desc || ''}
 					</div>
 				</div>
-				<div class="flex justify-end">
-					<Button
-						iconPath={mdiInformationOutline}
-						size="xs"
-						onClick={(ev) => handleOpenCustomerBasicInfo(ev,item)}
-						iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
-							? ''
-							: 'dark:hover:text-base-200'}"
-					/>
-				</div>
+
 				<div>
 					<ButtonMenu
 						menus={['View', 'Edit', 'Delete']}
