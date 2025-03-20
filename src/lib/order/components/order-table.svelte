@@ -5,6 +5,7 @@
 	import {
 		Button,
 		ButtonMenu,
+		ButtonSearch,
 		IconCircle,
 		Loading,
 		NoData,
@@ -123,13 +124,15 @@
 </script>
 
 <div>
-	<div class="p-4 flex items-center">
+	<div class="p-4 flex items-center gap-4">
 		<div></div>
 		<div class="flex-grow"></div>
 		<div>
+			<ButtonSearch onSearch={(text: string) => (searchText = text)} />
+		</div>
+		<div>
 			<ButtonMenu menus={['Order Sheet']} onMenu={(ev, menu) => handleMenu(ev, menu as string)} />
 		</div>
-		<!-- <SearchField bind:value={searchText} placeholder="Search Products..." /> -->
 	</div>
 
 	{#if isLoading}

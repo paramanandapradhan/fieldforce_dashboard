@@ -56,7 +56,7 @@ class OrderDatabaseService extends DatabaseService<OrderDataModel> {
 		let id = await this.createFirestoreId();
 		let date = new Date();
 		let year = `${date.getFullYear() % 10}`.padStart(1, '0'); // find last twi digit
-		let month = `${date.getMonth() % 10}`.padStart(2, '0');
+		let month = `${date.getMonth() % 10}`.padStart(1, '0');
 		return convertNumToAlphabets(parseInt(`${year}${month}${id}`)).toUpperCase();
 	}
 

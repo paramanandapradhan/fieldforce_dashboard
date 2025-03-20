@@ -8,9 +8,12 @@
 	import {
 		Button,
 		ButtonListItem,
+		ButtonMenu,
+		ButtonSearch,
 		IconCircle,
 		Loading,
 		NoData,
+		openLoadingDialog,
 		Pagination,
 		SearchField,
 		sort,
@@ -22,7 +25,11 @@
 	import type { OrderDataModel } from '../order-type';
 
 	import { appState } from '$lib/core/services/app-state.svelte';
-	import { openOrderBasicDetailsDialog, openOrderDetailsDialog } from '../order-ui-service';
+	import {
+		downloadOrderSheet,
+		openOrderBasicDetailsDialog,
+		openOrderDetailsDialog
+	} from '../order-ui-service';
 	import TextAttribute from '$lib/attribute/components/text-attribute.svelte';
 
 	let orders: OrderDataModel[] = $state([]);
@@ -94,14 +101,34 @@
 		}
 	}
 
+	async function handleMenu(ev: Event, menu: string) {
+		switch (menu) {
+			case 'Order Sheet':
+				let loader = await openLoadingDialog();
+				await downloadOrderSheet();
+				loader.closeDialog();
+				break;
+
+			default:
+				break;
+		}
+	}
+
 	onMount(() => {
 		loadOrders();
 	});
 </script>
 
 <div>
-	<div class="p-4">
-		<SearchField bind:value={searchText} placeholder="Search Products..." />
+	<div class="p-4 flex items-center gap-4">
+		<div></div>
+		<div class="flex-grow"></div>
+		<div>
+			<ButtonSearch onSearch={(text: string) => (searchText = text)} />
+		</div>
+		<div>
+			<ButtonMenu menus={['Order Sheet']} onMenu={(ev, menu) => handleMenu(ev, menu as string)} />
+		</div>
 	</div>
 
 	{#if isLoading}

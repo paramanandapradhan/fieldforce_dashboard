@@ -20,8 +20,8 @@ import OrderDetailsDialog from './components/order-details-dialog.svelte';
 import OrderBasicDetailsDialog from './components/order-basic-details-dialog.svelte';
 import type { CartDataModel } from '$lib/cart/cart-types';
 import { getAllProducts } from '$lib/product/product-service';
-import { CUSTOMER_SUBTYPES, getUser, USER_SUBTYPES } from '$lib/user/user-service';
-import type { CustomerDataModel } from '$lib/user/user-types';
+import { CUSTOMER_SUBTYPES, getAllUsers, getUser, USER_SUBTYPES } from '$lib/user/user-service';
+import type { CustomerDataModel, UserDataModel } from '$lib/user/user-types';
 import { getAllAttributes } from '$lib/attribute/attribute-service';
 
 export async function openOrderEditDialog(order?: OrderDataModel) {
@@ -99,19 +99,21 @@ export async function openOrderBasicDetailsDialog(orderId: string) {
 export async function downloadOrderSheet() {
 	const XLSX = (window as any).XLSX;
 	const orders = await getAllOrders();
+
 	const products = await getAllProducts();
 	const productsMap = products.reduce((acc, p) => {
 		acc[p._id!] = p;
 		return acc;
 	}, {} as any);
-	const users = await getAllProducts();
+	
+	const users = await getAllUsers() as UserDataModel[];
 	const usersMap = users.reduce((acc, u) => {
 		acc[u._id!] = u;
 		return acc;
 	}, {} as any);
 
 	const attributes = await getAllAttributes();
-	const attributesMap = users.reduce((acc, u) => {
+	const attributesMap = attributes.reduce((acc, u) => {
 		acc[u._id!] = u;
 		return acc;
 	}, {} as any);
@@ -138,6 +140,9 @@ export async function downloadOrderSheet() {
 			const customerType = CUSTOMER_SUBTYPES.find((o) => o._id == customer.subtype)?.name || '';
 			const customerExternalId = customer.extId || '';
 			const orderBy = usersMap[order?.cby!]?.name;
+			const orderType = attributesMap[order.orderType!]?.name || '';
+			const paymentMode = attributesMap[order.paymentMode!]?.name || '';
+			const note = order.note;
 
 			const result = {
 				orderId,
@@ -157,7 +162,10 @@ export async function downloadOrderSheet() {
 				customerTsm,
 				customerType,
 				customerExternalId,
-				orderBy
+				orderBy,
+				orderType,
+				paymentMode,
+				note
 			};
 
 			results.push(result);
