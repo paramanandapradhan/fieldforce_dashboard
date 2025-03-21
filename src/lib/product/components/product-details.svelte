@@ -10,6 +10,7 @@
 	import TextAttribute from '$lib/attribute/components/text-attribute.svelte';
 	import TextUser from '$lib/user/components/text-user.svelte';
 	import { openProductBasicDetailsDialog } from '../product-ui-service';
+	import { appState } from '$lib/core/services/app-state.svelte';
 
 	type Props = {
 		productId: any;
@@ -55,7 +56,9 @@
 				iconPath={mdiInformationOutline}
 				className="!px-2"
 				onClick={(ev) => handleOpenProductBasicInfo(ev, product!)}
-				iconClassName="text-base-400 hover:text-base-800 dark:hover:text-base-200}"
+				iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
+					? ''
+					: 'dark:hover:text-base-200'}"
 			/>
 		</div>
 	</div>

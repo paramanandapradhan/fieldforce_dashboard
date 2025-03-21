@@ -17,6 +17,7 @@
 	import { onMount } from 'svelte';
 	import WindowInfiniteScroll from '$lib/core/components/window-infinite-scroll.svelte';
 	import {
+	mdiAccountGroupOutline,
 		mdiNotebookOutline,
 		mdiPackageVariantClosed
 	} from '$lib/core/services/app-icons-service';
@@ -103,10 +104,10 @@
 		</NoData>
 	{:else}
 		{#each paginatedTeams as team, index}
-			<ButtonListItem onClick={() => handleViewTeam(team)}>
+			<ButtonListItem onClick={() => handleViewTeam(team)} className="!pe-2">
 				<div>
 					<IconCircle
-						iconPath={mdiPackageVariantClosed}
+						iconPath={mdiAccountGroupOutline}
 						iconClassName="!h-5 !w-5 text-primary"
 						circleClassName="!h-10 !w-10"
 					/>
@@ -121,6 +122,7 @@
 				</div>
 				<div class="flex justify-end">
 					<ButtonMenu
+					className="!px-2"
 						menus={['View', 'Edit', 'Delete']}
 						iconPath={mdiDotsHorizontal}
 						onMenu={(ev, menu) => handleMenu(ev, menu as string, team)}

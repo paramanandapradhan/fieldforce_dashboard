@@ -138,7 +138,7 @@
 		</NoData>
 	{:else}
 		{#each paginatedAttribute as attr, index}
-			<ButtonListItem onClick={() => handleViewAttribute(attr)}>
+			<ButtonListItem onClick={() => handleViewAttribute(attr)} className="!pe-2">
 				<div>
 					<IconCircle
 						iconPath={mdiFormatListBulleted}
@@ -154,12 +154,12 @@
 				</div>
 				<div>
 					<ButtonMenu
+						className="!px-2"
 						menus={['Edit', 'Delete']}
 						onMenu={(ev, menu) => handleMenu(ev, menu as string, attr)}
 						iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
 							? ''
 							: 'dark:hover:text-base-200'}"
-						size="xs"
 					/>
 				</div>
 			</ButtonListItem>

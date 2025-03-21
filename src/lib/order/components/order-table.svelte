@@ -174,7 +174,7 @@
 					<!-- <th class="text-left p-4 dark:text-base-300">Order Type</th>
 					<th class="text-left p-4 dark:text-base-300">Paymentmode</th> -->
 					<th class="text-right p-4 dark:text-base-300">Amount</th>
-					<th class="text-right p-4 dark:text-base-300"></th>
+					<th class="text-right dark:text-base-300"></th>
 				</tr>
 			</thead>
 			<tbody class="divide-y divide-base-200 dark:divide-base-600">
@@ -222,11 +222,10 @@
 						<td class="px-4 dark:text-base-300 text-right">
 							<TextCurrency input={order?.amount || 0} hasSymbol symbol="₹" />
 						</td>
-						<td class="text-right px-4 dark:text-base-300">
+						<td class="text-right dark:text-base-300">
 							<div class="flex justify-end">
 								<Button
 									iconPath={mdiInformationOutline}
-									size="xs"
 									onClick={() => handleOpenBasicInfo(order)}
 									iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
 										? ''

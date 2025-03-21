@@ -21,6 +21,7 @@
 	} from '@cloudparker/moldex.js';
 	import {
 		mdiAccount,
+		mdiAccountGroupOutline,
 		mdiInformationOutline,
 		mdiMagnify,
 		mdiNotebookOutline,
@@ -142,7 +143,7 @@
 					<tr>
 						<td class="text-left pl-4 py-1 w-14">
 							<IconCircle
-								iconPath={mdiPackageVariantClosed}
+								iconPath={mdiAccountGroupOutline}
 								iconClassName="!h-5 !w-5 text-primary"
 								circleClassName="!h-10 !w-10"
 							/>
@@ -157,8 +158,9 @@
 						</td>
 						<td class="text-left px-4"><TextUser input={team?.manager} hideIcon /></td>
 						<td class="text-left">
-							<div class="flex justify-end gap-2">
+							<div class="flex justify-end">
 								<Button
+									className="!px-2"
 									iconPath={mdiInformationOutline}
 									size="xs"
 									onClick={() => handleOpenTeamBasicInfoDialog(team)}
@@ -168,6 +170,7 @@
 								/>
 
 								<ButtonMenu
+									className="!px-2"
 									menus={['View', 'Edit', 'Delete']}
 									iconPath={mdiDotsHorizontal}
 									onMenu={(ev, menu) => handleMenu(ev, menu as string, team)}

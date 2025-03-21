@@ -190,14 +190,15 @@
 						<td class="text-right">
 							<div class="flex justify-end">
 								<Button
+									className="!px-2"
 									iconPath={mdiInformationOutline}
-									size="xs"
 									onClick={() => handleOpenCustomerBasicInfo(item)}
 									iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
 										? ''
 										: 'dark:hover:text-base-200'}"
 								/>
 								<ButtonMenu
+									className="!px-2"
 									menus={['View', 'Edit', 'Delete']}
 									onMenu={(ev, menu) => handleMenu(ev, menu as string, item)}
 									iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'

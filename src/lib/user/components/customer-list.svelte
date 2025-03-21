@@ -134,7 +134,7 @@
 		</NoData>
 	{:else}
 		{#each customers || paginatedCustomers as item, index}
-			<ButtonListItem onClick={() => handelViewCustomer(item)}>
+			<ButtonListItem onClick={() => handelViewCustomer(item)} className="!pr-2">
 				<div>
 					<IconCircle
 						iconPath={mdiBriefcaseAccount}
@@ -153,6 +153,7 @@
 
 				<div>
 					<ButtonMenu
+						className="!px-2"
 						menus={['View', 'Edit', 'Delete']}
 						onMenu={(ev, menu) => handleMenu(ev, menu as string, item)}
 						iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'

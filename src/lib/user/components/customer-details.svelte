@@ -7,6 +7,7 @@
 	import TextUserSubtype from './text-user-subtype.svelte';
 	import TextAttribute from '$lib/attribute/components/text-attribute.svelte';
 	import { openCustomerBasicDetailsDialog } from '../customer-ui-service';
+	import { appState } from '$lib/core/services/app-state.svelte';
 
 	type Props = {
 		customerId: any;
@@ -50,7 +51,9 @@
 				iconPath={mdiInformationOutline}
 				className="!px-2"
 				onClick={() => handleOpenCustomerBasicInfo(customer!)}
-				iconClassName="text-base-400 hover:text-base-800 dark:hover:text-base-200}"
+				iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
+					? ''
+					: 'dark:hover:text-base-200'}"
 			/>
 		</div>
 	</div>

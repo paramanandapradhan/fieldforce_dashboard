@@ -155,7 +155,10 @@
 						</td>
 						<td class="text-left px-4">
 							<div>
-								<a href="/restricted/attributes/view?attributeId={attr._id}" class="hover:text-primary">
+								<a
+									href="/restricted/attributes/view?attributeId={attr._id}"
+									class="hover:text-primary"
+								>
 									{attr.name || '-'}
 								</a>
 							</div>
@@ -166,7 +169,7 @@
 							<div class="flex justify-end gap-2">
 								<Button
 									iconPath={mdiInformationOutline}
-									size="xs"
+									className="!px-2"
 									onClick={(ev) => handleItemClick(ev, attr)}
 									iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
 										? ''
@@ -175,12 +178,12 @@
 
 								<div>
 									<ButtonMenu
+										className="!px-2"
 										menus={['Edit', 'Delete']}
 										onMenu={(ev, menu) => handleMenu(ev, menu as string, attr)}
 										iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
 											? ''
 											: 'dark:hover:text-base-200'}"
-										size="xs"
 									/>
 								</div>
 							</div>

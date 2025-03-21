@@ -15,6 +15,7 @@
 	import { onMount } from 'svelte';
 	import WindowInfiniteScroll from '$lib/core/components/window-infinite-scroll.svelte';
 	import {
+	mdiMapMarkerDistance,
 		mdiNotebookOutline,
 		mdiPackageVariantClosed
 	} from '$lib/core/services/app-icons-service';
@@ -104,10 +105,10 @@
 		</NoData>
 	{:else}
 		{#each paginatedVisits as visit, index}
-			<ButtonListItem onClick={() => handleViewVisit(visit)}>
+			<ButtonListItem onClick={() => handleViewVisit(visit)} className="pe-2">
 				<div>
 					<IconCircle
-						iconPath={mdiPackageVariantClosed}
+						iconPath={mdiMapMarkerDistance}
 						iconClassName="!h-5 !w-5 text-primary"
 						circleClassName="!h-10 !w-10"
 					/>
@@ -122,6 +123,7 @@
 				</div>
 				<div class="flex justify-end">
 					<ButtonMenu
+					className="!px-2"
 						menus={['View', 'Edit', 'Delete']}
 						iconPath={mdiDotsHorizontal}
 						onMenu={(ev, menu) => handleMenu(ev, menu as string, visit)}

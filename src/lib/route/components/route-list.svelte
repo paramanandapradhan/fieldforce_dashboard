@@ -83,7 +83,7 @@
 <div>
 	{#if isLoading}
 		<Loading />
-		{:else if searchText && filteredRoutes.length <= 0}
+	{:else if searchText && filteredRoutes.length <= 0}
 		<NoData>
 			<IconCircle
 				iconPath={mdiMagnify}
@@ -107,7 +107,7 @@
 		</NoData>
 	{:else}
 		{#each paginatedRoutes as route, index}
-			<ButtonListItem onClick={() => handelViewRoute(route)}>
+			<ButtonListItem onClick={() => handelViewRoute(route)} className="!pe-2">
 				<div>
 					<IconCircle
 						iconPath={mdiMapMarkerPath}
@@ -125,6 +125,7 @@
 				</div>
 				<div class="flex justify-end">
 					<ButtonMenu
+						className="!px-2"
 						menus={['View', 'Edit', 'Delete']}
 						onMenu={(ev, menu) => handleMenu(ev, menu as string, route)}
 						iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'

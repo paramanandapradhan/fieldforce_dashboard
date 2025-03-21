@@ -3,7 +3,7 @@
 	import { getTeam } from '../team-service';
 	import type { TeamDataModel } from '../team-type';
 	import { Button, IconCircle } from '@cloudparker/moldex.js';
-	import { mdiInformationOutline, mdiPackageVariantClosed } from '$lib/core/services/app-icons-service';
+	import { mdiAccountGroupOutline, mdiInformationOutline, mdiPackageVariantClosed } from '$lib/core/services/app-icons-service';
 	import TextUser from '$lib/user/components/text-user.svelte';
 	import { appState } from '$lib/core/services/app-state.svelte';
 	import { openTeamBasicDetailsDialog } from '../team-ui-service';
@@ -38,7 +38,7 @@
 	<div class="flex items-center gap-4">
 		<div>
 			<IconCircle
-				iconPath={mdiPackageVariantClosed}
+				iconPath={mdiAccountGroupOutline}
 				iconClassName="text-primary"
 				circleClassName=" "
 			/>
@@ -49,7 +49,7 @@
 		<div class="flex justify-end">
 			<Button
 				iconPath={mdiInformationOutline}
-				size="xs"
+				className="!px-2"
 				onClick={() => handleOpenTeamBasicInfoDialog(team!)}
 				iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
 					? ''

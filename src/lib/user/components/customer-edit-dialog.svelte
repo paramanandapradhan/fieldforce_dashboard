@@ -245,8 +245,8 @@
 <div class="pb-32">
 	<form id="customer-edit-form" onsubmit={handleSubmit} class="space-y-6">
 		<!-- Customer Details Card -->
-		<div class="m-4 bg-white p-4 border rounded shadow">
-			<h4 class="text-xl font-bold mb-4">Customer Details</h4>
+		<div class="m-4 bg-white dark:bg-base-800 p-4 border rounded shadow">
+			<h4 class="text-xl font-bold mb-4 dark:text-base-400">Customer Details</h4>
 			<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 				<div>
 					<TextField
@@ -312,8 +312,8 @@
 		</div>
 
 		<!-- Master Details Card -->
-		<div class="m-4 bg-white p-4 border rounded shadow">
-			<h4 class="text-xl font-bold mb-4">Master Details</h4>
+		<div class="m-4 bg-white dark:bg-base-800 p-4 border rounded shadow">
+			<h4 class="text-xl font-bold mb-4 dark:text-base-400">Master Details</h4>
 			<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 				<div>
 					<UserComboboxField
@@ -406,8 +406,8 @@
 		</div>
 
 		<!-- Billing Details Card -->
-		<div class="m-4 bg-white p-4 border rounded shadow">
-			<h4 class="text-xl font-bold mb-4">Billing Details</h4>
+		<div class="m-4 bg-white dark:bg-base-800 p-4 border rounded shadow">
+			<h4 class="text-xl font-bold mb-4 dark:text-base-400">Billing Details</h4>
 			<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 				<div>
 					<TextField
@@ -457,8 +457,8 @@
 		</div>
 
 		<!-- Delivery Details Card -->
-		<div class="m-4 bg-white p-4 border rounded shadow">
-			<h4 class="text-xl font-bold mb-4">Delivery Details</h4>
+		<div class="m-4 bg-white dark:bg-base-800 p-4 border rounded shadow">
+			<h4 class="text-xl font-bold mb-4 dark:text-base-400">Delivery Details</h4>
 			<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 				<div>
 					<TextField
@@ -496,8 +496,8 @@
 		</div>
 
 		<!-- Owner Details Card -->
-		<div class="m-4 bg-white p-4 border rounded shadow">
-			<h4 class="text-xl font-bold mb-4">Owner Details</h4>
+		<div class="m-4 bg-white dark:bg-base-800 p-4 border rounded shadow">
+			<h4 class="text-xl font-bold mb-4 dark:text-base-400">Owner Details</h4>
 			<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 				<div>
 					<TextField name="ownerName" label="Owner Name" bind:value={ownerName} maxlength={80} />
@@ -535,8 +535,8 @@
 		</div>
 
 		<!-- Geo Details Card -->
-		<div class="m-4 bg-white p-4 border rounded shadow">
-			<h4 class="text-xl font-bold mb-4">Geographical Details</h4>
+		<div class="m-4 bg-white dark:bg-base-800 p-4 border rounded shadow">
+			<h4 class="text-xl font-bold mb-4 dark:text-base-400">Geographical Details</h4>
 			<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 				<div>
 					<AttributeComboboxField

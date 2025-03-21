@@ -3,12 +3,16 @@
 	import { APP_NAME } from '$lib/core/services/app-environment-service';
 	import {
 		mdiAccount,
+		mdiAccountGroupOutline,
 		mdiBriefcaseAccount,
+		mdiCalendarAccountOutline,
 		mdiFormatListBulleted,
 		mdiHomeVariant,
+		mdiMapMarkerDistance,
 		mdiMapMarkerPath,
 		mdiPackageVariantClosed,
 		mdiStore,
+		mdiTableAccount,
 		mdiTextBoxCheckOutline
 	} from '$lib/core/services/app-icons-service';
 
@@ -91,7 +95,7 @@
 			className={`w-full !text-start !justify-start !gap-4 rounded-none  ${active.startsWith('/restricted/teams') ? 'bg-primary-50 dark:bg-base-700  font-bold' : ''}`}
 			onClick={(ev) => handleNavigate('/restricted/teams', ev)}
 		>
-			<IconCircle iconPath={mdiAccount} iconClassName="text-primary" />
+			<IconCircle iconPath={mdiAccountGroupOutline} iconClassName="text-primary" />
 			<div>Teams</div>
 		</Button>
 
@@ -99,7 +103,7 @@
 			className={`w-full !text-start !justify-start !gap-4 rounded-none  ${active.startsWith('/restricted/attendance') ? 'bg-primary-50 dark:bg-base-700  font-bold' : ''}`}
 			onClick={(ev) => handleNavigate('/restricted/attendance', ev)}
 		>
-			<IconCircle iconPath={mdiAccount} iconClassName="text-primary" />
+			<IconCircle iconPath={mdiCalendarAccountOutline} iconClassName="text-primary" />
 			<div>Attendance</div>
 		</Button>
 
@@ -107,14 +111,14 @@
 			className={`w-full !text-start !justify-start !gap-4 rounded-none  ${active.startsWith('/restricted/visits') ? 'bg-primary-50 dark:bg-base-700  font-bold' : ''}`}
 			onClick={(ev) => handleNavigate('/restricted/visits', ev)}
 		>
-			<IconCircle iconPath={mdiAccount} iconClassName="text-primary" />
+			<IconCircle iconPath={mdiMapMarkerDistance} iconClassName="text-primary" />
 			<div>Tour Visits</div>
 		</Button>
 		<Button
 			className={`w-full !text-start !justify-start !gap-4 rounded-none  ${active.startsWith('/restricted/activities') ? 'bg-primary-50 dark:bg-base-700  font-bold' : ''}`}
 			onClick={(ev) => handleNavigate('/restricted/activities', ev)}
 		>
-			<IconCircle iconPath={mdiAccount} iconClassName="text-primary" />
+			<IconCircle iconPath={mdiTableAccount} iconClassName="text-primary" />
 			<div>Activities</div>
 		</Button>
 

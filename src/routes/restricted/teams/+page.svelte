@@ -77,7 +77,7 @@
 						</div>
 					</div>
 					{#if screenSize.isSm || screenSize.isMd || screenSize.isXs}
-						<div class="m-4 bg-white dark:bg-base-800 shadow rounded-lg">
+						<div class="m-4 pb-4 bg-white dark:bg-base-800 shadow rounded-lg">
 							<TeamList bind:this={teamListRef} />
 						</div>
 					{:else}

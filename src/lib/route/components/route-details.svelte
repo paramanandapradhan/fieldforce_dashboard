@@ -34,7 +34,7 @@
 		<div class="flex justify-end">
 			<Button
 				iconPath={mdiInformationOutline}
-				size="xs"
+				className="!px-2"
 				onClick={() => handleOpenRouteBasicInfoDialog(route!)}
 				iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
 					? ''

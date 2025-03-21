@@ -17,6 +17,7 @@
 		mdiAccount,
 		mdiInformationOutline,
 		mdiMagnify,
+		mdiMapMarkerDistance,
 		mdiNotebookOutline,
 		mdiPackageVariantClosed
 	} from '$lib/core/services/app-icons-service';
@@ -150,7 +151,7 @@
 					<tr>
 						<td class="text-left pl-4 py-1 w-14">
 							<IconCircle
-								iconPath={mdiPackageVariantClosed}
+								iconPath={mdiMapMarkerDistance}
 								iconClassName="!h-5 !w-5 text-primary"
 								circleClassName="!h-10 !w-10"
 							/>
@@ -178,6 +179,7 @@
 						<td class="text-left">
 							<div class="flex justify-end">
 								<Button
+									className="!px-2"
 									iconPath={mdiInformationOutline}
 									size="xs"
 									onClick={() => handleOpenVisitsBasicInfoDialog(visit)}
@@ -187,6 +189,7 @@
 								/>
 
 								<ButtonMenu
+									className="!px-2"
 									menus={['View', 'Edit', 'Delete']}
 									iconPath={mdiDotsHorizontal}
 									onMenu={(ev, menu) => handleMenu(ev, menu as string, visit)}

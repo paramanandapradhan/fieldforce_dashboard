@@ -55,7 +55,7 @@
 		<div>
 			<Button
 				iconPath={mdiInformationOutline}
-				size="xs"
+				className="!px-2"
 				onClick={() => handleItemClick(attribute!)}
 				iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
 					? ''

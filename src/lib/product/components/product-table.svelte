@@ -18,9 +18,7 @@
 		Pagination,
 		SearchField,
 		sort,
-
 		TextCurrency
-
 	} from '@cloudparker/moldex.js';
 	import {
 		mdiAccount,
@@ -143,7 +141,6 @@
 					<th class="text-left p-4 dark:text-base-300">Brand</th>
 					<th class="text-left p-4 dark:text-base-300">Seller</th>
 					<th class="text-right dark:text-base-300"></th>
-					<th class="text-right dark:text-base-300"></th>
 				</tr>
 			</thead>
 			<tbody class="divide-y divide-base-200 dark:divide-base-600">
@@ -167,8 +164,12 @@
 							</div>
 							<div class="text-sm text-base-500 dark:text-base-400">{product.desc || '-'}</div>
 						</td>
-						<td class="text-left px-4 dark:text-base-300"><TextCurrency input={product?.mrp || 0} hasSymbol symbol="₹" /></td>
-						<td class="text-left px-4 dark:text-base-300"><TextCurrency input={product?.salePrice || 0} hasSymbol symbol="₹" /></td>
+						<td class="text-left px-4 dark:text-base-300"
+							><TextCurrency input={product?.mrp || 0} hasSymbol symbol="₹" /></td
+						>
+						<td class="text-left px-4 dark:text-base-300"
+							><TextCurrency input={product?.salePrice || 0} hasSymbol symbol="₹" /></td
+						>
 						<td class="text-left px-4 dark:text-base-300"
 							><TextAttribute input={product?.brand! || '-'} />
 						</td>
@@ -178,18 +179,15 @@
 						<td class="text-right dark:text-base-300">
 							<div class="flex justify-end">
 								<Button
+									className="!px-2"
 									iconPath={mdiInformationOutline}
-									size="xs"
 									onClick={() => handleOpenProductBasicInfo(product)}
 									iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
 										? ''
 										: 'dark:hover:text-base-200'}"
 								/>
-							</div>
-						</td>
-						<td class="text-right dark:text-base-300">
-							<div class="flex justify-end">
 								<ButtonMenu
+									className="!px-2"
 									menus={['View', 'Edit', 'Delete']}
 									iconPath={mdiDotsHorizontal}
 									onMenu={(ev, menu) => handleMenu(ev, menu as string, product)}

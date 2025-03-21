@@ -114,7 +114,7 @@
 		</NoData>
 	{:else}
 		{#each paginatedUsers as user, index}
-			<ButtonListItem onClick={() => handelViewUser(user)}>
+			<ButtonListItem onClick={() => handelViewUser(user)} className="!pe-2">
 				<div>
 					<IconCircle
 						iconPath={mdiAccount}
@@ -133,6 +133,7 @@
 
 				<div class="flex justify-end">
 					<ButtonMenu
+					className="!px-2"
 						menus={['View', 'Edit', 'Delete']}
 						iconPath={mdiDotsHorizontal}
 						onMenu={(ev, menu) => handleMenu(ev, menu as string, user)}
