@@ -51,6 +51,12 @@
 		filteredOrders.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize)
 	);
 
+	$effect(() => {
+		searchText;
+		pageIndex = 0;
+
+	})
+
 	export async function loadOrders() {
 		isLoading = true;
 		let array = await getAllOrders();
@@ -94,12 +100,8 @@
 			await openOrderDetailsDialog(order._id);
 		}
 	}
-	async function handleOpenBasicInfo(ev: MouseEvent, order: OrderDataModel) {
-		ev.stopPropagation();
-		if (order?._id) {
-			await openOrderBasicDetailsDialog(order._id);
-		}
-	}
+
+	
 
 	async function handleMenu(ev: Event, menu: string) {
 		switch (menu) {

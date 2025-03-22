@@ -5,6 +5,7 @@
 		mdiAccount,
 		mdiAccountGroupOutline,
 		mdiAccountOutline,
+		mdiAccountTieOutline,
 		mdiBriefcaseAccount,
 		mdiBriefcaseAccountOutline,
 		mdiBusMarker,
@@ -133,5 +134,14 @@
 			<IconCircle iconPath={mdiFormatListBulleted} iconClassName="text-primary" />
 			<div>Attributes</div>
 		</Button>
+
+		<Button
+			className={`w-full !text-start !justify-start rounded-none  ${active.startsWith('/restricted/roles') ? 'bg-primary-50 dark:bg-base-700  font-bold' : ''}`}
+			onClick={(ev) => handleNavigate('/restricted/roles', ev)}
+		>
+			<IconCircle iconPath={mdiAccountTieOutline} iconClassName="text-primary" />
+			<div>Roles</div>
+		</Button>
 	</div>
 </div>
+

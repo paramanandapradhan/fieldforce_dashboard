@@ -31,8 +31,6 @@
 	let {}: Props = $props();
 
 	let routes: RouteDataModel[] = $state([]);
-	// let paginatedRoutes: RouteDataModel[] = $state([]);
-	// let filteredRoutes: RouteDataModel[] = $state([]);
 	let pageIndex: number = $state(0);
 	let pageSize: number = $state(10);
 	let searchText: string = $state('');
@@ -50,6 +48,11 @@
 	let paginatedRoutes = $derived(
 		filteredRoutes.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize)
 	);
+
+	$effect(() => {
+		searchText;
+		pageIndex=0;
+	})
 
 	export async function loadRoutes() {
 		isLoading = true;

@@ -47,11 +47,22 @@
 	let isLoading: boolean = $state(true);
 
 	let filteredCustomers = $derived(
-		items.filter((item) =>
-			searchText ? item.name?.toLowerCase().includes(searchText.toLowerCase()) : true
-		)
+		items.filter((item) => {
+			const matchSearch = searchText
+				? item.name?.toLowerCase().includes(searchText.toLowerCase())
+				: true;
+			return matchSearch;
+		})
 	);
-	let paginatedCustomers = $derived(filteredCustomers.slice(0, (pageIndex + 1) * pageSize));
+
+	let paginatedCustomers = $derived(
+		filteredCustomers.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize)
+	);
+
+	$effect(() => {
+		searchText;
+		pageIndex = 0;
+	});
 
 	export async function loadCustomers() {
 		if (!customers) {
@@ -84,20 +95,21 @@
 		navigate(`/restricted/customers/view?customerId=${cuastomer._id}`);
 	}
 
-	// function loadMore() {
-	// 	const start = pageIndex * pageSize;
-	// 	const end = start + pageSize;
-	// 	const newItems = items.slice(start, end);
-	// 	if (newItems.length) {
-	// 		paginatedCustomers = [...paginatedCustomers, ...newItems];
-	// 		pageIndex++;
-	// 	}
-	// }
+	// Handle page index changes
+	function handlePageIndexChange(newPageIndex: number) {
+		pageIndex = newPageIndex;
+	}
+
+	// Handle page size changes
+	function handlePageSizeChange(newPageSize: number) {
+		pageSize = newPageSize;
+		pageIndex = 0;
+	}
 
 	// Infinite scrolling logic
-	function loadMore() {
-		pageIndex++;
-	}
+	// function loadMore() {
+	// 	pageIndex++;
+	// }
 
 	onMount(() => {
 		loadCustomers();
@@ -107,7 +119,7 @@
 <div class="p-4">
 	<SearchField bind:value={searchText} placeholder="Search Customers..." />
 </div>
-<WindowInfiniteScroll {loadMore} triggerDistance={500} side="bottom" />
+<!-- <WindowInfiniteScroll {loadMore} triggerDistance={500} side="bottom" /> -->
 <div>
 	{#if isLoading}
 		<Loading />
@@ -164,5 +176,14 @@
 				</div>
 			</ButtonListItem>
 		{/each}
+		<div class="p-4">
+			<Pagination
+				length={filteredCustomers?.length}
+				{pageIndex}
+				{pageSize}
+				onPageSizeChange={handlePageSizeChange}
+				onPageIndexChange={handlePageIndexChange}
+			/>
+		</div>
 	{/if}
 </div>

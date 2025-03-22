@@ -55,6 +55,12 @@
 		filteredOrders.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize)
 	);
 
+	$effect(() => {
+		searchText;
+		pageIndex = 0;
+
+	})
+
 	export async function loadOrders() {
 		isLoading = true;
 		let array = await getAllOrders();

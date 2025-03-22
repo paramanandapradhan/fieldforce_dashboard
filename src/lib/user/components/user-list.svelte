@@ -10,6 +10,7 @@
 		navigate,
 		NoData,
 		openDeleteConfirmDialog,
+		Pagination,
 		SearchField,
 		sort
 	} from '@cloudparker/moldex.js';
@@ -31,19 +32,28 @@
 	import { appState } from '$lib/core/services/app-state.svelte';
 
 	let users: UserDataModel[] = $state([]);
-	// let paginatedUsers: UserDataModel[] = $state([]);
 	let pageIndex: number = $state(0);
 	let pageSize: number = $state(10);
 	let isLoading: boolean = $state(true);
 	let searchText: string = $state('');
 
 	let filteredUsers = $derived(
-		users.filter((user) =>
-			searchText ? user.name?.toLowerCase().includes(searchText.toLowerCase()) : true
-		)
+		users.filter((user) => {
+			const matchSearch = searchText
+				? user.name?.toLowerCase().includes(searchText.toLowerCase())
+				: true;
+			return matchSearch;
+		})
 	);
 
-	let paginatedUsers = $derived(filteredUsers.slice(0, (pageIndex + 1) * pageSize));
+	let paginatedUsers = $derived(
+		filteredUsers.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize)
+	);
+
+	$effect(() => {
+		searchText;
+		pageIndex = 0;
+	})
 
 	export async function loadUsers() {
 		isLoading = true;
@@ -77,14 +87,25 @@
 		navigate(`/restricted/users/view?userId=${user._id}`);
 	}
 
-	// Infinite scrolling logic
-	function loadMore() {
-		pageIndex++;
+	// Handle page index changes
+	function handlePageIndexChange(newPageIndex: number) {
+		pageIndex = newPageIndex;
 	}
+
+	// Handle page size changes
+	function handlePageSizeChange(newPageSize: number) {
+		pageSize = newPageSize;
+		pageIndex = 0;
+	}
+
+	// Infinite scrolling logic
+	// function loadMore() {
+	// 	pageIndex++;
+	// }
 </script>
 
 <AuthUserReady onReady={handleReady} />
-<WindowInfiniteScroll {loadMore} triggerDistance={500} side="bottom" />
+<!-- <WindowInfiniteScroll {loadMore} triggerDistance={500} side="bottom" /> -->
 <div class="p-4">
 	<SearchField bind:value={searchText} placeholder="Search Users..." />
 </div>
@@ -134,7 +155,7 @@
 
 				<div class="flex justify-end">
 					<ButtonMenu
-					className="!px-2"
+						className="!px-2"
 						menus={['View', 'Edit', 'Delete']}
 						iconPath={mdiDotsHorizontal}
 						onMenu={(ev, menu) => handleMenu(ev, menu as string, user)}
@@ -145,5 +166,14 @@
 				</div>
 			</ButtonListItem>
 		{/each}
+		<div class="p-4">
+			<Pagination
+				length={filteredUsers?.length}
+				{pageIndex}
+				{pageSize}
+				onPageSizeChange={handlePageSizeChange}
+				onPageIndexChange={handlePageIndexChange}
+			/>
+		</div>
 	{/if}
 </div>

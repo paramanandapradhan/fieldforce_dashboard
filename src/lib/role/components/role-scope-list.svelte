@@ -57,10 +57,10 @@
 
 <div>
 	{#if features?.length}
-		<div><h6 class="font-bold text-base">Permissions</h6></div>
+		<div><h6 class="font-bold text-base dark:text-base-400">Permissions</h6></div>
 		<table class="table-auto w-full mt-6">
 			<thead>
-				<tr class="text-base-500 text-left">
+				<tr class="text-base-500 dark:text-base-400 text-left">
 					<th>Feature Name </th>
 					<th>None</th>
 					<th>Read</th>
@@ -70,8 +70,8 @@
 			</thead>
 			<tbody>
 				{#each features as feature}
-					<tr class="border-b hover:bg-base-50">
-						<td class=" ">
+					<tr class="border-b hover:bg-base-50 dark:hover:bg-base-700">
+						<td class="dark:text-base-400">
 							<div class="flex items-center gap-1">
 								<span>
 									{feature.name}

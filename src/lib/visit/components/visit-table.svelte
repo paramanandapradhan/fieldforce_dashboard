@@ -54,6 +54,11 @@
 		filteredVisits.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize)
 	);
 
+	$effect(() => {
+		searchText ;
+		pageIndex = 0;
+	});
+
 	export async function loadVisits() {
 		isLoading = true;
 		let array = await getAllVisits();

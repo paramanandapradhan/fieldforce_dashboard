@@ -9,6 +9,7 @@
 		mdiMagnify,
 		navigate,
 		NoData,
+		Pagination,
 		SearchField,
 		sort
 	} from '@cloudparker/moldex.js';
@@ -29,19 +30,27 @@
 	import { appState } from '$lib/core/services/app-state.svelte';
 
 	let products: ProductDataModel[] = $state([]);
-	// let filteredProducts: ProductDataModel[] = $state([]);
-	// let paginatedProducts: ProductDataModel[] = $state([]);
 	let pageIndex: number = $state(0);
 	let pageSize: number = $state(10);
 	let isLoading: boolean = $state(true);
 	let searchText: string = $state('');
 
 	let filteredProducts = $derived(
-		products.filter((product) =>
-			searchText ? product.name?.toLowerCase().includes(searchText.toLowerCase()) : true
-		)
+		products.filter((item) => {
+			const matchSearch = searchText
+				? item.name?.toLowerCase().includes(searchText.toLowerCase())
+				: true;
+			return matchSearch;
+		})
 	);
-	let paginatedProducts = $derived(filteredProducts.slice(0, (pageIndex + 1) * pageSize));
+	let paginatedProducts = $derived(
+		filteredProducts.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize)
+	);
+	
+	$effect(() => {
+		searchText;
+		pageIndex = 0;
+	});
 
 	export async function loadProducts() {
 		isLoading = true;
@@ -70,17 +79,29 @@
 		navigate(`/restricted/products/view?productId=${product._id}`);
 	}
 
-	// Infinite scrolling logic
-	function loadMore() {
-		pageIndex++;
+	// Handle page index changes
+	function handlePageIndexChange(newPageIndex: number) {
+		pageIndex = newPageIndex;
 	}
+
+	// Handle page size changes
+	function handlePageSizeChange(newPageSize: number) {
+		pageSize = newPageSize;
+		pageIndex = 0;
+	}
+
+
+	// Infinite scrolling logic
+	// function loadMore() {
+	// 	pageIndex++;
+	// }
 
 	onMount(() => {
 		loadProducts();
 	});
 </script>
 
-<WindowInfiniteScroll {loadMore} triggerDistance={500} side="bottom" />
+<!-- <WindowInfiniteScroll {loadMore} triggerDistance={500} side="bottom" /> -->
 <div class="p-4">
 	<SearchField bind:value={searchText} placeholder="Search Products..." />
 </div>
@@ -143,5 +164,15 @@
 				</div>
 			</ButtonListItem>
 		{/each}
+		<div class="p-4">
+			<Pagination
+				length={filteredProducts?.length}
+				{pageIndex}
+				{pageSize}
+				onPageSizeChange={handlePageSizeChange}
+				onPageIndexChange={handlePageIndexChange}
+			/>
+		</div>
 	{/if}
 </div>
+

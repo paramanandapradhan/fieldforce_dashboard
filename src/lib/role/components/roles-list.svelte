@@ -20,6 +20,7 @@
 	import { openRoleEditDialog, openRolePermissionEditDialog, openRoleUsersListDialog } from '../role-ui-service';
 	import RoleScopeList from './role-scope-list.svelte';
 	import RolePermissionEditDialog from './role-permission-edit-dialog.svelte';
+	import { appState } from '$lib/core/services/app-state.svelte';
 
 	let roles: RoleDataModel[] = $state([]);
 	let expanded: { items: { [key: string]: string } } = $state({ items: {} });
@@ -145,7 +146,7 @@
 	{#each filteredRoles as role (role._id)}
 		{@const scopeCount = getScopeCount(role)}
 		{@const isExpanded = !!expanded.items[role._id!]}
-		<div class="my-2 bg-white shadow-sm rounded">
+		<div class="my-2 bg-white dark:bg-base-800 text-base-800 dark:text-base-200 shadow-sm rounded">
 			<div class="flex align-center py-2 gap-3">
 				<div class="">
 					<Button onClick={() => handleExpand(role)} className="!px-4">
@@ -154,7 +155,7 @@
 				</div>
 				<div class="flex-grow flex align-center">
 					<div class="flex-grow">
-						<div class="font-bold">{role?.name || ''}</div>
+						<div class="font-bold dark:text-base-300">{role?.name || ''}</div>
 						<div class="text-sm text-base-400">{role?.desc || ''}</div>
 					</div>
 					<div></div>
@@ -174,6 +175,9 @@
 						disabled={role?._id === ADMIN_ROLE_ID}
 						menus={['Edit', 'Delete']}
 						onMenu={(ev, menu) => handleMenu(ev, menu as string, role)}
+						iconClassName="text-base-400 hover:text-base-800 {appState.theme == 'light'
+							? ''
+							: 'dark:hover:text-base-200'}"
 					/>
 				</div>
 			</div>

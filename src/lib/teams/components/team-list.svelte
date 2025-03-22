@@ -8,6 +8,7 @@
 		mdiMagnify,
 		navigate,
 		NoData,
+		Pagination,
 		SearchField,
 		sort
 	} from '@cloudparker/moldex.js';
@@ -30,11 +31,22 @@
 	let searchText: string = $state('');
 
 	let filteredTeams = $derived(
-		teams.filter((team) =>
-			searchText ? team.name?.toLowerCase().includes(searchText.toLowerCase()) : true
-		)
+		teams.filter((item) => {
+			const matchSearch = searchText
+				? item.name?.toLowerCase().includes(searchText.toLowerCase())
+				: true;
+			return matchSearch;
+		})
 	);
-	let paginatedTeams = $derived(filteredTeams.slice(0, (pageIndex + 1) * pageSize));
+
+	let paginatedTeams = $derived(
+		filteredTeams.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize)
+	);
+
+	$effect(() => {
+		searchText;
+		pageIndex = 0;
+	})
 
 	export async function loadTeams() {
 		isLoading = true;
@@ -63,17 +75,28 @@
 		navigate(`/restricted/teams/view?teamId=${team._id}`);
 	}
 
-	// Infinite scrolling logic
-	function loadMore() {
-		pageIndex++;
+	// Handle page index changes
+	function handlePageIndexChange(newPageIndex: number) {
+		pageIndex = newPageIndex;
 	}
+
+	// Handle page size changes
+	function handlePageSizeChange(newPageSize: number) {
+		pageSize = newPageSize;
+		pageIndex = 0;
+	}
+
+	// Infinite scrolling logic
+	// function loadMore() {
+	// 	pageIndex++;
+	// }
 
 	onMount(() => {
 		loadTeams();
 	});
 </script>
 
-<WindowInfiniteScroll {loadMore} triggerDistance={500} side="bottom" />
+<!-- <WindowInfiniteScroll {loadMore} triggerDistance={500} side="bottom" /> -->
 <div class="p-4">
 	<SearchField bind:value={searchText} placeholder="Search Teams..." />
 </div>
@@ -133,5 +156,14 @@
 				</div>
 			</ButtonListItem>
 		{/each}
+		<div class="p-4">
+			<Pagination
+				length={filteredTeams?.length}
+				{pageIndex}
+				{pageSize}
+				onPageSizeChange={handlePageSizeChange}
+				onPageIndexChange={handlePageIndexChange}
+			/>
+		</div>
 	{/if}
 </div>

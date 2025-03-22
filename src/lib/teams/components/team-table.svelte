@@ -49,6 +49,11 @@
 		filteredTeams.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize)
 	);
 
+	$effect(() => {
+		searchText;
+		pageIndex = 0;
+	})
+
 	export async function loadTeams() {
 		isLoading = true;
 		let array = await getAllTeams();

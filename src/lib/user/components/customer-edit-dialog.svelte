@@ -242,10 +242,10 @@
 	Inside each card a grid (1 column on mobile, 3 columns on md+ screens) holds the fields.
 	The textarea fields are now placed in their own grid cell so they align as one column on larger screens.
   -->
-<div class="pb-32">
+<div class="pb-32 ">
 	<form id="customer-edit-form" onsubmit={handleSubmit} class="space-y-6">
 		<!-- Customer Details Card -->
-		<div class="m-4 bg-white dark:bg-base-800 p-4 border rounded shadow">
+		<div class="m-4 bg-white dark:bg-base-800 p-4 border dark:border-base-700 rounded shadow">
 			<h4 class="text-xl font-bold mb-4 dark:text-base-400">Customer Details</h4>
 			<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 				<div>
@@ -312,7 +312,7 @@
 		</div>
 
 		<!-- Master Details Card -->
-		<div class="m-4 bg-white dark:bg-base-800 p-4 border rounded shadow">
+		<div class="m-4 bg-white dark:bg-base-800 p-4 border rounded dark:border-base-700 shadow">
 			<h4 class="text-xl font-bold mb-4 dark:text-base-400">Master Details</h4>
 			<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 				<div>
@@ -406,7 +406,7 @@
 		</div>
 
 		<!-- Billing Details Card -->
-		<div class="m-4 bg-white dark:bg-base-800 p-4 border rounded shadow">
+		<div class="m-4 bg-white dark:bg-base-800 p-4 border rounded dark:border-base-700 shadow">
 			<h4 class="text-xl font-bold mb-4 dark:text-base-400">Billing Details</h4>
 			<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 				<div>
@@ -457,7 +457,7 @@
 		</div>
 
 		<!-- Delivery Details Card -->
-		<div class="m-4 bg-white dark:bg-base-800 p-4 border rounded shadow">
+		<div class="m-4 bg-white dark:bg-base-800 p-4 border rounded dark:border-base-700 shadow">
 			<h4 class="text-xl font-bold mb-4 dark:text-base-400">Delivery Details</h4>
 			<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 				<div>
@@ -496,7 +496,7 @@
 		</div>
 
 		<!-- Owner Details Card -->
-		<div class="m-4 bg-white dark:bg-base-800 p-4 border rounded shadow">
+		<div class="m-4 bg-white dark:bg-base-800 p-4 border rounded dark:border-base-700 shadow">
 			<h4 class="text-xl font-bold mb-4 dark:text-base-400">Owner Details</h4>
 			<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 				<div>
@@ -535,7 +535,7 @@
 		</div>
 
 		<!-- Geo Details Card -->
-		<div class="m-4 bg-white dark:bg-base-800 p-4 border rounded shadow">
+		<div class="m-4 bg-white dark:bg-base-800 p-4 border rounded dark:border-base-700 shadow">
 			<h4 class="text-xl font-bold mb-4 dark:text-base-400">Geographical Details</h4>
 			<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 				<div>

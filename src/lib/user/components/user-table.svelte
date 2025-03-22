@@ -32,8 +32,6 @@
 	import TextUserType from './text-user-type.svelte';
 
 	let users: UserDataModel[] = $state([]);
-	// let paginatedUsers: UserDataModel[] = $state([]);
-	// let filteredUsers: UserDataModel[] = $state([]);
 	let pageIndex: number = $state(0);
 	let pageSize: number = $state(10);
 	let searchText: string = $state('');
@@ -52,6 +50,11 @@
 		filteredUsers.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize)
 	);
 
+	$effect(() => {
+		searchText;
+		pageIndex = 0;
+	})
+	
 	export async function loadUsers() {
 		isLoading = true;
 		let array =
