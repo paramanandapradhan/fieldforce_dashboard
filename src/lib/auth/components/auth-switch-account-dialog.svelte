@@ -40,14 +40,7 @@
 	});
 </script>
 
-<!-- <div class="">
-	<h5 class="font-bold">Switch Account</h5>
-	<h6 class="text-base-500">
-		<span> Identity : </span>
-		<span>{authState.authOrgUser?.email || authState.authOrgUser?.phone || ''}</span>
-	</h6>
-</div> -->
-<div>
+<div class="p-6 min-h-80">
 	{#each authUsers as user, index}
 		<div class="my-1">
 			<ButtonListItem className="gap-4" onClick={() => handleSwithUser(user)}>
