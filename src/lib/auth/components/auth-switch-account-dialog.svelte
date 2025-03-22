@@ -1,35 +1,66 @@
 <script lang="ts">
-	import { Button, Icon, mdiCheckCircle, type DialogExports } from '@cloudparker/moldex.js';
+	import {
+		Button,
+		ButtonListItem,
+		Icon,
+		IconCircle,
+		mdiCheckCircle,
+		type DialogExports
+	} from '@cloudparker/moldex.js';
 	import TextOrg from '$lib/org/components/text-org.svelte';
-	import type { UserDataModel } from '$lib/user/user-types';
-	import { switchAuthUser } from '../services/auth-service.svelte';
+	import type { ClaimUsers, UserDataModel } from '$lib/user/user-types';
+	import { getAuthOrgUser, getAuthOrgUsers, switchAuthUser } from '../services/auth-service.svelte';
 	import { authState } from '../services/auth-state.svelte';
+	import { onMount } from 'svelte';
+	import TextUser from '$lib/user/components/text-user.svelte';
+	import { mdiCity } from '$lib/core/services/app-icons-service';
 
 	let { closeDialog, setResult }: DialogExports = $props();
 
-	async function handleSwithUser(user: UserDataModel) {
-		if (authState.authOrgUser?._id != user?._id) {
+	let authUsers: ClaimUsers[] = $state([]);
+
+	async function handleSwithUser(user: ClaimUsers) {
+		console.log('handleSwithUser', user);
+		let authUser = await getAuthOrgUser();
+		if (authUser?._id != user?._id) {
 			await switchAuthUser(user);
+			closeDialog();
+		} else {
 			closeDialog();
 		}
 	}
+
+	async function loadAuthUsers() {
+		authUsers = (await getAuthOrgUsers()) || [];
+		console.log('loadAuthUsers', authUsers);
+	}
+
+	onMount(() => {
+		loadAuthUsers();
+	});
 </script>
 
-<div class="">
+<!-- <div class="">
 	<h5 class="font-bold">Switch Account</h5>
 	<h6 class="text-base-500">
 		<span> Identity : </span>
 		<span>{authState.authOrgUser?.email || authState.authOrgUser?.phone || ''}</span>
 	</h6>
-</div>
+</div> -->
 <div>
-	{#each authState.authOrgUsers as user, index}
+	{#each authUsers as user, index}
 		<div class="my-1">
-			<Button className="w-full" onClick={() => handleSwithUser(user)}>
-				<div></div>
-				<div class="flex-grow-1">
-					<div class="font-bold"><TextOrg input={user?.oid} /></div>
-					<div>{user?.name || ''}</div>
+			<ButtonListItem className="gap-4" onClick={() => handleSwithUser(user)}>
+				<div>
+					<IconCircle iconPath={mdiCity}></IconCircle>
+				</div>
+				<div class="flex-grow">
+					<div class="font-bold dark:text-base-300">
+						<TextOrg input={user?.oid} />
+					</div>
+					<div class="dark:text-base-500 text-sm font-light">
+						<TextUser input={user._id} hideIcon hideDropdown />
+					</div>
 				</div>
 				<div>
 					<Icon
@@ -40,7 +71,7 @@
 							: 'text-base-500'}
 					/>
 				</div>
-			</Button>
+			</ButtonListItem>
 		</div>
 	{/each}
 </div>

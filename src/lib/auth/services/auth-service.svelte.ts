@@ -2,7 +2,7 @@ import { goto } from '$app/navigation';
 import { firebaseApp } from '$lib/firebase/firebase-service';
 import type { OrgDataModel } from '$lib/org/org-types';
 import { getUserCache, updateUser } from '$lib/user/user-service';
-import type { UserDataModel } from '$lib/user/user-types';
+import type { ClaimUsers, UserDataModel } from '$lib/user/user-types';
 import {
 	delay,
 	openAlertDialog,
@@ -174,7 +174,7 @@ export async function ensureAuthUser(claims: FirebaseAuthClaimsType) {
 export async function extractOrgUsers(claims: FirebaseAuthClaimsType) {
 	if (claims?.orgs) {
 		let orgsMap = claims.orgs || {};
-		let userList: UserDataModel[] = [];
+		let userList: ClaimUsers[] = [];
 		Object.keys(orgsMap).map((oid: string) => {
 			let usersMap = orgsMap[oid] || {};
 			Object.keys(usersMap).map((uid) => {
@@ -222,7 +222,7 @@ export async function extractClaimsInfo(claims: FirebaseAuthClaimsType) {
 	}
 }
 
-export async function switchAuthUser(user: UserDataModel) {
+export async function switchAuthUser(user: ClaimUsers) {
 	if (IS_DEV_ENV) {
 		console.log('Switch user', user);
 	}
@@ -276,7 +276,7 @@ export function getFirebaseAuthUid(): string | null {
 	return getFirebaseAuthClaims()?.user_id || getFirebaseAuthUser()?.uid || '';
 }
 
-export function getAuthOrgUsers(): UserDataModel[] | null {
+export function getAuthOrgUsers(): ClaimUsers[] | null {
 	return authState.authOrgUsers;
 }
 

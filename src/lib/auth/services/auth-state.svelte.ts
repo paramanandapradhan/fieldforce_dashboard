@@ -1,5 +1,5 @@
 import type { OrgDataModel } from "$lib/org/org-types";
-import type { UserDataModel } from "$lib/user/user-types";
+import type { ClaimUsers, UserDataModel } from "$lib/user/user-types";
 import type { FirebaseAuthClaimsType, FirebaseAuthStatesEnum } from "../auth-types";
 import type { User as FirebaseAuthUserType } from 'firebase/auth';
 
@@ -9,7 +9,7 @@ type Props = {
     firebaseAuthClaims: FirebaseAuthClaimsType | null,
     authOrg: OrgDataModel | null,
     authOrgUser: UserDataModel | null,
-    authOrgUsers: UserDataModel[],
+    authOrgUsers: ClaimUsers[],
     isRootUser: boolean,
     isSupportUser: boolean,
     isAdminUser: boolean,

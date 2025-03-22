@@ -12,6 +12,8 @@ class OrgDatabaseService extends DatabaseService<OrgDataModel> {
     protected syncEnabled: boolean = false;
     protected collectionName: string = 'orgs';
 
+    private orgMap: { [key: string]: OrgDataModel } = {}
+
     constructor() {
         super();
     }
@@ -48,7 +50,14 @@ class OrgDatabaseService extends DatabaseService<OrgDataModel> {
     }
 
     public async getOrg(id: string) {
-        return super.getOneLocal(id);
+        let org: OrgDataModel | null = this.orgMap[id];
+        if (!org) {
+            org = await super.getOneFirestoreDoc(id);
+            if (org) {
+                this.orgMap[id] = org;
+            }
+        }
+        return org;
     }
 
     public async getAllOrgs() {

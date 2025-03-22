@@ -2,6 +2,12 @@
 import type { BaseDataModel } from "$lib/core/types/app-types";
 import type { UserSubtypeEnum, UserTypeEnum } from "./user-service";
 
+
+export type ClaimUsers = {
+    _id: string,
+    oid: string,
+    rid: string
+}
 export type UserDataModel = BaseDataModel & {
     name?: string;
     desc?: string;

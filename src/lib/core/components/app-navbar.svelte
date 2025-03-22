@@ -6,7 +6,7 @@
 	import { mdiAccount, mdiAccountCircle } from '../services/app-icons-service';
 	import { goto } from '$app/navigation';
 	import AuthSwitchAccountDialog from '$lib/auth/components/auth-switch-account-dialog.svelte';
-	import { signout } from '$lib/auth/services/auth-service.svelte';
+	import { getAuthUser, signout } from '$lib/auth/services/auth-service.svelte';
 	import ButtonTheme from './button-theme.svelte';
 
 	type Props = {};
@@ -32,7 +32,7 @@
 		// 	url: '/admin'
 		// },
 		{
-			id: 'switch_acount',
+			id: 'switch_account',
 			title: 'Switch Account',
 			iconPath: mdiAccount
 		},
@@ -49,6 +49,7 @@
 	});
 
 	async function handleMenu(ev: any, menu: any) {
+		console.log('handleMenu', menu);
 		switch (menu.id) {
 			case 'switch_account':
 				handleSitchAccount();
@@ -63,7 +64,18 @@
 	}
 
 	async function handleSitchAccount() {
-		let res = await openDialog({ component: AuthSwitchAccountDialog });
+		const authUser = getAuthUser();
+		const identity = authUser?.email || authUser?.phone || '';
+		if (authUser) {
+			let res = await openDialog({
+				bodyComponent: AuthSwitchAccountDialog,
+				hasHeader: true,
+				hasTitle: true,
+				title: 'Switch Account',
+				hasSubtitle: true,
+				subtitle: identity ? `Of ${identity}` : ''
+			});
+		}
 	}
 </script>
 

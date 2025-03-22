@@ -1,24 +1,26 @@
 <script lang="ts">
 	import type { OrgDataModel } from '$lib/org/org-types';
-	import { BROWSER } from 'esm-env';
+	import { onMount } from 'svelte';
 	import { getOrg } from '../org-service';
 
-	/**
-	 * Org id need to be in input
-	 */
-	export let input: string | undefined | null;
+	type Props = {
+		input: string | undefined | null;
+	};
+	let { input }: Props = $props();
 
-	let org: OrgDataModel | null;
+	let org: OrgDataModel | null = $state(null);
 
-	async function prepareOrg(..._: any) {
+	async function loadOrg() {
 		if (input) {
 			org = await getOrg(input);
-		} else {
-			org = null;
 		}
 	}
 
-	$: BROWSER && prepareOrg(input);
+	onMount(() => {
+		loadOrg();
+	});
 </script>
 
-{org?.name || ''}
+<span>
+	{org?.name || ''}
+</span>
