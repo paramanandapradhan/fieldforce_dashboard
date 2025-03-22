@@ -15,6 +15,7 @@
 
 	import {
 		mdiBriefcaseAccount,
+		mdiBriefcaseAccountOutline,
 		mdiInformationOutline,
 		mdiMapMarkerPath,
 		mdiNotebookOutline
@@ -137,7 +138,7 @@
 			<ButtonListItem onClick={() => handelViewCustomer(item)} className="!pr-2">
 				<div>
 					<IconCircle
-						iconPath={mdiBriefcaseAccount}
+						iconPath={mdiBriefcaseAccountOutline}
 						iconClassName="!h-5 !w-5 text-primary"
 						circleClassName="!h-10 !w-10"
 					/>

@@ -15,6 +15,7 @@
 	import { onMount } from 'svelte';
 	import WindowInfiniteScroll from '$lib/core/components/window-infinite-scroll.svelte';
 	import {
+	mdiBusMarker,
 	mdiMapMarkerDistance,
 		mdiNotebookOutline,
 		mdiPackageVariantClosed
@@ -108,7 +109,7 @@
 			<ButtonListItem onClick={() => handleViewVisit(visit)} className="pe-2">
 				<div>
 					<IconCircle
-						iconPath={mdiMapMarkerDistance}
+						iconPath={mdiBusMarker}
 						iconClassName="!h-5 !w-5 text-primary"
 						circleClassName="!h-10 !w-10"
 					/>

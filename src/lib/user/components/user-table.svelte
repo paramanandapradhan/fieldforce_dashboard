@@ -17,6 +17,7 @@
 	import type { UserDataModel } from '../user-types';
 	import {
 		mdiAccount,
+		mdiAccountOutline,
 		mdiDotsHorizontal,
 		mdiInformationOutline,
 		mdiNotebookOutline
@@ -149,7 +150,7 @@
 					<tr>
 						<td class="text-left pl-4 py-1 w-14">
 							<IconCircle
-								iconPath={mdiAccount}
+								iconPath={mdiAccountOutline}
 								iconClassName="!h-5 !w-5 text-primary"
 								circleClassName="!h-10 !w-10"
 							/>

@@ -14,6 +14,7 @@
 
 	import {
 		mdiBriefcaseAccount,
+		mdiBriefcaseAccountOutline,
 		mdiInformationOutline,
 		mdiMapMarkerPath,
 		mdiNotebookOutline
@@ -156,7 +157,7 @@
 					<tr class="hover:bg-base-100 dark:hover:bg-base-700">
 						<td class="text-left pl-4 py-1 w-14">
 							<IconCircle
-								iconPath={mdiBriefcaseAccount}
+								iconPath={mdiBriefcaseAccountOutline}
 								iconClassName="!h-5 !w-5 text-primary"
 								circleClassName="!h-10 !w-10"
 							/>

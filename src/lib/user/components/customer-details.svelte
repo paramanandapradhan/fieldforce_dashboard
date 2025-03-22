@@ -3,7 +3,7 @@
 	import { getUser } from '../user-service';
 	import type { CustomerDataModel } from '../user-types';
 	import { Button, IconCircle } from '@cloudparker/moldex.js';
-	import { mdiBriefcaseAccount, mdiInformationOutline } from '$lib/core/services/app-icons-service';
+	import { mdiBriefcaseAccount, mdiBriefcaseAccountOutline, mdiInformationOutline } from '$lib/core/services/app-icons-service';
 	import TextUserSubtype from './text-user-subtype.svelte';
 	import TextAttribute from '$lib/attribute/components/text-attribute.svelte';
 	import { openCustomerBasicDetailsDialog } from '../customer-ui-service';
@@ -38,7 +38,7 @@
 	<div class="flex items-center gap-4">
 		<div>
 			<IconCircle
-				iconPath={mdiBriefcaseAccount}
+				iconPath={mdiBriefcaseAccountOutline}
 				iconClassName="  text-primary"
 				circleClassName=" "
 			/>

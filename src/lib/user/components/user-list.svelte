@@ -17,6 +17,7 @@
 	import type { UserDataModel } from '../user-types';
 	import {
 		mdiAccount,
+		mdiAccountOutline,
 		mdiDotsHorizontal,
 		mdiInformationOutline,
 		mdiNotebookOutline
@@ -117,7 +118,7 @@
 			<ButtonListItem onClick={() => handelViewUser(user)} className="!pe-2">
 				<div>
 					<IconCircle
-						iconPath={mdiAccount}
+						iconPath={mdiAccountOutline}
 						iconClassName="!h-5 !w-5 text-primary"
 						circleClassName="!h-10 !w-10"
 					/>

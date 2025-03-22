@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 
 	import { Button, IconCircle } from '@cloudparker/moldex.js';
-	import { mdiInformationOutline, mdiMapMarkerDistance, mdiPackageVariantClosed } from '$lib/core/services/app-icons-service';
+	import { mdiBusMarker, mdiInformationOutline, mdiMapMarkerDistance, mdiPackageVariantClosed } from '$lib/core/services/app-icons-service';
 	import type { VisitDataModel } from '../visite-type';
 	import { getVisit } from '../visit-service';
 	import TextUser from '$lib/user/components/text-user.svelte';
@@ -40,7 +40,7 @@
 	<div class="flex items-center gap-4">
 		<div>
 			<IconCircle
-				iconPath={mdiMapMarkerDistance}
+				iconPath={mdiBusMarker}
 				iconClassName="text-primary"
 				circleClassName=" "
 			/>

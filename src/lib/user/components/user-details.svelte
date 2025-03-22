@@ -3,7 +3,7 @@
 	import { getUser } from '../user-service';
 	import type { CustomerDataModel, UserDataModel } from '../user-types';
 	import { Button, IconCircle, TextDate } from '@cloudparker/moldex.js';
-	import { mdiAccount, mdiBriefcaseAccount, mdiInformationOutline } from '$lib/core/services/app-icons-service';
+	import { mdiAccount, mdiAccountOutline, mdiBriefcaseAccount, mdiInformationOutline } from '$lib/core/services/app-icons-service';
 	import TextUserSubtype from './text-user-subtype.svelte';
 	import TextAttribute from '$lib/attribute/components/text-attribute.svelte';
 	import TextUser from './text-user.svelte';
@@ -40,7 +40,7 @@
 <div>
 	<div class="flex items-center gap-4">
 		<div>
-			<IconCircle iconPath={mdiAccount} iconClassName="text-primary" circleClassName=" " />
+			<IconCircle iconPath={mdiAccountOutline} iconClassName="text-primary" circleClassName=" " />
 		</div>
 		<div class="flex-grow">
 			<h4 class="text-xl font-bold dark:text-base-300">User Details</h4>

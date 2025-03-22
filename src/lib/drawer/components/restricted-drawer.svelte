@@ -4,9 +4,13 @@
 	import {
 		mdiAccount,
 		mdiAccountGroupOutline,
+		mdiAccountOutline,
 		mdiBriefcaseAccount,
+		mdiBriefcaseAccountOutline,
+		mdiBusMarker,
 		mdiCalendarAccountOutline,
 		mdiFormatListBulleted,
+		mdiHomeOutline,
 		mdiHomeVariant,
 		mdiMapMarkerDistance,
 		mdiMapMarkerPath,
@@ -47,7 +51,7 @@
 			className={`w-full !text-start !justify-start !gap-4 rounded-none  ${active === '/restricted/home' ? 'bg-primary-50 dark:bg-base-700 font-bold' : ''}`}
 			onClick={(ev) => handleNavigate('/restricted/home', ev)}
 		>
-			<IconCircle iconPath={mdiHomeVariant} iconClassName="text-primary" />
+			<IconCircle iconPath={mdiHomeOutline} iconClassName="text-primary" />
 			<div>Home</div>
 		</Button>
 
@@ -71,7 +75,7 @@
 			className={`w-full !text-start !justify-start !gap-4 rounded-none  ${active.startsWith('/restricted/customers') ? 'bg-primary-50 dark:bg-base-700  font-bold' : ''}`}
 			onClick={(ev) => handleNavigate('/restricted/customers', ev)}
 		>
-			<IconCircle iconPath={mdiBriefcaseAccount} iconClassName="text-primary" />
+			<IconCircle iconPath={mdiBriefcaseAccountOutline} iconClassName="text-primary" />
 			<div>Customers</div>
 		</Button>
 
@@ -87,7 +91,7 @@
 			className={`w-full !text-start !justify-start !gap-4 rounded-none  ${active.startsWith('/restricted/users') ? 'bg-primary-50 dark:bg-base-700  font-bold' : ''}`}
 			onClick={(ev) => handleNavigate('/restricted/users', ev)}
 		>
-			<IconCircle iconPath={mdiAccount} iconClassName="text-primary" />
+			<IconCircle iconPath={mdiAccountOutline} iconClassName="text-primary" />
 			<div>Users</div>
 		</Button>
 
@@ -111,7 +115,7 @@
 			className={`w-full !text-start !justify-start !gap-4 rounded-none  ${active.startsWith('/restricted/visits') ? 'bg-primary-50 dark:bg-base-700  font-bold' : ''}`}
 			onClick={(ev) => handleNavigate('/restricted/visits', ev)}
 		>
-			<IconCircle iconPath={mdiMapMarkerDistance} iconClassName="text-primary" />
+			<IconCircle iconPath={mdiBusMarker} iconClassName="text-primary" />
 			<div>Tour Visits</div>
 		</Button>
 		<Button
