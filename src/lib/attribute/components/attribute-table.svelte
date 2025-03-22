@@ -26,12 +26,14 @@
 		mdiNotebookOutline
 	} from '$lib/core/services/app-icons-service';
 	import { appState } from '$lib/core/services/app-state.svelte';
+	import AttributeTypeComboboxField from './attribute-type-combobox-field.svelte';
 
 	let attributes: AttributeDataModel[] = $state([]);
 	let pageIndex: number = $state(0);
 	let pageSize: number = $state(10);
 	let searchText: string = $state('');
 	let isLoading: boolean = $state(true);
+	let attributeType: string = $state('');
 
 	// Map enum values to their labels
 	const attributeTypeMap = new Map(
@@ -104,9 +106,15 @@
 
 <AuthAttributeReady onReady={handleReady} />
 <div>
-	<div class="p-4 max-w-80">
-		<SearchField bind:value={searchText} placeholder="Search Attribute Name or Type..." />
+	<div class="flex items-center justify-between gap-4">
+		<div class="p-4 max-w-96 w-full">
+			<SearchField bind:value={searchText} placeholder="Search by attribute name or type..." />
+		</div>
+		<!-- <div>
+			<AttributeTypeComboboxField name="type" label="Attribute Type" bind:value={attributeType} />
+		</div> -->
 	</div>
+
 	{#if isLoading}
 		<Loading />
 	{:else if searchText && filteredAttribute.length <= 0}

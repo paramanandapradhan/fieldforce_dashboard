@@ -1,62 +1,33 @@
 <script lang="ts">
-	import { mdiCash, mdiFaceAgent, mdiTagOutline } from '$lib/core/services/app-icons-service';
+	import { page } from '$app/stores';
+	import {
+		mdiCash,
+		mdiFaceAgent,
+		mdiFormatListBulleted,
+		mdiTagOutline
+	} from '$lib/core/services/app-icons-service';
 
 	import { Button, IconCircle, mdiPhone, navigate } from '@cloudparker/moldex.js';
 
-	function handleSkus(ev: MouseEvent) {
-		navigate('/admin/skus', { event: ev });
+	let active: string = $state('');
+
+ 
+	function handleNavigate(route: string, ev: MouseEvent) {
+		navigate(route, { event: ev });
 	}
-
 	
-
+	$effect(() => {
+		active = $page.url.pathname;
+	});
 </script>
 
 <div>
-	<Button className="w-full !text-start !justify-start !gap-4" onClick={handleSkus}>
-		<IconCircle
-			iconPath={mdiFaceAgent}
-			circleClassName="!w-8 !h-8"
-			iconClassName="!w-4 !h-4 text-primary"
-		/>
-		<div>SKUs</div>
-	</Button>
-	<!-- <Button className="w-full !text-start !justify-start !gap-4" onClick={handlePhoneNumber}>
-		<IconCircle
-			iconPath={mdiPhone}
-			circleClassName="!w-8 !h-8"
-			iconClassName="!w-4 !h-4 text-primary"
-		/>
-		<div>Phone Numbers</div>
-	</Button>
-	<Button className="w-full !text-start !justify-start !gap-4" onClick={handleCallHistory}>
-		<IconCircle
-			iconPath={mdiPhone}
-			circleClassName="!w-8 !h-8"
-			iconClassName="!w-4 !h-4 text-primary"
-		/>
-		<div>Call History</div>
-	</Button>
-	
-	<Button className="w-full !text-start !justify-start !gap-4" onClick={handleBilling}>
-		<IconCircle
-			iconPath={mdiCash}
-			circleClassName="!w-8 !h-8"
-			iconClassName="!w-4 !h-4 text-primary"
-		/>
-		<div>Billing</div>
-	</Button>
-
-	<Button className="w-full !text-start !justify-start" onClick={handleAttribute}>
-		<IconCircle
-			iconPath={mdiTagOutline}
-			circleClassName="!w-8 !h-8"
-			iconClassName="!w-4 !h-4 text-primary"
-		/>
+	<Button
+		className={`w-full !text-start !justify-start rounded-none  ${active.startsWith('/restricted/attributes') ? 'bg-primary-50 dark:bg-base-700  font-bold' : ''}`}
+		onClick={(ev) => handleNavigate('/restricted/attributes', ev)}
+	>
+		<IconCircle iconPath={mdiFormatListBulleted} iconClassName="text-primary" />
 		<div>Attributes</div>
-	</Button> -->
-	<!-- <Button className="w-full !text-start !justify-start" onClick={handleRoles}>
-		<IconCircle iconPath={mdiShieldKeyOutline} />
-		<div>Roles</div>
-	</Button> -->
-	
+	</Button>
+	 
 </div>

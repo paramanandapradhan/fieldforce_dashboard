@@ -25,12 +25,12 @@
 	}: Props & NavbarProps = $props();
 
 	let defaultAuthMenus: any[] = [
-		{
-			id: 'admin',
-			title: 'Admin',
-			iconPath: mdiAccount,
-			url: '/admin/skus'
-		},
+		// {
+		// 	id: 'admin',
+		// 	title: 'Admin',
+		// 	iconPath: mdiAccount,
+		// 	url: '/admin'
+		// },
 		{
 			id: 'switch_acount',
 			title: 'Switch Account',
@@ -69,16 +69,16 @@
 
 {#snippet rightSnippet()}
 	{#if !hasBack}
-	<div class="h-full flex gap-1">
-		<ButtonTheme iconClassName="text-base-500" />
-		<ButtonMenu
-			className="h-full rounded-none !px-2"
-			menus={authMenus}
-			iconPath={mdiAccountCircle}
-			iconClassName="text-base-500"
-			onMenu={(ev, menu) => handleMenu(ev, menu as any)}
-		/>
-	</div>
+		<div class="h-full flex gap-1">
+			<ButtonTheme iconClassName="text-base-500" />
+			<ButtonMenu
+				className="h-full rounded-none !px-2"
+				menus={authMenus}
+				iconPath={mdiAccountCircle}
+				iconClassName="text-base-500"
+				onMenu={(ev, menu) => handleMenu(ev, menu as any)}
+			/>
+		</div>
 	{/if}
 {/snippet}
 

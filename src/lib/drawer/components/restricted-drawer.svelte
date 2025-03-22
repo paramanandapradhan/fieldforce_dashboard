@@ -103,13 +103,13 @@
 			<div>Teams</div>
 		</Button>
 
-		<Button
+		<!-- <Button
 			className={`w-full !text-start !justify-start !gap-4 rounded-none  ${active.startsWith('/restricted/attendance') ? 'bg-primary-50 dark:bg-base-700  font-bold' : ''}`}
 			onClick={(ev) => handleNavigate('/restricted/attendance', ev)}
 		>
 			<IconCircle iconPath={mdiCalendarAccountOutline} iconClassName="text-primary" />
 			<div>Attendance</div>
-		</Button>
+		</Button> -->
 
 		<Button
 			className={`w-full !text-start !justify-start !gap-4 rounded-none  ${active.startsWith('/restricted/visits') ? 'bg-primary-50 dark:bg-base-700  font-bold' : ''}`}
@@ -118,13 +118,13 @@
 			<IconCircle iconPath={mdiBusMarker} iconClassName="text-primary" />
 			<div>Tour Visits</div>
 		</Button>
-		<Button
+		<!-- <Button
 			className={`w-full !text-start !justify-start !gap-4 rounded-none  ${active.startsWith('/restricted/activities') ? 'bg-primary-50 dark:bg-base-700  font-bold' : ''}`}
 			onClick={(ev) => handleNavigate('/restricted/activities', ev)}
 		>
 			<IconCircle iconPath={mdiTableAccount} iconClassName="text-primary" />
 			<div>Activities</div>
-		</Button>
+		</Button> -->
 
 		<Button
 			className={`w-full !text-start !justify-start rounded-none  ${active.startsWith('/restricted/attributes') ? 'bg-primary-50 dark:bg-base-700  font-bold' : ''}`}
