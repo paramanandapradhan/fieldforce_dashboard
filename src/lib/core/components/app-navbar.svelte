@@ -32,8 +32,8 @@
 		// 	url: '/admin'
 		// },
 		{
-			id: 'switch_account',
-			title: 'Switch Account',
+			id: 'switch_organization',
+			title: 'Switch Organization',
 			iconPath: mdiAccount
 		},
 		{
@@ -51,7 +51,7 @@
 	async function handleMenu(ev: any, menu: any) {
 		console.log('handleMenu', menu);
 		switch (menu.id) {
-			case 'switch_account':
+			case 'switch_organization':
 				handleSitchAccount();
 				break;
 			case 'profile':
