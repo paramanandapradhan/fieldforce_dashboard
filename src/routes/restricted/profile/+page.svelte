@@ -56,19 +56,19 @@
 <AuthUserReady onReady={handleReady} />
 <div class="min-h-full">
 	<AppNavbar hasLogo hasTitle />
-	<Drawer bind:this={drawerRef} className="border-r">drawwer</Drawer>
+	<!-- <Drawer bind:this={drawerRef} className="border-r">drawwer</Drawer> -->
 	<Sidebar className="border-r "><RestrictedDrawer /></Sidebar>
 	<ContentArea className="md:pl-72">
 		<BackgroundGradient>
-			<main class="">
+			<main class="px-4">
 				<div class="flex justify-center">
 					<div class="w-full max-w-[800px]">
 						<div class="p-4">
 							<h1 class="text-2xl font-bold dark:text-base-200">Profile</h1>
 						</div>
-						<div class="my-8 lg:mx-6 mx-2 bg-white dark:bg-base-800 rounded-2xl p-4 shadow">
-							<UserDetails {userId} showRootUserInfo></UserDetails>
-							<!-- {#if user}
+						<!-- <div class="my-8 lg:mx-6 mx-2 bg-white dark:bg-base-800 rounded-2xl p-4 shadow"> -->
+						<!-- <UserDetails {userId} showRootUserInfo></UserDetails> -->
+						<!-- {#if user}
 								<UserDetails
 									input={user?._id}
 									showRootUserInfo
@@ -80,7 +80,7 @@
 							{:else}
 								<Spinner/>
 							{/if} -->
-						</div>
+						<!-- </div> -->
 						<div class="my-8 lg:mx-6 mx-2 bg-white dark:bg-base-800 rounded-2xl p-4 shadow">
 							<div class="mb-4">
 								<h2 class="font-bold dark:text-base-300">Basic Information</h2>
